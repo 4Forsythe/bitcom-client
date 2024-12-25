@@ -1,0 +1,38 @@
+.container {
+	@apply h-fit gap-3 flex;
+	.inner {
+		@apply gap-5 flex flex-col grow;
+		.list {
+			@apply min-h-[420px] mb-5 gap-5 grid grid-cols-2;
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		.inner {
+			@apply gap-2.5;
+			.list {
+				@apply gap-3;
+			}
+		}
+	}
+}
+@media (max-width: 768px) {
+	.container {
+		.inner {
+			.list {
+				@apply grid grid-cols-2;
+			}
+		}
+	}
+}
+@media (max-width: 390px) {
+	.container {
+		.inner {
+			.list {
+				@apply flex flex-col;
+			}
+		}
+	}
+}

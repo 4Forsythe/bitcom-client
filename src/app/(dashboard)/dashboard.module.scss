@@ -1,0 +1,32 @@
+.container {
+	@apply h-fit px-2.5 gap-5 flex;
+	.aside {
+		@apply w-fit h-full flex flex-col;
+	}
+	.inner {
+		@apply min-h-[400px] h-fit px-7 py-6 flex flex-1 flex-col bg-zinc-50 shadow rounded-lg;
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		@apply gap-3.5 flex-col;
+		.aside {
+			@apply w-full h-fit;
+		}
+	}
+}
+@media (max-width: 768px) {
+	.container {
+		.inner {
+			@apply px-5;
+		}
+	}
+}
+@media (max-width: 390px) {
+	.container {
+		.inner {
+			@apply px-1.5;
+		}
+	}
+}

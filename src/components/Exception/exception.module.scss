@@ -1,0 +1,18 @@
+.container {
+	@apply gap-1.5 flex flex-col items-center;
+	.emoji {
+		@apply text-8xl font-semibold;
+	}
+	.super {
+		@apply mt-5 text-2xl;
+	}
+	.error {
+		@apply font-black;
+	}
+	.controls {
+		@apply mt-3.5 gap-3 inline-flex items-center;
+		.button {
+			@apply px-4 py-3 text-zinc-50 bg-zinc-800 rounded-md;
+		}
+	}
+}

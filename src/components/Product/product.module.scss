@@ -1,0 +1,63 @@
+.container {
+	@apply mb-5 p-8 gap-8 grid grid-cols-[0.5fr,1fr] bg-zinc-50 shadow-sm;
+	.cover {
+		@apply h-fit max-h-[600px] rounded-lg overflow-hidden;
+		.image {
+			@apply w-full h-auto object-cover;
+		}
+	}
+	.information {
+		@apply gap-2.5 flex flex-col;
+		.overview {
+			@apply gap-2.5 inline-flex flex-col;
+			.head {
+				@apply flex items-center justify-between;
+				.title {
+					@apply mb-1.5 text-2xl font-bold;
+				}
+				.article {
+					@apply text-sm font-medium text-zinc-400 uppercase;
+				}
+			}
+			.category {
+				@apply rounded-xl;
+			}
+		}
+		.options {
+			@apply gap-4 flex flex-col;
+			.description {
+				@apply my-1.5;
+				.text {
+					@apply text-zinc-400/70;
+				}
+			}
+			.availables {
+				@apply gap-2 flex items-center;
+				.breadcrumb {
+					@apply w-fit my-1 px-2.5 py-1 text-sm text-zinc-500 bg-zinc-200/50 rounded-3xl;
+				}
+			}
+			.features {
+				@apply py-2.5 gap-3 flex items-end justify-between;
+				.controls {
+					@apply h-[50px] gap-2 col-start-1 col-end-2 flex items-center *:h-full;
+				}
+				.price {
+					@apply text-3xl font-bold;
+				}
+			}
+		}
+		.details {
+			@apply p-4 flex flex-col;
+			.title {
+				@apply mb-3 text-lg font-semibold;
+			}
+			.characteristics {
+				@apply pt-4 pb-2 gap-2 flex flex-col;
+				.characteristic {
+					@apply gap-4 grid grid-cols-2 items-center;
+				}
+			}
+		}
+	}
+}

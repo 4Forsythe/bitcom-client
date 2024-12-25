@@ -1,0 +1,15 @@
+.container {
+	@apply w-full px-5 py-4 flex flex-col bg-zinc-50 rounded-lg shadow-sm overflow-hidden;
+	.title {
+		@apply mr-2 mb-2.5 text-lg font-semibold;
+	}
+	.inner {
+		@apply h-full;
+	}
+}
+
+@media (max-width: 480px) {
+	.container {
+		@apply px-3 py-2;
+	}
+}

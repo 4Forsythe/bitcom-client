@@ -1,0 +1,15 @@
+.container {
+	@apply w-full h-[300px] mb-5 px-10 pt-14;
+	.inner {
+		@apply gap-3.5 flex flex-col items-center justify-center;
+		.super {
+			@apply text-7xl font-extrabold;
+		}
+		.title {
+			@apply text-4xl font-semibold;
+		}
+		.action {
+			@apply flex items-center justify-center *:inline-flex;
+		}
+	}
+}

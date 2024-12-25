@@ -1,0 +1,6 @@
+.container {
+	@apply max-w-[1056px] w-full mx-auto px-28 pt-10 pb-14 bg-zinc-50 shadow-sm;
+	.markdown {
+		@apply mt-4 prose;
+	}
+}

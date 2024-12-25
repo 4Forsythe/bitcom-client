@@ -1,0 +1,15 @@
+.container {
+	@apply my-3.5 px-3.5;
+	.inner {
+		@apply mb-8 gap-2.5 flex flex-col;
+	}
+}
+
+@media (max-width: 564px) {
+	.container {
+		@apply px-2;
+		.inner {
+			@apply mb-2.5;
+		}
+	}
+}

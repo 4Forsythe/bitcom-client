@@ -1,0 +1,38 @@
+.container {
+	@apply w-[95px] px-1.5 py-2.5 flex flex-col items-center text-zinc-400 font-medium rounded-lg outline-none truncate relative
+  hover:text-zinc-500 hover:bg-zinc-100 hover:shadow-sm transition-all duration-200;
+	.icon {
+		@apply w-auto h-5 mb-0.5 text-zinc-400;
+	}
+	.text {
+		@apply max-w-[75px] text-sm truncate;
+	}
+	.badge {
+		@apply top-0 right-0 m-0.5 px-2 text-sm leading-5 text-zinc-200 bg-red-500 rounded-xl absolute;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		@apply w-[88px] px-1.5 py-2;
+		.icon {
+			@apply h-4;
+		}
+	}
+}
+@media (max-width: 590px) {
+	.container {
+		@apply w-[75px] text-sm;
+	}
+}
+@media (max-width: 490px) {
+	.container {
+		@apply w-[50px];
+		.text {
+			@apply hidden;
+		}
+		.badge {
+			@apply px-1 text-xs leading-4;
+		}
+	}
+}

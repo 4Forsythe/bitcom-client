@@ -1,0 +1,54 @@
+.container {
+	@apply px-3.5 gap-5 flex justify-between;
+	.list {
+		@apply mb-7 flex flex-col grow;
+		.items {
+			@apply gap-4 flex flex-col;
+		}
+	}
+	.sidebar {
+		@apply w-[350px] h-fit top-[120px] sticky;
+		.block {
+			@apply mb-5 px-4 pt-4 pb-5 gap-5 flex flex-col bg-zinc-50 rounded-lg shadow-sm;
+			.summary {
+				@apply flex flex-col;
+				.total {
+					@apply mb-1.5 text-lg font-semibold text-zinc-400;
+				}
+				.amount {
+					@apply gap-1.5 flex items-end justify-between;
+					.divider {
+						@apply mb-2 flex-1 border-b border-dashed border-zinc-400/70;
+					}
+				}
+				.text {
+					@apply text-lg font-semibold;
+				}
+			}
+			.action {
+				@apply w-full h-[64px] p-3.5;
+			}
+		}
+		.danger {
+			@apply p-4 leading-[1.6] rounded-lg;
+			.text {
+				@apply text-sm;
+				.divider {
+					@apply w-full my-1.5;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		@apply gap-2.5 flex-col;
+		.list {
+			@apply mb-4;
+		}
+		.sidebar {
+			@apply w-full;
+		}
+	}
+}

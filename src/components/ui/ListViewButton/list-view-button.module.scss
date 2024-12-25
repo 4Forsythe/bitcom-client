@@ -1,0 +1,9 @@
+.container {
+	@apply gap-1.5 inline-flex items-center;
+	.button {
+		@apply text-zinc-400/70 hover:text-zinc-400 transition duration-200;
+		&.active {
+			@apply text-zinc-700;
+		}
+	}
+}

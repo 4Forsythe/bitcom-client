@@ -1,0 +1,12 @@
+.container {
+	@apply h-full py-5 flex flex-col border-t border-zinc-300;
+	.list {
+		@apply gap-3.5 flex flex-col;
+	}
+}
+
+@media (max-width: 564px) {
+	.container {
+		@apply py-1.5;
+	}
+}

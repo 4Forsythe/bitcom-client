@@ -1,0 +1,89 @@
+.container {
+	@apply w-full px-6 py-7 gap-4 grid grid-cols-[1fr,auto] bg-zinc-50 rounded-lg;
+	&.negative {
+		@apply opacity-80 hover:opacity-100 transition-opacity duration-300;
+		.information {
+			.avails {
+				@apply opacity-80;
+			}
+		}
+	}
+	.inner {
+		@apply gap-4 flex items-center;
+		.cover {
+			@apply gap-1.5 inline-flex flex-col;
+			.link {
+				@apply w-[100px] block;
+				.image {
+					@apply max-w-[100px] max-h-[100px] m-auto rounded;
+				}
+			}
+			.barcode {
+				@apply text-center text-zinc-400/70 text-sm;
+			}
+		}
+		.information {
+			@apply gap-3 flex flex-1 flex-col;
+			.title {
+				@apply mb-2.5 text-zinc-700 font-semibold hover:text-red-500 transition-colors duration-200;
+			}
+			.counter {
+				@apply min-w-[100px] w-fit h-8 inline-flex items-center justify-center border border-zinc-200 rounded-md;
+				.count {
+					@apply h-full flex items-center justify-center grow;
+				}
+				.control {
+					@apply w-[40px] h-full flex items-center justify-center text-zinc-400 bg-zinc-100 rounded-md hover:bg-zinc-200 active:bg-zinc-200/30
+					transition-colors duration-200;
+				}
+			}
+			.avails {
+				@apply mt-2 text-sm;
+			}
+		}
+	}
+	.meta {
+		@apply gap-8 flex flex-col;
+		.menu {
+			@apply w-fit gap-0.5 inline-flex items-center self-end;
+			.action {
+				@apply p-2 text-zinc-400 bg-zinc-100 rounded-md hover:bg-zinc-200
+        transition-colors duration-200;
+				&.active {
+					@apply text-red-500 bg-red-200 hover:bg-red-200/70;
+				}
+			}
+		}
+		.price {
+			@apply self-end font-semibold;
+		}
+	}
+}
+
+@media (max-width: 460px) {
+	.container {
+		@apply p-3.5 flex flex-col;
+		.meta {
+			@apply flex flex-row items-center justify-between;
+		}
+	}
+}
+@media (max-width: 350px) {
+	.container {
+		.inner {
+			@apply flex-col;
+			.cover {
+				@apply w-full;
+				.link {
+					@apply w-full;
+					.image {
+						@apply w-full;
+					}
+				}
+			}
+			.information {
+				@apply gap-1 w-full;
+			}
+		}
+	}
+}

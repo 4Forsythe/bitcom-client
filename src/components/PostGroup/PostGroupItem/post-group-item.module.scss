@@ -1,0 +1,23 @@
+.container {
+	@apply w-full flex flex-col bg-zinc-50 shadow-sm overflow-hidden hover:shadow-md
+  transition-shadow duration-300;
+	.cover {
+		@apply w-full h-[140px] flex items-center justify-center overflow-hidden hover:*:scale-110;
+		.image {
+			@apply w-full h-full object-cover transition-transform duration-300;
+		}
+	}
+	.information {
+		@apply w-full p-3.5 gap-2.5 flex shrink flex-1 flex-col justify-between grow overflow-hidden;
+		.title {
+			@apply text-base font-semibold leading-6 truncate hover:text-red-500
+      transition-colors duration-200;
+		}
+		.details {
+			@apply gap-1.5 inline-flex flex-col;
+			.text {
+				@apply text-sm text-zinc-400 truncate;
+			}
+		}
+	}
+}

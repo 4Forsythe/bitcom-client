@@ -1,0 +1,15 @@
+.container {
+	@apply w-full my-1 p-5 flex items-center rounded-lg shadow;
+	&.contained {
+		@apply bg-zinc-200;
+	}
+	&.outlined {
+		@apply bg-zinc-50;
+	}
+	.inner {
+		@apply gap-3 grid grid-cols-[auto,1fr] items-center;
+		.icon {
+			@apply w-auto h-5;
+		}
+	}
+}

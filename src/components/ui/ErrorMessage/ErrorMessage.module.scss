@@ -1,0 +1,6 @@
+.container {
+	@apply w-fit my-1 px-1.5 inline-flex;
+	.text {
+		@apply text-sm font-medium text-red-600;
+	}
+}

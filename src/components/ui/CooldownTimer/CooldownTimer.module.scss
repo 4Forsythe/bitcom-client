@@ -1,0 +1,6 @@
+.container {
+	@apply w-fit px-5 py-1.5 bg-zinc-200 border border-zinc-300 inline-flex self-center rounded-lg;
+	.counter {
+		@apply opacity-60 text-lg font-semibold;
+	}
+}

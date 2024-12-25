@@ -1,0 +1,63 @@
+.container {
+	@apply mt-5 p-12 bg-zinc-50 max-sm:px-4 max-sm:py-6;
+	.form {
+		@apply gap-5 flex flex-col;
+		.fields {
+			@apply gap-3 flex flex-col;
+			.title {
+				@apply text-xl font-semibold;
+			}
+			.field {
+				@apply gap-3.5 grid grid-cols-2;
+			}
+			.selector {
+				@apply gap-2.5 flex flex-wrap items-center;
+			}
+			.payments {
+				@apply gap-2.5 flex flex-wrap;
+			}
+			.getting {
+				@apply gap-x-10 flex justify-around max-md:flex-col;
+				.details {
+					@apply my-7 gap-3 flex flex-col;
+					.address {
+						@apply flex flex-col;
+						.location {
+							@apply font-semibold;
+						}
+						.text {
+							@apply mb-1.5 text-sm;
+						}
+						.working {
+							@apply text-sm text-zinc-400;
+						}
+					}
+					.avails {
+						@apply w-fit px-3 py-1 inline-flex items-center justify-center font-semibold bg-zinc-300 rounded-xl;
+					}
+				}
+				.map {
+					@apply max-w-[500px] w-full h-[200px] rounded-xl overflow-hidden;
+				}
+			}
+		}
+		.policy {
+			@apply my-1 text-sm;
+			.link {
+				@apply text-red-500 underline;
+			}
+		}
+	}
+}
+
+@media (max-width: 530px) {
+	.container {
+		.form {
+			.fields {
+				.field {
+					@apply grid-cols-1;
+				}
+			}
+		}
+	}
+}

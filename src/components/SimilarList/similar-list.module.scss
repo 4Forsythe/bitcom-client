@@ -1,0 +1,18 @@
+.container {
+	@apply p-8 bg-white shadow-sm;
+	.head {
+		@apply mb-3.5 gap-2.5 flex items-center;
+		.title {
+			@apply pl-1.5 text-xl font-semibold uppercase;
+		}
+		.count {
+			@apply px-2.5 py-0.5 font-bold bg-zinc-200 rounded-full;
+		}
+	}
+	.list {
+		@apply mb-7;
+	}
+	.button {
+		@apply h-16 gap-1 font-normal;
+	}
+}

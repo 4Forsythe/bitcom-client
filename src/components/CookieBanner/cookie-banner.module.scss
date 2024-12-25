@@ -1,0 +1,32 @@
+.container {
+	@apply w-full px-10 py-2.5 z-50 flex items-center justify-center text-zinc-50 bg-zinc-800;
+	.inner {
+		@apply gap-5 flex items-center justify-center relative;
+		.cover {
+			.image {
+				@apply w-auto h-8;
+			}
+		}
+		.text {
+			@apply text-xs;
+		}
+		.control {
+			@apply p-1 rounded-xl hover:bg-zinc-700/50
+      transition-colors duration-200;
+			.icon {
+				@apply w-auto h-5;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		@apply py-5;
+		.inner {
+			.text {
+				@apply text-[0.7rem];
+			}
+		}
+	}
+}

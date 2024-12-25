@@ -1,0 +1,31 @@
+.container {
+	@apply px-3.5 flex flex-col;
+	.banners {
+		@apply mb-8;
+	}
+	.features {
+		@apply my-8 gap-x-5 gap-y-3.5 grid grid-cols-4 flex-nowrap items-center *:w-full;
+	}
+}
+
+@media (max-width: 1225px) {
+	.container {
+		.features {
+			@apply grid-cols-3;
+		}
+	}
+}
+@media (max-width: 768px) {
+	.container {
+		.features {
+			@apply grid-cols-2;
+		}
+	}
+}
+@media (max-width: 400px) {
+	.container {
+		.features {
+			@apply grid-cols-1;
+		}
+	}
+}

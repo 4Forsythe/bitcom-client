@@ -1,0 +1,34 @@
+.container {
+	@apply flex flex-col bg-zinc-50 shadow-lg shadow-zinc-200 overflow-hidden;
+	&.opened {
+		.title {
+			@apply font-bold bg-transparent;
+			.icon {
+				@apply rotate-180;
+			}
+		}
+		.items {
+			@apply flex flex-col;
+		}
+	}
+	.title {
+		@apply px-4 py-3 gap-1.5 font-semibold flex items-center border-b border-zinc-200 hover:text-red-500 hover:bg-red-50/70
+		transition-colors duration-200;
+		.icon {
+			@apply w-auto h-5 font-semibold transition-transform duration-200;
+		}
+	}
+	.items {
+		@apply hidden;
+		.item {
+			@apply px-4 py-2.5 text-sm border-l-4 border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-50 hover:bg-zinc-100 transition-colors duration-200;
+			&.target {
+				@apply border-l-zinc-700;
+			}
+		}
+		.showmore {
+			@apply px-4 py-1.5 text-sm flex text-red-500 underline
+			transition-colors duration-200;
+		}
+	}
+}

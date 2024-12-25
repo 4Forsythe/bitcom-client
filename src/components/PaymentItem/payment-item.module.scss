@@ -1,0 +1,13 @@
+.container {
+	@apply max-w-[250px] px-5 py-3.5 flex flex-col items-center justify-center border-2 border-zinc-400/60 bg-zinc-100/80 rounded-lg
+	cursor-pointer overflow-hidden;
+	.cover {
+		@apply w-auto h-[35px] mb-0.5 flex items-center justify-center overflow-hidden;
+		.icon {
+			@apply w-auto h-9;
+		}
+	}
+	.title {
+		@apply text-sm;
+	}
+}

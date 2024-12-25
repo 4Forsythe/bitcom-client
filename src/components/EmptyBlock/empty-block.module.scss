@@ -1,0 +1,41 @@
+.container {
+	@apply w-full min-h-[480px] py-24 flex items-center justify-center bg-zinc-50 rounded-md;
+	.block {
+		@apply max-w-[50%] inline-flex flex-col items-center text-center;
+		.emoji {
+			@apply mb-5 text-7xl font-semibold;
+		}
+		.icon {
+			@apply w-auto h-20 mb-3;
+		}
+		.title {
+			@apply mb-1.5 text-lg font-semibold;
+		}
+		.description {
+			@apply mb-5 text-zinc-500;
+		}
+		.controls {
+			@apply gap-3 inline-flex items-center max-sm:flex-col-reverse;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		@apply py-8;
+		.block {
+			.emoji {
+				@apply mb-3.5 text-6xl;
+			}
+		}
+	}
+}
+@media (max-width: 460px) {
+	.container {
+		.block {
+			.emoji {
+				@apply mb-3.5 text-5xl;
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+.container {
+	@apply w-full flex flex-col bg-zinc-50 shadow-sm overflow-hidden hover:shadow-md
+  transition-shadow duration-300;
+	.cover {
+		@apply w-full h-[140px] flex items-center justify-center overflow-hidden hover:*:scale-110;
+		.image {
+			@apply w-full h-auto object-cover transition-transform duration-300;
+		}
+		.placeholder {
+			@apply w-auto h-full;
+		}
+	}
+	.information {
+		@apply w-full p-3.5 gap-2.5 flex shrink flex-1 flex-col justify-between grow overflow-hidden;
+		.name {
+			@apply w-full flex items-center justify-between font-semibold leading-5 hover:text-red-500
+      transition-colors duration-200;
+		}
+		.details {
+			@apply gap-y-2.5 inline-flex flex-wrap items-center justify-between leading-4;
+			.text {
+				@apply px-2 py-0.5 text-sm font-medium text-zinc-50 bg-red-400 rounded-3xl;
+			}
+			.price {
+				@apply text-lg font-bold text-zinc-500;
+			}
+		}
+	}
+}

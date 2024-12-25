@@ -1,0 +1,52 @@
+.container {
+	@apply h-[58px] px-5 flex items-center grow z-10 rounded-lg relative transition duration-200;
+	&.contained {
+		@apply bg-white;
+	}
+	&.outlined {
+		@apply bg-neutral-200/70;
+	}
+	&.focused {
+		@apply z-[100] shadow-lg bg-zinc-50;
+		.controls {
+			.control {
+				@apply hover:bg-zinc-200;
+			}
+		}
+	}
+	.form {
+		@apply w-full h-full bg-transparent outline-none;
+	}
+	.controls {
+		@apply gap-2 flex items-center;
+		.control {
+			@apply p-2 text-zinc-400 rounded-md hover:bg-zinc-50 outline-none relative hover:shadow-sm
+			transition-all duration-200;
+			.icon {
+				@apply w-auto h-5;
+			}
+		}
+		.divider {
+			@apply w-0.5 h-5 bg-zinc-300;
+		}
+	}
+	.presearch {
+		@apply w-full mt-1.5 top-[100%] left-0 z-10 bg-zinc-50 rounded-lg absolute;
+		.items {
+			@apply py-3 flex flex-col;
+			.item {
+				@apply w-full px-4 py-2.5 gap-2 flex items-center hover:bg-zinc-200/60 truncate
+				transition-colors duration-200;
+				.title {
+					@apply text-zinc-400 text-left grow;
+				}
+				.icon {
+					@apply w-auto h-5 text-zinc-400/80;
+				}
+			}
+		}
+	}
+}
+.overlay {
+	@apply inset-0 z-[100] fixed bg-neutral-700/50;
+}

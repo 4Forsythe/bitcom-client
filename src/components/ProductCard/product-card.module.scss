@@ -1,0 +1,100 @@
+.container {
+	@apply max-w-[1096px] w-full gap-3 p-6 flex bg-zinc-50 border border-zinc-200 rounded-2xl shadow-sm;
+	.cover {
+		@apply w-[200px] h-[200px] flex items-center justify-center rounded-lg overflow-hidden;
+		.image {
+			@apply w-full h-full object-cover;
+		}
+	}
+	.information {
+		@apply gap-1.5 flex flex-1 flex-col grow;
+		.title {
+			@apply px-1.5 shrink text-lg font-medium hover:text-red-500 overflow-hidden
+      transition-colors duration-200;
+		}
+		.article {
+			@apply w-fit mb-1.5 px-1.5 text-sm text-zinc-400 bg-zinc-100 rounded shadow;
+		}
+		.type {
+			@apply w-fit px-2 py-0.5 text-sm text-zinc-400 bg-zinc-100 rounded-md hover:text-zinc-50 hover:bg-zinc-700
+			transition-colors duration-200;
+		}
+		.description {
+			@apply my-1.5 px-1.5 text-sm text-gray-400;
+		}
+	}
+	.details {
+		@apply ml-auto gap-1.5 flex flex-col items-end;
+		.avails {
+			@apply gap-1.5 flex flex-col items-end;
+			.price {
+				@apply text-xl font-semibold;
+			}
+			.count {
+				@apply mb-1.5 text-sm text-zinc-400;
+			}
+		}
+		.controls {
+			@apply gap-2 flex;
+			.wishlist {
+				@apply p-2.5 border border-zinc-200 text-zinc-400 bg-zinc-200 rounded-lg hover:text-zinc-700
+        transition-colors duration-200;
+				&.active {
+					@apply text-red-500 bg-red-100 border-red-300 hover:bg-red-200;
+				}
+				.icon {
+					@apply w-auto h-5;
+				}
+			}
+			.buy {
+				@apply p-2.5 border border-zinc-400 rounded-lg hover:text-zinc-50 hover:bg-red-500 hover:border-red-500
+        transition-colors duration-200;
+			}
+		}
+	}
+}
+
+.tile {
+	@apply p-0 gap-0 flex flex-col overflow-hidden;
+	.cover {
+		@apply w-full rounded-none;
+	}
+	.information {
+		@apply mb-2 px-4 pt-4;
+		.title {
+			@apply px-0;
+		}
+	}
+	.details {
+		@apply ml-0 px-4 pb-4;
+		.avails {
+			@apply w-full mb-1.5 flex-row-reverse justify-between;
+		}
+		.controls {
+			@apply w-full last:*:flex-1;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		@apply p-3.5 flex-col;
+		.cover {
+			@apply w-full;
+		}
+		.details {
+			@apply ml-0 items-start;
+		}
+	}
+}
+@media (max-width: 490px) {
+	.container {
+		@apply flex-col;
+		.cover {
+			@apply w-full;
+		}
+		.details {
+			@apply ml-0 items-start;
+		}
+	}
+}

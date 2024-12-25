@@ -1,0 +1,15 @@
+.container {
+	@apply px-12 py-10 gap-5 flex flex-col bg-neutral-50 shadow-sm;
+	.paragraph {
+		@apply text-base;
+	}
+}
+
+@media (max-width: 460px) {
+	.container {
+		@apply px-2.5;
+		.paragraph {
+			@apply text-sm;
+		}
+	}
+}

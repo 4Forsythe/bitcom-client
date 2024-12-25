@@ -1,0 +1,86 @@
+.container {
+	@apply w-full px-4 py-3.5 z-0 flex items-center justify-between bg-zinc-50 rounded-lg shadow-lg shadow-zinc-200;
+	.list {
+		@apply h-full gap-1.5 flex items-center relative;
+		.item {
+			@apply h-full gap-1.5 inline-flex items-center;
+			.label {
+				@apply text-sm font-medium;
+			}
+			.drop {
+				@apply h-full gap-0.5 text-sm text-red-500 flex items-center lowercase hover:text-red-600/70
+				transition-colors duration-200;
+				.icon {
+					@apply w-auto h-4 transition-transform duration-200;
+					&.droped {
+						@apply rotate-180;
+					}
+				}
+			}
+		}
+		.dropdown {
+			@apply max-w-[460px] min-w-[300px] left-0 top-[40px] bg-zinc-50 border border-zinc-200 absolute overflow-hidden rounded-xl shadow-lg;
+			.menu {
+				@apply py-2 flex flex-col;
+				.item {
+					@apply px-2 py-0.5 text-sm;
+				}
+				.select {
+					@apply w-full h-full px-4 py-2 text-left rounded-xl hover:bg-zinc-200/70
+					transition-colors duration-200;
+					&.target {
+						@apply text-zinc-50 bg-red-400;
+					}
+				}
+			}
+		}
+	}
+	.filters {
+		@apply text-zinc-700 hidden hover:text-zinc-400
+		transition-colors duration-200;
+		.icon {
+			@apply w-auto h-4;
+		}
+	}
+}
+
+.popup {
+	@apply min-w-[20rem] max-w-[50rem] flex flex-1 flex-col;
+	.head {
+		@apply my-4 gap-2.5 inline-flex items-center;
+		.title {
+			@apply text-2xl font-semibold;
+		}
+	}
+	.inner {
+		@apply py-2.5 overflow-y-auto *:w-full grow;
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		.list {
+			.item {
+				.label {
+					@apply text-base;
+				}
+				.drop {
+					@apply text-base;
+				}
+			}
+		}
+		.filters {
+			@apply gap-1.5 flex items-center;
+		}
+	}
+}
+@media (max-width: 490px) {
+	.container {
+		@apply gap-3.5 flex-col items-start;
+		.list {
+			.item {
+				@apply flex-col items-start;
+			}
+		}
+	}
+}

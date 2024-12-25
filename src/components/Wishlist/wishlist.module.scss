@@ -1,0 +1,21 @@
+.container {
+	@apply h-full flex flex-col;
+	.list {
+		@apply px-4 gap-3.5 flex flex-col;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		.list {
+			@apply px-1.5 grid grid-cols-2;
+		}
+	}
+}
+@media (max-width: 560px) {
+	.container {
+		.list {
+			@apply grid grid-cols-1;
+		}
+	}
+}

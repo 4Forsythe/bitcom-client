@@ -1,0 +1,15 @@
+.wrap {
+	@apply mb-5;
+	.container {
+		@apply gap-5 grid grid-cols-3;
+		.group {
+			@apply pt-5 gap-1.5 flex flex-col border-t border-zinc-300;
+			.item {
+				@apply w-fit inline-flex hover:text-zinc-400 transition-colors duration-200 relative;
+				.link {
+					@apply z-20;
+				}
+			}
+		}
+	}
+}

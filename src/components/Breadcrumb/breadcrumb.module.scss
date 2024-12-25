@@ -1,0 +1,15 @@
+.container {
+	@apply my-2.5;
+	.items {
+		@apply flex items-center;
+		.item {
+			@apply opacity-60 text-sm hover:opacity-100 transition duration-200;
+			&.target {
+				@apply opacity-100 font-medium;
+			}
+			.divider {
+				@apply mx-2.5;
+			}
+		}
+	}
+}

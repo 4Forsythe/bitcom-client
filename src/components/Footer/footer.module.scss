@@ -1,0 +1,71 @@
+.container {
+	@apply mt-8 text-zinc-50 bg-zinc-800;
+	.inner {
+		@apply max-w-[1180px] mx-auto my-0 pt-14 px-14;
+		.navbar {
+			@apply gap-12 flex justify-between;
+			.menu {
+				@apply min-w-[250px];
+				.title {
+					@apply mb-5 pb-5 text-lg font-bold border-b border-zinc-400/50;
+				}
+				.list {
+					@apply my-4 gap-3 flex flex-col;
+					.item {
+						@apply text-sm hover:text-zinc-400 transition-colors duration-200;
+					}
+					.marketplaces {
+						@apply py-1.5 gap-1.5 flex items-center;
+						.market {
+							@apply w-fit px-3 py-1 flex items-center justify-center grayscale bg-zinc-100 rounded-lg hover:bg-neutral-100/80 hover:grayscale-0 transition-colors duration-300;
+							.image {
+								@apply w-auto h-[1.15rem];
+							}
+						}
+					}
+				}
+			}
+		}
+		.copyright {
+			@apply py-5 text-center;
+			.text {
+				@apply text-sm text-zinc-400;
+			}
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		@apply mt-3.5;
+		.inner {
+			.navbar {
+				@apply gap-6;
+				.menu {
+					.title {
+						@apply mb-2.5 pb-3.5 text-base;
+					}
+					.list {
+						@apply my-1.5;
+					}
+				}
+			}
+		}
+	}
+}
+@media (max-width: 912px) {
+	.container {
+		.inner {
+			.navbar {
+				@apply flex-col;
+			}
+		}
+	}
+}
+@media (max-width: 530px) {
+	.container {
+		.inner {
+			@apply px-8 pt-8;
+		}
+	}
+}

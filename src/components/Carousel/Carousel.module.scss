@@ -1,0 +1,29 @@
+.container {
+	@apply w-full rounded-2xl overflow-hidden relative;
+	&:hover {
+		.navigation {
+			.button {
+				&.prev {
+					@apply translate-x-0 hover:shadow-zinc-300;
+				}
+				&.next {
+					@apply translate-x-0 hover:shadow-zinc-300;
+				}
+			}
+		}
+	}
+	.navigation {
+		.button {
+			@apply w-[48px] h-[48px] top-[50%] p-1.5 inline-flex items-center justify-center z-50 rounded-full border border-zinc-100 bg-zinc-50 shadow-sm shadow-neutral-300/70 absolute hover:bg-zinc-50 hover:shadow-md transition-all duration-200;
+			&.prev {
+				@apply left-2 -translate-x-20 -translate-y-[50%];
+			}
+			&.next {
+				@apply right-2 translate-x-20 -translate-y-[50%];
+			}
+			.icon {
+				@apply w-auto h-6 text-zinc-800;
+			}
+		}
+	}
+}

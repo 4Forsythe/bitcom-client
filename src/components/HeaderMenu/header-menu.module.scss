@@ -1,0 +1,14 @@
+.container {
+	@apply gap-1.5 flex items-center;
+	.search {
+		@apply hidden;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		.search {
+			@apply block;
+		}
+	}
+}

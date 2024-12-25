@@ -1,0 +1,62 @@
+.container {
+	@apply max-w-[1096px] w-full gap-3 p-6 flex flex-col bg-zinc-50 border border-zinc-200 rounded-2xl;
+	.head {
+		@apply flex items-center justify-between;
+		.title {
+			@apply text-xl font-bold;
+		}
+		.status {
+			@apply py-1 font-medium rounded-xl;
+		}
+	}
+	.inner {
+		@apply gap-2.5 flex flex-col;
+		.customer {
+			@apply space-y-1 flex flex-col;
+			.field {
+				@apply gap-1.5 flex items-center;
+			}
+		}
+		.details {
+			@apply py-1.5 gap-5 inline-flex items-center;
+			.method {
+				@apply mb-1.5;
+				.tag {
+					@apply mb-0.5 text-sm font-semibold uppercase;
+				}
+				.badge {
+					@apply py-1 rounded-md;
+				}
+			}
+			.total {
+				@apply ml-auto text-3xl font-bold;
+			}
+		}
+		.items {
+			@apply p-4 gap-2.5 flex flex-col bg-neutral-200/60 rounded-2xl;
+			.count {
+				@apply px-1.5 text-sm text-zinc-400;
+			}
+			.list {
+				@apply flex flex-wrap items-center;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		@apply p-3.5;
+	}
+}
+@media (max-width: 490px) {
+	.container {
+		@apply py-3.5 flex-col;
+		.cover {
+			@apply w-full;
+		}
+		.details {
+			@apply ml-0 items-start;
+		}
+	}
+}

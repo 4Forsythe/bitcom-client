@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+	@apply scroll-smooth;
+}
+
+body {
+	@apply w-full min-h-[100vh] flex flex-col font-source-sans text-zinc-700 bg-zinc-200/55 overflow-x-hidden scrollbar-thin
+	scrollbar-thumb-zinc-300 scrollbar-track-zinc-200;
+}
+
+.container {
+	@apply max-w-[1280px] py-3.5 h-fit mx-auto my-0 flex flex-col grow;
+}
+
+.main {
+	@apply flex flex-col grow;
+}
+
+.swiper-navigation-prev {
+	@apply text-xl;
+}
+
+.animate-opacity {
+	animation: animate-opacity 0.5s;
+}
+
+.animate-slide {
+	animation: animate-slide 0.5s;
+}
+
+.animate-bounce {
+	animation: animate-bounce 0.5s;
+}
+
+@keyframes animate-opacity {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes animate-slide {
+	from {
+		opacity: 0.3;
+		transform: translateX(3.5rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes animate-bounce {
+	0% {
+		opacity: 0;
+		transform: scale(0);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}

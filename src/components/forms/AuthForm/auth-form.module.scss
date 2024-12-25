@@ -1,0 +1,49 @@
+.container {
+	@apply w-[360px] relative;
+	.form {
+		@apply gap-4 flex flex-col;
+		.head {
+			@apply inline-flex flex-col;
+			.title {
+				@apply text-2xl font-semibold;
+			}
+		}
+		.inner {
+			@apply overflow-hidden;
+			.text {
+				@apply mb-4 text-zinc-500 leading-[1.15rem];
+			}
+			.fields {
+				@apply gap-1.5 flex flex-col;
+				.text {
+					@apply text-[13px] text-zinc-500 leading-[1.15rem];
+				}
+				.divider {
+					@apply my-1;
+				}
+				.input {
+					@apply p-5 w-full h-full border border-zinc-300 text-lg font-semibold outline-none placeholder:text-base placeholder:font-medium;
+				}
+			}
+		}
+		.action {
+			@apply w-full h-14 px-5 py-2.5 flex items-center justify-center text-zinc-50 bg-red-500 rounded-lg shadow-md
+			hover:opacity-90 hover:shadow-xl transition-all duration-200;
+		}
+		.buttons {
+			@apply gap-2.5 flex flex-col;
+		}
+		.policy {
+			@apply text-center text-[0.75rem] text-zinc-500;
+			.link {
+				@apply text-red-400;
+			}
+		}
+	}
+}
+
+@media (max-width: 390px) {
+	.container {
+		@apply w-[300px] p-5;
+	}
+}

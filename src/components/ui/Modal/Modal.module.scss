@@ -1,0 +1,48 @@
+.container {
+	@apply inset-0 z-[1000] flex items-center justify-center fixed;
+	.inner {
+		@apply gap-1 z-[1000] inline-flex;
+		.dialog {
+			@apply p-8 bg-zinc-50 rounded-xl shadow-xl;
+		}
+		.exit {
+			@apply h-fit p-1 flex text-zinc-200 hover:text-white transition duration-200;
+			.icon {
+				@apply w-auto h-9;
+			}
+		}
+	}
+	.overlay {
+		@apply inset-0 z-[900] bg-zinc-800/50 fixed;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		.inner {
+			.dialog {
+				@apply p-4;
+			}
+			.exit {
+				.icon {
+					@apply h-6;
+				}
+			}
+		}
+	}
+}
+@media (max-width: 430px) {
+	.container {
+		.inner {
+			.dialog {
+				@apply p-3.5;
+			}
+			.exit {
+				@apply p-0;
+				.icon {
+					@apply h-5;
+				}
+			}
+		}
+	}
+}
