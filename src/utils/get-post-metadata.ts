@@ -18,9 +18,9 @@ export function getPostMetadata(
 	const folder = `${baseUrl}/`
 	const files = fs.readdirSync(folder)
 
-	const posts = files.filter((file) => file.endsWith('.md'))
+	if (!files) return []
 
-	if (!posts) return []
+	const posts = files.filter((file) => file.endsWith('.md'))
 
 	const metadata = posts.map((filename) => {
 		const contents = fs.readFileSync(`${baseUrl}/${filename}`, 'utf-8')

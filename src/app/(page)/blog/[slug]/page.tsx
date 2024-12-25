@@ -8,14 +8,6 @@ import { getPostContent } from '@/utils/get-post-content'
 
 import type { PostType } from '@/types/post.types'
 
-export const generateStaticParams = async () => {
-	const posts = getPostMetadata()
-
-	if (!posts) return notFound()
-
-	return posts.map((post) => ({ slug: post.slug }))
-}
-
 export const generateMetadata = ({ params }: IPostPageProps): Metadata => {
 	const { slug } = params
 

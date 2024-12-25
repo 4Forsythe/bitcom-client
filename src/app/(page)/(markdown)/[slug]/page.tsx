@@ -6,14 +6,6 @@ import { StaticPage } from '@/components'
 import { getPostMetadata } from '@/utils/get-post-metadata'
 import { getPostContent } from '@/utils/get-post-content'
 
-export const generateStaticParams = async () => {
-	const pages = getPostMetadata({ path: 'public/pages' })
-
-	if (!pages) return notFound()
-
-	return pages.map((page) => ({ slug: page.slug }))
-}
-
 export const generateMetadata = ({ params }: IMarkdownPageProps): Metadata => {
 	const { slug } = params
 

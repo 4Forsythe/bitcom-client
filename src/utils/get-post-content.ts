@@ -5,9 +5,11 @@ import { transliterate, slugify } from 'transliteration'
 export function getPostContent(slug: string, path?: string) {
 	const baseUrl = path ?? 'public/blog'
 
-	const files = fs.readdirSync(baseUrl, 'utf-8')
+	const isDirExist = fs.existsSync(baseUrl)
 
-	if (!files) return null
+	if (!isDirExist) return null
+
+	const files = fs.readdirSync(baseUrl, 'utf-8')
 
 	for (const file of files) {
 		if (file.endsWith('.md')) {
@@ -22,5 +24,7 @@ export function getPostContent(slug: string, path?: string) {
 				return compile
 			}
 		}
+
+		continue
 	}
 }
