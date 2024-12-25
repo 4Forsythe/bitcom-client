@@ -9,6 +9,8 @@ import { getPostContent } from '@/utils/get-post-content'
 export const generateStaticParams = async () => {
 	const pages = getPostMetadata({ path: 'public/pages' })
 
+	if (!pages) return notFound()
+
 	return pages.map((page) => ({ slug: page.slug }))
 }
 
@@ -33,7 +35,7 @@ interface IMarkdownPageProps {
 	params: { slug: string }
 }
 
-export default async function MarkdownPage({ params }: IMarkdownPageProps) {
+export default function MarkdownPage({ params }: IMarkdownPageProps) {
 	const page = getPostContent(params.slug, 'public/pages')
 
 	if (!page) return notFound()

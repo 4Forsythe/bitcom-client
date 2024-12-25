@@ -7,6 +7,8 @@ export function getPostContent(slug: string, path?: string) {
 
 	const files = fs.readdirSync(baseUrl, 'utf-8')
 
+	if (!files) return null
+
 	for (const file of files) {
 		if (file.endsWith('.md')) {
 			const filePath = `${baseUrl}/${file}`
@@ -21,6 +23,4 @@ export function getPostContent(slug: string, path?: string) {
 			}
 		}
 	}
-
-	return undefined
 }
