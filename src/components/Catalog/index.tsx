@@ -2,8 +2,9 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
-import { DynamicImage } from '@/components/dynamic-image'
+import clsx from 'clsx'
 
 import { ROUTE } from '@/config/routes.config'
 import { formatCase } from '@/utils/format-case'
@@ -11,7 +12,6 @@ import { formatCase } from '@/utils/format-case'
 import type { ProductCharacteristicsType } from '@/types/product.types'
 
 import styles from './catalog.module.scss'
-import Image from 'next/image'
 
 export const Catalog: React.FC<ProductCharacteristicsType> = ({ items }) => {
 	return (
@@ -24,10 +24,16 @@ export const Catalog: React.FC<ProductCharacteristicsType> = ({ items }) => {
 				>
 					<div className={styles.cover}>
 						<Image
-							className={styles.image}
+							className={clsx(styles.image, {
+								[styles.placeholder]: !category?.imageUrl
+							})}
 							width={170}
 							height={120}
-							src={`/static/${category.imageUrl}`}
+							src={
+								category.imageUrl
+									? `/static/${category.imageUrl}`
+									: '/static/image-placeholder.png'
+							}
 							alt={category.name}
 							priority
 						/>

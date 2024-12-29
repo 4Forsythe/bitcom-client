@@ -9,6 +9,9 @@ interface IDynamicImage extends ImageProps {
 
 export const getImage = async (url: string) => {
 	const response = await fetch(url)
+
+	if (!response.ok) return undefined
+
 	const buffer = Buffer.from(await response.arrayBuffer())
 
 	const {
@@ -24,7 +27,11 @@ export const DynamicImage: React.FC<IDynamicImage> = async ({
 	className,
 	...props
 }) => {
-	const { image, base64 } = await getImage(src.toString())
+	const buffer = await getImage(src.toString())
+
+	if (!buffer) return null
+
+	const { image, base64 } = buffer
 
 	return (
 		<Image

@@ -33,7 +33,9 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 					src={
 						imageUrl
 							? `${SERVER_BASE_URL}/${imageUrl}`
-							: '/static/image-placeholder.png'
+							: category?.imageUrl
+								? `/static/${category.imageUrl}`
+								: '/static/image-placeholder.png'
 					}
 					placeholder='blur'
 					blurDataURL='/static/image-placeholder.png'

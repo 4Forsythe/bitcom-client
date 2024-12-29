@@ -13,6 +13,9 @@
 			.image {
 				@apply w-auto h-full object-cover transition-transform duration-300;
 			}
+			.placeholder {
+				@apply w-full h-auto object-cover transition-transform duration-300;
+			}
 		}
 		.title {
 			@apply p-4 font-semibold transition-colors duration-200;

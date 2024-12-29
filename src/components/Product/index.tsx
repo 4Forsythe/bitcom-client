@@ -21,7 +21,6 @@ import { SERVER_BASE_URL } from '@/constants'
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
-import placeholder from '@/../public/static/image-placeholder.png'
 
 type IProduct = ProductType & {
 	imagePlaceholder?: string
@@ -42,6 +41,11 @@ export const Product: React.FC<IProduct> = ({
 	price
 }) => {
 	const router = useRouter()
+
+	const [imagePath, setImagePath] = React.useState<string | undefined>()
+	const [imageSrc, setImageSrc] = React.useState<string | undefined>(
+		`${SERVER_BASE_URL}/${imageUrl}`
+	)
 
 	const { isCartLoading } = useCart()
 	const { isWishlistLoading } = useWishlist()
@@ -68,32 +72,49 @@ export const Product: React.FC<IProduct> = ({
 		createWishlistItem({ productId: id })
 	}
 
+	const handleImageUrl = (event: React.SyntheticEvent<HTMLImageElement>) => {
+		setImagePath(event.currentTarget.src)
+	}
+
+	const handleImageError = () => {
+		setImageSrc('/static/image-placeholder.png')
+	}
+
 	return (
 		<>
 			<div className={styles.container}>
 				<div className={styles.cover}>
-					<Image
-						className={styles.image}
-						width={750}
-						height={750}
-						src={
-							imageUrl
-								? `${SERVER_BASE_URL}/${imageUrl}`
-								: category?.imageUrl
-									? `/static/${category.imageUrl}`
-									: '/static/image-placeholder.png'
-						}
-						blurDataURL={imagePlaceholder}
-						placeholder='blur'
-						alt={name}
-						priority
-					/>
+					<Link
+						href={imageUrl ?? imagePath ?? window.location.href}
+						target={imageUrl ? '_blank' : '_self'}
+					>
+						<Image
+							className={styles.image}
+							width={750}
+							height={750}
+							src={
+								imageSrc
+									? imageSrc
+									: category?.imageUrl
+										? `/static/${category.imageUrl}`
+										: '/static/image-placeholder.png'
+							}
+							blurDataURL={
+								imageUrl ? imagePlaceholder : '/static/image-placeholder.png'
+							}
+							placeholder='blur'
+							alt={name}
+							priority
+							onLoad={handleImageUrl}
+							onError={handleImageError}
+						/>
+					</Link>
 				</div>
 				<div className={styles.information}>
 					<div className={styles.overview}>
 						<div className={styles.head}>
 							<h1 className={styles.title}>{name}</h1>
-							<p className={styles.article}>#{barcode[0]}</p>
+							<p className={styles.article}>{barcode[0]}</p>
 						</div>
 					</div>
 					<div className={styles.options}>
