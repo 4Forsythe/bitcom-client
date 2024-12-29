@@ -26,7 +26,7 @@ const getProducts = cache(
 
 		return productService.getAll({
 			name: query,
-			categoryId: id,
+			categoryId: decodeURIComponent(id),
 			deviceId: device,
 			brandId: brand,
 			modelId: model,

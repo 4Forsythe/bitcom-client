@@ -44,7 +44,7 @@ export const FiltersGroup: React.FC<IFiltersGroup> = ({
 			return value === id
 		}
 
-		return pathname.includes(path + id)
+		return decodeURIComponent(pathname).includes(path + id)
 	}
 
 	const handleClick = () => {
