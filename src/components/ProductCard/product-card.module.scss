@@ -3,7 +3,7 @@
 	.cover {
 		@apply w-[200px] h-[200px] flex items-center justify-center rounded-lg overflow-hidden;
 		.image {
-			@apply w-full h-full object-cover;
+			@apply w-[80%] max-h-[80%] h-auto object-cover;
 		}
 	}
 	.information {

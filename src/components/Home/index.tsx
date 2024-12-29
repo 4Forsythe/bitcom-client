@@ -11,10 +11,10 @@ import {
 	PostGroup
 } from '@/components'
 
+import { getPostMetadata } from '@/utils/get-post-metadata'
 import { productService } from '@/services/product.service'
 
 import styles from './home.module.scss'
-import { getPostMetadata } from '@/utils/get-post-metadata'
 
 export const Home: React.FC = async () => {
 	const posts = getPostMetadata({ take: 8 })
