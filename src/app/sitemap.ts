@@ -4,75 +4,77 @@ import { ROUTE } from '@/config/routes.config'
 
 import { productService } from '@/services/product.service'
 
+const baseUrl = process.env.BASE_URL
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const products = await productService.getAll()
 
 	const productsMetadata: MetadataRoute.Sitemap = products.items.map(
 		({ id, createdAt }) => ({
-			url: `${ROUTE.PRODUCT}/${id}`,
+			url: `${baseUrl}${ROUTE.PRODUCT}/${id}`,
 			lastModified: new Date(createdAt)
 		})
 	)
 
 	return [
 		{
-			url: ROUTE.HOME,
+			url: `${baseUrl}${ROUTE.HOME}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.ABOUT,
+			url: `${baseUrl}${ROUTE.ABOUT}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.ASSEMBLY,
+			url: `${baseUrl}${ROUTE.ASSEMBLY}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.BUYING,
+			url: `${baseUrl}${ROUTE.BUYING}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.SERVICE,
+			url: `${baseUrl}${ROUTE.SERVICE}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.UPGRADING,
+			url: `${baseUrl}${ROUTE.UPGRADING}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.SEARCH,
+			url: `${baseUrl}${ROUTE.SEARCH}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.CATALOG,
+			url: `${baseUrl}${ROUTE.CATALOG}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.DEVICES,
+			url: `${baseUrl}${ROUTE.DEVICES}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.BLOG,
+			url: `${baseUrl}${ROUTE.BLOG}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.PROFILE,
+			url: `${baseUrl}${ROUTE.PROFILE}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.ORDERLIST,
+			url: `${baseUrl}${ROUTE.ORDERLIST}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.CART,
+			url: `${baseUrl}${ROUTE.CART}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.WISHLIST,
+			url: `${baseUrl}${ROUTE.WISHLIST}`,
 			lastModified: new Date()
 		},
 		{
-			url: ROUTE.POLICIES,
+			url: `${baseUrl}${ROUTE.POLICIES}`,
 			lastModified: new Date()
 		},
 		...productsMetadata

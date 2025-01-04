@@ -1,5 +1,5 @@
 class ROUTES {
-	private BASE_URL = String(process.env.BASE_URL) + '/'
+	private BASE_URL = '/'
 
 	HOME = this.BASE_URL
 
