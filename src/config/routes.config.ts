@@ -1,5 +1,5 @@
 class ROUTES {
-	private BASE_URL = '/'
+	private BASE_URL = String(process.env.BASE_URL) + '/'
 
 	HOME = this.BASE_URL
 
@@ -22,6 +22,8 @@ class ROUTES {
 	UPGRADING = `${this.BASE_URL}upgrading`
 	ABOUT = `${this.BASE_URL}about-us`
 	POLICIES = `${this.BASE_URL}our-policies`
+
+	SITEMAP = `${this.BASE_URL}sitemap.xml`
 }
 
 export const ROUTE = new ROUTES()
