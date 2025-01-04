@@ -81,7 +81,6 @@ export const AuthVerifyForm: React.FC = () => {
 						<FormField
 							name='code'
 							className={styles.input}
-							type='number'
 							placeholder='Введите код'
 							isError={isError}
 						/>
