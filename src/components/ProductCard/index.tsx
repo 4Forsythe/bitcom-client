@@ -9,8 +9,8 @@ import clsx from 'clsx'
 
 import { ProductCardSkeleton } from './skeleton'
 import { Button, AddWishlistButton } from '@/components'
+import { ViewType } from '@/components/ProductList'
 
-import { ListView } from '../ProductList'
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
 
@@ -26,7 +26,7 @@ import type { ProductType } from '@/types/product.types'
 import styles from './product-card.module.scss'
 
 type IProductCard = ProductType & {
-	variant?: ListView
+	variant?: ViewType
 }
 
 export const ProductCard: React.FC<IProductCard> = ({
@@ -38,7 +38,7 @@ export const ProductCard: React.FC<IProductCard> = ({
 	imageUrl,
 	category,
 	device,
-	variant = ListView.SIMPLE
+	variant = ViewType.SIMPLE
 }) => {
 	const router = useRouter()
 
@@ -72,7 +72,7 @@ export const ProductCard: React.FC<IProductCard> = ({
 	return (
 		<article
 			className={clsx(styles.container, 'animate-opacity', {
-				[styles.tile]: variant === ListView.TILE
+				[styles.tile]: variant === ViewType.TILE
 			})}
 		>
 			<Link
@@ -111,7 +111,7 @@ export const ProductCard: React.FC<IProductCard> = ({
 						{device.name}
 					</Link>
 				)}
-				{variant === ListView.SIMPLE && (
+				{variant === ViewType.SIMPLE && (
 					<p className={styles.description}>
 						{description || 'Описание отсутствует'}
 					</p>

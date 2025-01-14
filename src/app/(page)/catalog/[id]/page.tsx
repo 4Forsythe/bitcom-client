@@ -26,7 +26,7 @@ const getProducts = cache(
 
 		return productService.getAll({
 			name: query,
-			categoryId: decodeURIComponent(id),
+			categoryId: id,
 			deviceId: device,
 			brandId: brand,
 			modelId: model,
@@ -72,7 +72,8 @@ export default async function ProductsPage({
 	params,
 	searchParams
 }: ProductsPageProps) {
-	const { id } = params
+	const { id: encodedId } = params
+	const id = decodeURIComponent(encodedId)
 
 	const category = await getCategory(id)
 
@@ -89,7 +90,10 @@ export default async function ProductsPage({
 					{ href: ROUTE.CATALOG, value: 'Каталог' }
 				]}
 			/>
-			<ProductList {...products} />
+			<ProductList
+				{...products}
+				searchParams={getSearchParams({ ...searchParams, category: id })}
+			/>
 		</>
 	)
 }

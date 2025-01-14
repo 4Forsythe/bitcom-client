@@ -5,6 +5,7 @@ import { getSearchParams } from '@/utils/get-search-params'
 
 import { productService } from '@/services/product.service'
 import { ROUTE } from '@/config/routes.config'
+import { deviceService } from '@/services/device.service'
 
 const getProducts = cache(
 	async (searchParams: { [key: string]: string | undefined }) => {
@@ -60,17 +61,29 @@ interface SearchPageProps {
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-	const { query, device } = getSearchParams(searchParams)
+	const params = getSearchParams(searchParams)
+
+	const device = params.device
+		? await deviceService.getOne(params.device)
+		: undefined
 
 	const products = await getProducts(searchParams)
 
 	return (
 		<>
 			<Breadcrumb
-				value={query || device || 'Каталог'}
-				items={[{ href: ROUTE.HOME, value: 'Главная' }]}
+				value={params.query || device?.name || 'Поиск'}
+				items={[
+					{ href: ROUTE.HOME, value: 'Главная' },
+					...(params.query || device
+						? [{ href: ROUTE.CATALOG, value: 'Каталог' }]
+						: [])
+				]}
 			/>
-			<ProductList {...products} />
+			<ProductList
+				{...products}
+				searchParams={params}
+			/>
 		</>
 	)
 }

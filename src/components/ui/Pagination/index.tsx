@@ -10,8 +10,6 @@ import {
 	ChevronsRight
 } from 'lucide-react'
 
-import { Skeleton } from './Skeleton'
-
 import styles from './Pagination.module.scss'
 
 interface PaginationProps {
@@ -59,7 +57,7 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 				{!pageNumbers.includes(1) && (
 					<li className={styles.tile}>
 						<button
-							className={styles.page}
+							className={clsx(styles.page, styles.abstract)}
 							onClick={() => onPageChange(1)}
 						>
 							<ChevronsLeft />
@@ -68,7 +66,7 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 				)}
 				<li className={styles.tile}>
 					<button
-						className={styles.page}
+						className={clsx(styles.page, styles.abstract)}
 						onClick={() => onPageChange(page - 1)}
 						disabled={page <= 1}
 					>
@@ -92,7 +90,7 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 				))}
 				<li className={styles.tile}>
 					<button
-						className={styles.page}
+						className={clsx(styles.page, styles.abstract)}
 						onClick={() => onPageChange(page + 1)}
 						disabled={page === pages}
 					>
@@ -102,7 +100,7 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 				{!pageNumbers.includes(pages) && (
 					<li className={styles.tile}>
 						<button
-							className={styles.page}
+							className={clsx(styles.page, styles.abstract)}
 							onClick={() => onPageChange(pages)}
 						>
 							<ChevronsRight />

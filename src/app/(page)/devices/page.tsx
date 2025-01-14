@@ -25,8 +25,6 @@ export const generateMetadata = async () => {
 	}
 }
 
-export const revalidate = 60
-
 export default async function DevicesPage() {
 	const devices = await getDevices()
 

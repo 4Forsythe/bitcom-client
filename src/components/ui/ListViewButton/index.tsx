@@ -5,18 +5,18 @@ import React from 'react'
 import clsx from 'clsx'
 import { LayoutGrid, StretchHorizontal } from 'lucide-react'
 
-import { ListView } from '@/components/ProductList'
+import { ViewType } from '@/components/ProductList'
 
 import styles from './list-view-button.module.scss'
 
 interface IListViewButton {
-	view: ListView
+	mode: ViewType
 	className?: string
-	onChange: (mode: ListView) => void
+	onChange: (mode: ViewType) => void
 }
 
 export const ListViewButton: React.FC<IListViewButton> = ({
-	view,
+	mode,
 	className,
 	onChange
 }) => {
@@ -24,17 +24,17 @@ export const ListViewButton: React.FC<IListViewButton> = ({
 		<div className={clsx(styles.container, className)}>
 			<button
 				className={clsx(styles.button, {
-					[styles.active]: view === ListView.TILE
+					[styles.active]: mode === ViewType.TILE
 				})}
-				onClick={() => onChange(ListView.TILE)}
+				onClick={() => onChange(ViewType.TILE)}
 			>
 				<LayoutGrid size={24} />
 			</button>
 			<button
 				className={clsx(styles.button, {
-					[styles.active]: view === ListView.SIMPLE
+					[styles.active]: mode === ViewType.SIMPLE
 				})}
-				onClick={() => onChange(ListView.SIMPLE)}
+				onClick={() => onChange(ViewType.SIMPLE)}
 			>
 				<StretchHorizontal size={24} />
 			</button>

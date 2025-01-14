@@ -6,7 +6,10 @@
 			@apply w-[40px] h-[40px];
 			.page {
 				@apply w-full h-full text-zinc-500 bg-zinc-50 text-sm font-semibold flex items-center justify-center border-2 border-transparent
-        rounded-lg shadow-md hover:text-red-400 hover:bg-zinc-100 transition-colors duration-200;
+        rounded-lg shadow-md hover:text-red-400 hover:shadow-none transition-colors duration-200;
+				&.abstract {
+					@apply text-opacity-30 hover:text-opacity-100;
+				}
 				&.target {
 					@apply text-red-500 border-red-400;
 				}

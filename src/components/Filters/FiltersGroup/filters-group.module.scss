@@ -21,7 +21,7 @@
 	.items {
 		@apply hidden;
 		.item {
-			@apply px-4 py-2.5 text-sm border-l-4 border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-50 hover:bg-zinc-100 transition-colors duration-200;
+			@apply px-4 py-2.5 text-sm border-l-4 border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-100 hover:bg-zinc-50 transition-colors duration-200;
 			&.target {
 				@apply border-l-zinc-700;
 			}
