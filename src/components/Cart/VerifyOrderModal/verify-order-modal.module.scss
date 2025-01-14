@@ -1,0 +1,15 @@
+.container {
+	@apply max-w-[30rem] flex flex-col items-center;
+	.heading {
+		@apply mb-3.5 gap-1.5 flex items-center self-start;
+		.title {
+			@apply text-2xl font-bold;
+		}
+	}
+	.description {
+		@apply my-1.5 text-lg text-zinc-500;
+	}
+	.controls {
+		@apply mt-5 self-start;
+	}
+}

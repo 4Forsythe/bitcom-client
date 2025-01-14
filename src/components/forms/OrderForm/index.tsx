@@ -3,12 +3,10 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { CreditCard } from 'lucide-react'
 import { Placemark, YMaps, Map } from 'react-yandex-maps'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { PaymentItem } from '@/components/PaymentItem'
-import { Badge, Field, FormField, InfoBlock } from '@/components/ui'
+import { Badge, FormField, InfoBlock } from '@/components/ui'
 
 import { ROUTE } from '@/config/routes.config'
 
@@ -26,12 +24,7 @@ import {
 import styles from './order-form.module.scss'
 
 export const OrderForm = () => {
-	const {
-		register,
-		getValues,
-		control,
-		formState: { errors }
-	} = useFormContext<OrderFormType>()
+	const { control } = useFormContext<OrderFormType>()
 
 	const { isProfileLoading } = useProfile()
 
@@ -45,8 +38,16 @@ export const OrderForm = () => {
 			<div className={styles.form}>
 				<div className={styles.fields}>
 					<h5 className={styles.title}>1 Персональные данные</h5>
-					{user ? (
+					{user && (
 						<>
+							{!user.isActive && (
+								<InfoBlock>
+									Ваша учетная запись не активирована, поэтому при оформлении мы
+									отправим вам письмо для подтверждения заказа на{' '}
+									<b>{user.email}</b>.
+								</InfoBlock>
+							)}
+
 							<div className={styles.field}>
 								<FormField
 									name='customerName'
@@ -88,7 +89,9 @@ export const OrderForm = () => {
 								/>
 							</div>
 						</>
-					) : (
+					)}
+
+					{!user && (
 						<InfoBlock>
 							Для оформления заказа нужно войти или зарегистрироваться.
 						</InfoBlock>

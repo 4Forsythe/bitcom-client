@@ -10,6 +10,7 @@ class ROUTES {
 	CART = `${this.BASE_URL}cart`
 	WISHLIST = `${this.BASE_URL}wish-list`
 	PRODUCT = `${this.BASE_URL}product`
+	THANKS = `${this.CART}cart/thanks`
 
 	PROFILE = `${this.BASE_URL}my`
 	ORDERLIST = `${this.BASE_URL}my/order-list`

@@ -1,5 +1,15 @@
 import { ProductType } from './product.types'
 
+export enum OrderStatus {
+	PENDING = 'Обрабатывается',
+	WAITING = 'Ожидает подтверждения',
+	PAYED = 'Оплачен',
+	CANCELED = 'Отменен',
+	CREATED = 'Создан',
+	PROCESSING = 'Собирается',
+	READY = 'Готов к выдаче'
+}
+
 export enum GettingType {
 	PICKUP = 'Самовывоз'
 }
@@ -36,7 +46,7 @@ export type OrderType = {
 	customerPhone: string
 	address?: string
 	comment?: string
-	status: string
+	status: OrderStatus
 	gettingMethod: string
 	paymentMethod: string
 

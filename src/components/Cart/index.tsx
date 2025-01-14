@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Sidebar } from './sidebar'
+import { VerifyOrderModal } from './VerifyOrderModal'
 import {
 	CartItem,
 	CartItemSkeleton,
@@ -29,9 +30,10 @@ import {
 	PaymentType
 } from '@/types/order.types'
 
-import styles from './cart.module.scss'
 import { calcNounDeclension } from '@/utils/calc-noun-declension'
 import { calcDaysDifference } from '@/utils/calc-days-difference'
+
+import styles from './cart.module.scss'
 
 export const Cart: React.FC = () => {
 	const { onOpen } = useModal()
@@ -65,7 +67,14 @@ export const Cart: React.FC = () => {
 	}, [isProfileSuccess])
 
 	const onSubmit = (data: OrderFormType) => {
-		!user ? onOpen(<AuthForm />) : createOrder(data)
+		if (!user) {
+			onOpen(<AuthForm />)
+		} else if (!user?.isActive) {
+			createOrder(data)
+			onOpen(<VerifyOrderModal />)
+		} else if (user.isActive) {
+			createOrder(data)
+		}
 	}
 
 	return (

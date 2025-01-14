@@ -1,10 +1,12 @@
+import React from 'react'
+
 import clsx from 'clsx'
 import { Info } from 'lucide-react'
 
 import styles from './InfoBlock.module.scss'
 
 interface InfoBlockProps {
-	children: string
+	children: string | React.ReactNode
 	variant?: 'contained' | 'outlined'
 }
 

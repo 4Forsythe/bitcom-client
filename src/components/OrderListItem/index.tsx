@@ -32,7 +32,7 @@ export const OrderListItem: React.FC<OrderType> = ({
 		<article className={clsx(styles.container, 'animate-slide')}>
 			<div className={styles.head}>
 				<h5 className={styles.title}>
-					{`Заказ №${id} — ${new Date(createdAt).toLocaleDateString()}, ${new Date(createdAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}`}
+					{`Заказ от ${new Date(createdAt).toLocaleDateString()}`}
 				</h5>
 				<Badge
 					className={styles.status}

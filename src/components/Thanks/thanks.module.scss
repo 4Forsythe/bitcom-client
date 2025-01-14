@@ -1,0 +1,36 @@
+.container {
+	@apply w-full min-h-[480px] px-14 py-24 flex flex-col items-center justify-center  bg-zinc-50 rounded-md;
+	.block {
+		@apply flex flex-col items-center;
+		.heading {
+			@apply mb-5 text-3xl font-bold uppercase;
+		}
+		.caption {
+			@apply gap-1.5 text-lg flex items-center;
+		}
+		.paragraph {
+			@apply mb-1 text-zinc-500;
+		}
+		.phone {
+			@apply text-nowrap;
+		}
+		.divider {
+			@apply w-[10%] h-0.5 my-2.5 border border-zinc-300;
+		}
+		.controls {
+			@apply mt-8 gap-3 inline-flex items-center max-sm:flex-col-reverse;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		@apply px-5 py-8;
+		.block {
+			@apply text-center;
+			.caption {
+				@apply gap-0.5 flex-col;
+			}
+		}
+	}
+}

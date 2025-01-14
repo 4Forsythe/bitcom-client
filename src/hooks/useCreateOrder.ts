@@ -5,12 +5,17 @@ import { useRouter } from 'next/navigation'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { ROUTE } from '@/config/routes.config'
 import { useDeleteCart } from './useDeleteCart'
 import { orderService } from '@/services/order.service'
-import { ROUTE } from '@/config/routes.config'
 
 import type { PaymentStatusType } from '@/types/payment.types'
-import { type OrderFormType, OrderType, PaymentType } from '@/types/order.types'
+import {
+	type OrderFormType,
+	OrderStatus,
+	OrderType,
+	PaymentType
+} from '@/types/order.types'
 
 export const useCreateOrder = () => {
 	const router = useRouter()
@@ -40,7 +45,13 @@ export const useCreateOrder = () => {
 			}
 
 			if (order.paymentMethod === PaymentType.CASH) {
-				router.push(ROUTE.ORDERLIST)
+				if (order.status === OrderStatus.WAITING) {
+					router.push(`${ROUTE.THANKS}?order=${order.id}`)
+				}
+
+				if (order.status === OrderStatus.CREATED) {
+					router.push(ROUTE.ORDERLIST)
+				}
 			}
 		}
 	}, [isSuccess])

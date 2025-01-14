@@ -1,7 +1,7 @@
 .container {
 	@apply px-3.5 gap-5 flex justify-between;
 	.list {
-		@apply mb-7 flex flex-col grow;
+		@apply mb-7 flex flex-1 flex-col;
 		.items {
 			@apply gap-4 flex flex-col;
 		}
