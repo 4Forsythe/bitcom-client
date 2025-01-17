@@ -13,19 +13,10 @@
 		}
 		.column {
 			@apply gap-2.5 flex flex-col;
-			.contacts {
-				@apply gap-1 flex flex-wrap items-center;
-				.item {
-					@apply px-3 py-1.5 rounded-lg bg-zinc-200 hover:bg-zinc-300 transition-colors duration-200;
-					.icon {
-						@apply w-auto h-6 object-cover;
-					}
-				}
-			}
 			.socials {
 				@apply gap-1 flex flex-wrap items-center;
 				.item {
-					@apply p-1.5 rounded-lg bg-zinc-200 hover:bg-zinc-300 transition-colors duration-200;
+					@apply px-2.5 py-1.5 rounded-lg bg-zinc-200 hover:bg-zinc-300 transition-colors duration-200;
 					.icon {
 						@apply w-auto h-6 object-cover;
 					}

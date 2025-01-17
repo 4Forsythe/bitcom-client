@@ -37,8 +37,8 @@ export const News: React.FC = () => {
 					loop
 				/>
 				<div className={styles.column}>
-					<HomeWidget title='Контакты'>
-						<div className={styles.contacts}>
+					<HomeWidget title='Полезные ссылки'>
+						<div className={styles.socials}>
 							<Badge
 								className={styles.item}
 								href={`tel:${PHONE}`}
@@ -67,10 +67,6 @@ export const News: React.FC = () => {
 									priority
 								/>
 							</Badge>
-						</div>
-					</HomeWidget>
-					<HomeWidget title='Полезные ссылки'>
-						<div className={styles.socials}>
 							{SOCIALS.map((item) => (
 								<Link
 									className={styles.item}
