@@ -1,0 +1,31 @@
+.container {
+	@apply w-full px-5 py-8 space-y-1.5 flex flex-col items-center justify-center text-zinc-500 border-2 border-dashed border-zinc-300 rounded-xl relative hover:text-zinc-700 hover:border-zinc-500
+	transition-colors duration-200;
+	&.disabled {
+		@apply bg-zinc-50 shadow-none;
+	}
+	&.loaded {
+		@apply text-opacity-50 animate-pulse;
+	}
+	&.warned {
+		@apply text-red-600/80 border-red-500/60;
+	}
+	&.successed {
+		@apply text-green-600/80 border-green-500/60;
+	}
+	.label {
+		@apply text-xl font-semibold;
+	}
+	.icon {
+		@apply w-10 h-10;
+	}
+	.description {
+		@apply text-sm font-medium;
+	}
+	.input {
+		@apply inset-0 opacity-0 cursor-pointer absolute;
+	}
+	.loader {
+		@apply w-10 h-10 text-zinc-700 animate-spin absolute;
+	}
+}
