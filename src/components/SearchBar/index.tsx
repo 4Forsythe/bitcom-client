@@ -25,6 +25,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 	const searchParams = useSearchParams()
 
 	const [value, setValue] = React.useState('')
+	const [target, setTarget] = React.useState(0)
 
 	const [isHovered, setIsHovered] = React.useState(false)
 	const [isFocused, setIsFocused] = React.useState(false)
@@ -41,17 +42,54 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 		enabled: !!query
 	})
 
-	const onEnterDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (!value.trim()) return
-
-		event.key === 'Enter' ? onSearch() : event.key === 'Escape' && onClear()
+	const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		switch (event.key) {
+			case 'ArrowUp':
+				event.preventDefault()
+				setTarget((prev) =>
+					prev > 1 ? prev - 1 : data ? data.items.length : -1
+				)
+				break
+			case 'ArrowDown':
+				event.preventDefault()
+				setTarget((prev) =>
+					prev > (data ? data.items.length - 1 : 1) ? 1 : prev + 1
+				)
+				break
+			case 'Enter':
+				event.preventDefault()
+				onSearch()
+				break
+			case 'Escape':
+				event.preventDefault()
+				if (value.trim()) {
+					onClear()
+				} else {
+					inputRef.current?.blur()
+					setIsFocused(false)
+				}
+				break
+			default:
+				setTarget(0)
+				break
+		}
 	}
 
 	const onSearch = () => {
-		if (value.trim()) {
+		if (!value.trim() && target < 1) {
+			inputRef.current?.blur()
+			setIsFocused(false)
+		}
+
+		if (!(target > 0) && value.trim()) {
 			const params = new URLSearchParams(searchParams.toString())
 			params.set('q', value)
 			router.push(`${ROUTE.SEARCH}?${params.toString()}`)
+			inputRef.current?.blur()
+		}
+
+		if (target > 0 && data?.items[target]) {
+			router.push(`${ROUTE.PRODUCT}/${data.items[target].id}`)
 			inputRef.current?.blur()
 		}
 
@@ -106,7 +144,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 					className={styles.form}
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
-					onKeyDown={onEnterDown}
+					onKeyDown={onKeyDown}
 					onFocus={() => setIsFocused(true)}
 					type='text'
 					placeholder='Поиск в магазине...'
@@ -136,10 +174,12 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 						ref={presearchRef}
 					>
 						<ul className={styles.items}>
-							{data.items.map((item) => (
+							{data.items.map((item, index) => (
 								<li key={item.id}>
 									<button
-										className={styles.item}
+										className={clsx(styles.item, {
+											[styles.target]: index + 1 === target
+										})}
 										onClick={() => {
 											router.push(`${ROUTE.PRODUCT}/${item.id}`, {
 												scroll: true
