@@ -29,6 +29,10 @@ export const getSearchParams = (searchParams?: SearchParamsType) => {
 		searchParams && searchParams['limit']
 			? Number(searchParams['limit']) ?? 10
 			: 10
+	const renderType =
+		searchParams && searchParams['renderType']
+			? searchParams['renderType']
+			: undefined
 
 	return {
 		query,
@@ -39,6 +43,7 @@ export const getSearchParams = (searchParams?: SearchParamsType) => {
 		sortBy,
 		orderBy,
 		page,
-		limit
+		limit,
+		renderType
 	}
 }

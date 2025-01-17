@@ -14,15 +14,15 @@ type ListRenderButtonType = {
 
 const TYPES: ListRenderButtonType[] = [
 	{
-		name: '10',
+		name: '10 шт',
 		property: RenderType.SMALL
 	},
 	{
-		name: '20',
+		name: '20 шт',
 		property: RenderType.MEDIUM
 	},
 	{
-		name: '30',
+		name: '30 шт',
 		property: RenderType.LARGE
 	},
 	{

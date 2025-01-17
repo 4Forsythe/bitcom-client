@@ -67,8 +67,6 @@ export function useInfiniteProducts({
 
 	const { ref, inView } = useInView()
 
-	console.log('DATA', data)
-
 	React.useEffect(() => {
 		if (inView && hasNextPage) fetchNextPage()
 	}, [inView, hasNextPage])

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import clsx from 'clsx'
 import {
@@ -13,15 +14,14 @@ import {
 	ListViewButton,
 	ListRenderButton
 } from '@/components'
+import { getSearchParams } from '@/utils/get-search-params'
 
 import { useWindowSize } from '@/hooks/useWindowSize'
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
-import { getSearchParams } from '@/utils/get-search-params'
 
 import type { ProductsType, ProductType } from '@/types/product.types'
 
 import styles from './product-list.module.scss'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 export enum ViewType {
 	TILE = 'tile',
@@ -48,7 +48,9 @@ export const ProductList: React.FC<Props> = ({
 
 	const [viewType, setViewType] = React.useState<ViewType>(ViewType.SIMPLE)
 	const [renderType, setRenderType] = React.useState<RenderType>(
-		RenderType.SMALL
+		Object.values(RenderType).includes(searchParams.renderType as RenderType)
+			? (searchParams.renderType as RenderType)
+			: searchParams.limit
 	)
 
 	const router = useRouter()
@@ -83,8 +85,14 @@ export const ProductList: React.FC<Props> = ({
 		setRenderType(type)
 
 		const qs = new URLSearchParams(params.toString())
-		qs.set('limit', String(type))
-		qs.delete('page')
+
+		if (type === RenderType.INFINITE) {
+			qs.set('renderType', String(type))
+			qs.delete('page')
+		} else {
+			qs.set('limit', String(type))
+			qs.delete('renderType')
+		}
 
 		router.push(`?${qs.toString()}`)
 	}
