@@ -1,0 +1,27 @@
+.container {
+	@apply h-full pt-5 border-t border-zinc-300;
+	.input {
+		@apply flex-1;
+	}
+	.uploads {
+		@apply my-5 pt-10 border-t border-zinc-300;
+		.head {
+			@apply mb-3.5 text-lg font-semibold;
+		}
+		.description {
+			@apply text-zinc-500/70;
+		}
+		.list {
+			@apply gap-2 flex flex-wrap;
+			.article {
+				@apply w-fit px-2.5 py-1.5 gap-2.5 bg-neutral-200/70 flex items-center rounded-md;
+				.filename {
+					@apply gap-1.5 font-medium flex items-center hover:text-red-500 transition duration-200;
+				}
+				.remove {
+					@apply hover:bg-neutral-300 rounded-sm;
+				}
+			}
+		}
+	}
+}

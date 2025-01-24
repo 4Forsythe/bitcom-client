@@ -1,6 +1,7 @@
 'use server'
 
 import fs from 'fs'
+import path from 'path'
 import iconv from 'iconv-lite'
 
 export async function uploadDocFile(formData: FormData) {
@@ -27,4 +28,18 @@ export async function uploadDocFile(formData: FormData) {
 	const decFileName = iconv.decode(Buffer.from(file.name, 'binary'), 'utf8')
 
 	await fs.promises.writeFile(`${fileDir}/${decFileName}`, bufferData)
+}
+
+export async function deleteDocFile(fileName: string) {
+	const fileDir = 'public/blog'
+	const isDirExist = fs.existsSync(fileDir)
+
+	if (!isDirExist) return
+
+	const filePath = path.join(fileDir, fileName)
+	const isFileExist = fs.existsSync(filePath)
+
+	if (!isFileExist) return
+
+	await fs.promises.rm(filePath)
 }
