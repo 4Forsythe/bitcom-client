@@ -1,16 +1,18 @@
-import { UserType } from './user.types'
+import type { GrayMatterFile } from 'gray-matter'
 
 export type PostType = {
 	slug: string
-
 	title: string
-	description: string
-	imageUrl: string
-	author: string
-	tags: string[]
-	content?: string
+	content: GrayMatterFile<string>
+	reading: number
+	lastModified: Date
+}
 
-	createdAt: string
+export type FrontmatterPostType = {
+	slug: string
+	title: string
+	fileName: string
+	lastModified: Date
 }
 
 export type PostsType = {
