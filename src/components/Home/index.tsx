@@ -11,15 +11,17 @@ import {
 	PostGroup
 } from '@/components'
 
-import { getPostMetadata } from '@/utils/get-post-metadata'
-import { productService } from '@/services/product.service'
+import type { ProductsType } from '@/types/product.types'
+import type { FrontmatterPostType } from '@/types/post.types'
 
 import styles from './home.module.scss'
 
-export const Home: React.FC = async () => {
-	const posts = getPostMetadata({ take: 8 })
-	const products = await productService.getAll({ take: 8 })
+interface Props {
+	products: ProductsType
+	posts: FrontmatterPostType[]
+}
 
+export const Home: React.FC<Props> = async ({ products, posts }) => {
 	return (
 		<div className={styles.container}>
 			<Navbar />

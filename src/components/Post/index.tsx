@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import Image from 'next/image'
 
@@ -18,12 +16,9 @@ import styles from './post.module.scss'
 
 export const Post: React.FC<PostType> = ({
 	title,
-	description,
-	imageUrl,
-	author,
-	tags,
 	content,
-	createdAt
+	reading,
+	lastModified
 }) => {
 	return (
 		<article className={styles.container}>
@@ -37,46 +32,22 @@ export const Post: React.FC<PostType> = ({
 			<div className={styles.head}>
 				<h1 className={styles.title}>{title}</h1>
 			</div>
+
 			<div className={styles.information}>
 				<div className={styles.meta}>
-					<span className={styles.tag}>{author}</span>
 					<span className={styles.tag}>
-						{`Опубликовано ${calcNounDate(createdAt)}`}
+						{`Опубликовано ${new Date(lastModified).toLocaleDateString()}`}
 					</span>
 					<div className={styles.tag}>
 						<Clock className={styles.icon} />
-						<span className={styles.text}>
-							{calcReadingTime(content || description)} мин
-						</span>
+						<span className={styles.text}>{reading} мин</span>
 					</div>
-					{tags.map((tag, index) => (
-						<span
-							key={index}
-							className={styles.tag}
-						>
-							#{tag.toLowerCase()}
-						</span>
-					))}
 				</div>
-				{imageUrl && (
-					<div className={styles.preview}>
-						<Image
-							className={styles.image}
-							width={400}
-							height={400}
-							src={imageUrl}
-							alt={title}
-							priority
-						/>
-					</div>
-				)}
 			</div>
 
-			{content && (
-				<div className={styles.content}>
-					<Markdown>{content}</Markdown>
-				</div>
-			)}
+			<div className={styles.content}>
+				<Markdown>{content.content}</Markdown>
+			</div>
 		</article>
 	)
 }

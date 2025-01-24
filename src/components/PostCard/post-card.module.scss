@@ -7,7 +7,7 @@
 		}
 	}
 	.information {
-		@apply px-5 py-3.5 gap-1.5 flex shrink flex-1 flex-col grow truncate;
+		@apply px-5 py-7 gap-1.5 flex shrink flex-1 flex-col grow truncate;
 		.title {
 			@apply max-h-16 flex items-center justify-between text-xl font-semibold hover:text-red-500 overflow-hidden
       transition-colors duration-200;

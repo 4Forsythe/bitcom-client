@@ -3,24 +3,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import clsx from 'clsx'
-import { formatDate } from '@/utils/format-date'
 import { calcNounDate } from '@/utils/calc-noun-date'
 import { ROUTE } from '@/config/routes.config'
-import { SERVER_BASE_URL } from '@/constants'
 
-import type { PostType } from '@/types/post.types'
+import type { FrontmatterPostType } from '@/types/post.types'
 
 import styles from './post-group-item.module.scss'
 
-export const PostGroupItem: React.FC<PostType> = ({
+export const PostGroupItem: React.FC<FrontmatterPostType> = ({
 	slug,
 	title,
-	description,
-	imageUrl,
-	createdAt
+	lastModified
 }) => {
 	return (
-		<article className={clsx(styles.container, 'animate-opacity')}>
+		<article className={clsx(styles.container, 'animate-bounce')}>
 			<Link
 				className={styles.cover}
 				href={`${ROUTE.BLOG}/${slug}`}
@@ -29,11 +25,7 @@ export const PostGroupItem: React.FC<PostType> = ({
 					className={styles.image}
 					width={200}
 					height={200}
-					src={
-						imageUrl
-							? `${SERVER_BASE_URL}/${imageUrl}`
-							: '/static/image-placeholder.png'
-					}
+					src={'/static/image-placeholder.png'}
 					blurDataURL='/static/image-placeholder.png'
 					placeholder='blur'
 					alt={title}
@@ -48,7 +40,9 @@ export const PostGroupItem: React.FC<PostType> = ({
 					{title}
 				</Link>
 				<div className={styles.details}>
-					<span className={styles.text}>{calcNounDate(createdAt)}</span>
+					<span className={styles.text}>
+						{calcNounDate(lastModified.toISOString())}
+					</span>
 				</div>
 			</div>
 		</article>

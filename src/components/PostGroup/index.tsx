@@ -3,13 +3,13 @@ import React from 'react'
 import { PostGroupItem } from './PostGroupItem'
 import { ProductGroupItemSkeleton } from '@/components'
 
-import type { PostType } from '@/types/post.types'
+import type { FrontmatterPostType } from '@/types/post.types'
 
 import styles from './post-group.module.scss'
 
 interface IPostGroupProps {
 	title: string
-	items: PostType[]
+	items: FrontmatterPostType[]
 	isLoading?: boolean
 }
 

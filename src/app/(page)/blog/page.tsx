@@ -1,21 +1,27 @@
+import type { Metadata } from 'next'
+
 import { Breadcrumb, Heading, PostList } from '@/components'
 
 import { getSearchParams } from '@/utils/get-search-params'
-import { getPostMetadata } from '@/utils/get-post-metadata'
+import { getBlogMetadata } from '@/utils/get-blog-metadata'
 
 import { ROUTE } from '@/config/routes.config'
 
-const getPosts = (searchParams?: { [key: string]: string | undefined }) => {
+const getPosts = async (searchParams?: {
+	[key: string]: string | undefined
+}) => {
 	const { page, limit } = getSearchParams(searchParams)
 
-	return getPostMetadata({
+	return getBlogMetadata({
 		take: limit,
 		skip: (page - 1) * limit
 	})
 }
 
-export const generateMetadata = ({ searchParams }: BlogPageProps) => {
-	const data = getPosts(searchParams)
+export const generateMetadata = async ({
+	searchParams
+}: BlogPageProps): Promise<Metadata> => {
+	const data = await getPosts(searchParams)
 
 	if (!data) {
 		return {
@@ -36,7 +42,7 @@ interface BlogPageProps {
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-	const posts = getPosts(searchParams)
+	const posts = await getPosts(searchParams)
 
 	return (
 		<>

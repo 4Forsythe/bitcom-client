@@ -1,28 +1,23 @@
 import type { Metadata } from 'next'
+
 import { notFound } from 'next/navigation'
 
 import { Post } from '@/components/Post'
+import { getBlogPost } from '@/utils/get-blog-post'
 
-import { getPostMetadata } from '@/utils/get-post-metadata'
-import { getPostContent } from '@/utils/get-post-content'
-
-import type { PostType } from '@/types/post.types'
-
-export const generateMetadata = ({ params }: IPostPageProps): Metadata => {
+export const generateMetadata = async ({
+	params
+}: IPostPageProps): Promise<Metadata> => {
 	const { slug } = params
 
-	const post = getPostContent(slug)
+	const post = await getBlogPost(slug)
 
 	if (post) {
-		const { title, description, imageUrl, tags } = post.data as PostType
+		const { title, reading, lastModified } = post
 
 		return {
-			title: title && title,
-			description: description && description,
-			keywords: tags && tags,
-			openGraph: {
-				images: [{ url: imageUrl }]
-			}
+			title: title,
+			description: `Статья «${title}» опубликована ${new Date(lastModified).toLocaleDateString()} г. Ожидаемая продолжительность изучения — ${reading > 0 ? `${reading} минут` : 'менее минуты'}.`
 		}
 	}
 
@@ -34,14 +29,9 @@ interface IPostPageProps {
 }
 
 export default async function PostPage({ params }: IPostPageProps) {
-	const post = getPostContent(params.slug)
+	const post = await getBlogPost(params.slug)
 
 	if (!post) return notFound()
 
-	const props = {
-		...post.data,
-		content: post.content
-	} as PostType
-
-	return <Post {...props} />
+	return <Post {...post} />
 }

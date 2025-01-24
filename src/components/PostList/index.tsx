@@ -1,19 +1,13 @@
 import React from 'react'
 
-import {
-	SearchBar,
-	Pagination,
-	PostCard,
-	EmptyBlock,
-	PostSortBar
-} from '@/components'
+import { Pagination, PostCard, EmptyBlock } from '@/components'
 
-import type { PostType } from '@/types/post.types'
+import type { FrontmatterPostType } from '@/types/post.types'
 
 import styles from './post-list.module.scss'
 
 interface IPostList {
-	items: PostType[]
+	items: FrontmatterPostType[]
 }
 
 export const PostList: React.FC<IPostList> = ({ items }) => {
