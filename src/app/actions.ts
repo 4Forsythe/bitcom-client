@@ -11,14 +11,21 @@ export async function uploadDocFile(formData: FormData) {
 		throw new Error('Исходный файл поврежден или отсутствует')
 	}
 
-	const fileExtension = file.name.split('.')[1]
+	const mimeTypes = [
+		'application/msword',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+	]
 
-	if (fileExtension !== 'doc' && fileExtension !== 'docx') {
+	if (!mimeTypes.includes(file.type)) {
 		throw new Error('Исходный файл должен быть в формате .doc или .docx')
 	}
 
 	const fileDir = 'public/blog'
-	const isDirExist = fs.existsSync(fileDir)
+
+	const isDirExist = await fs.promises
+		.access(fileDir)
+		.then(() => true)
+		.catch(() => false)
 
 	if (!isDirExist) fs.promises.mkdir(fileDir)
 
@@ -32,7 +39,11 @@ export async function uploadDocFile(formData: FormData) {
 
 export async function deleteDocFile(fileName: string) {
 	const fileDir = 'public/blog'
-	const isDirExist = fs.existsSync(fileDir)
+
+	const isDirExist = await fs.promises
+		.access(fileDir)
+		.then(() => true)
+		.catch(() => false)
 
 	if (!isDirExist) return
 

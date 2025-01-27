@@ -14,7 +14,10 @@ export async function getBlogMetadata(
 ): Promise<FrontmatterPostType[] | []> {
 	const fileDir = 'public/blog'
 
-	const isDirExist = fs.existsSync(fileDir)
+	const isDirExist = await fs.promises
+		.access(fileDir)
+		.then(() => true)
+		.catch(() => false)
 
 	if (!isDirExist) await fs.promises.mkdir(fileDir)
 
