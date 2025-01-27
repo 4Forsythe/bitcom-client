@@ -6,6 +6,7 @@ class ROUTES {
 	SEARCH = `${this.BASE_URL}search`
 	CATALOG = `${this.BASE_URL}catalog`
 	DEVICES = `${this.BASE_URL}devices`
+	PRICES = `${this.BASE_URL}prices`
 
 	CART = `${this.BASE_URL}cart`
 	WISHLIST = `${this.BASE_URL}wish-list`
@@ -14,6 +15,7 @@ class ROUTES {
 
 	PROFILE = `${this.BASE_URL}my`
 	ORDERLIST = `${this.BASE_URL}my/order-list`
+	UPLOAD_DOCX = `${this.BASE_URL}my/upload-docx`
 
 	BLOG = `${this.BASE_URL}blog`
 

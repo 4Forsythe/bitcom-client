@@ -13,6 +13,10 @@ export const INFOS: FooterMenuType[] = [
 		label: 'О компании'
 	},
 	{
+		href: ROUTE.PRICES,
+		label: 'Прайс-листы'
+	},
+	{
 		href: ROUTE.POLICIES,
 		label: 'Политика конфиденциальности'
 	}
