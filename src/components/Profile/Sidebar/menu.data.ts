@@ -1,5 +1,4 @@
-import type { LucideIcon } from 'lucide-react'
-import { Package, CakeSlice, User } from 'lucide-react'
+import { type LucideIcon, Package, CakeSlice, User, File } from 'lucide-react'
 
 import { ROUTE } from '@/config/routes.config'
 

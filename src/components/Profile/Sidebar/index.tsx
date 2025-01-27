@@ -5,10 +5,11 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 
 import clsx from 'clsx'
-import { LogOut } from 'lucide-react'
+import { File, LogOut } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui'
+import { ProfileSidebarSkeleton } from './skeleton'
 
 import { PUBLIC_MENU } from './menu.data'
 import { ROUTE } from '@/config/routes.config'
@@ -56,6 +57,18 @@ export const ProfileSidebar: React.FC = () => {
 		)
 	}
 
+	if (!user) {
+		return (
+			<div className={styles.container}>
+				<div className={styles.menu}>
+					{[...new Array(4)].map((_, index) => (
+						<ProfileSidebarSkeleton key={index} />
+					))}
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<nav className={styles.container}>
 			<ul className={styles.menu}>
@@ -75,6 +88,20 @@ export const ProfileSidebar: React.FC = () => {
 						</Link>
 					</li>
 				))}
+
+				{user?.role && (
+					<li className={styles.item}>
+						<Link
+							href={ROUTE.UPLOAD_DOCX}
+							className={clsx(styles.tab, {
+								[styles.target]: pathname === ROUTE.UPLOAD_DOCX
+							})}
+						>
+							<File className={styles.icon} />
+							Загрузить статью
+						</Link>
+					</li>
+				)}
 			</ul>
 
 			<div className={styles.item}>
