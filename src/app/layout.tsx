@@ -6,6 +6,7 @@ import { Source_Sans_3 } from 'next/font/google'
 import { Providers } from './providers'
 import { Header, Footer, CookieBanner } from '@/components'
 import { ModalProvider } from '@/contexts/ModalContext'
+import { YandexMetrika } from '@/components/yandex-metrika'
 
 import { SITE_NAME, SITE_DESCRIPTION } from '@/constants/seo.constants'
 
@@ -31,6 +32,8 @@ export const metadata: Metadata = {
 	}
 }
 
+const isAnalyticsEnabled = !!(process.env.NODE_ENV === 'production')
+
 export default function AppLayout({
 	children
 }: React.PropsWithChildren<unknown>) {
@@ -46,6 +49,7 @@ export default function AppLayout({
 					</ModalProvider>
 				</Providers>
 			</body>
+			<YandexMetrika isEnabled={isAnalyticsEnabled} />
 		</html>
 	)
 }
