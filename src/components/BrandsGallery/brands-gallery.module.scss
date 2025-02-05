@@ -1,0 +1,9 @@
+.container {
+	@apply my-8 flex flex-col;
+	.cover {
+		@apply p-3.5 flex flex-1 items-center justify-center overflow-hidden;
+		.image {
+			@apply w-full h-[50px] grayscale select-none object-contain;
+		}
+	}
+}

@@ -1,7 +1,9 @@
 'use client'
 
-import SwiperCore from 'swiper'
+import React from 'react'
 
+import clsx from 'clsx'
+import SwiperCore from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 
@@ -10,12 +12,17 @@ import { NavButtons } from './NavButtons'
 import styles from './Carousel.module.scss'
 
 import 'swiper/css'
-import React from 'react'
-import clsx from 'clsx'
+
+export type CarouselSlideType = {
+	id: string
+	tag: string
+	imageUrl: string
+}
 
 interface CarouselProps {
 	slides: React.ReactNode[]
 	loop?: boolean
+	speed?: number
 	autoplay?: number
 	navigation?: boolean
 	pagination?: boolean
@@ -30,6 +37,7 @@ interface CarouselProps {
 export const Carousel: React.FC<CarouselProps> = ({
 	slides,
 	loop = false,
+	speed = undefined,
 	autoplay = 0,
 	navigation = false,
 	spaceBetween = 0,
@@ -45,6 +53,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 				className={clsx(styles.container, className)}
 				modules={[Navigation, Autoplay]}
 				loop={loop}
+				speed={speed}
 				spaceBetween={spaceBetween}
 				slidesPerView={slidesPerView}
 				navigation={
