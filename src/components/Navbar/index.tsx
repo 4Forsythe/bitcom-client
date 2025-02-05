@@ -1,7 +1,10 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 
 import clsx from 'clsx'
+import { Loader2 } from 'lucide-react'
 
 import { FEATURES } from './navbar.data'
 import { Carousel } from '@/components/Carousel'
@@ -9,6 +12,27 @@ import { Carousel } from '@/components/Carousel'
 import styles from './navbar.module.scss'
 
 export const Navbar: React.FC = () => {
+	const [isMounted, setIsMounted] = React.useState(false)
+
+	React.useEffect(() => {
+		if (typeof window !== 'undefined') {
+			setIsMounted(true)
+		}
+	}, [])
+
+	if (!isMounted) {
+		return (
+			<div className={styles.container}>
+				<div className={styles.skeleton}>
+					<Loader2
+						className={styles.loader}
+						size={32}
+					/>
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<div className={styles.container}>
 			<ul className={styles.items}>
