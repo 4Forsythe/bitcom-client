@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -5,7 +7,7 @@ import Image from 'next/image'
 import { Badge, Carousel, HomeWidget } from '@/components'
 
 import { SOCIALS } from './socials.data'
-import { SLIDES } from '../Carousel/carousel.data'
+import { NEWS_SLIDES } from './slides.data'
 import { EMAIL, PHONE } from '@/constants/contacts.constants'
 import { MARKETPLACES } from '@/constants/marketplaces.constants'
 
@@ -16,7 +18,7 @@ export const News: React.FC = () => {
 		<section className={styles.container}>
 			<div className={styles.inner}>
 				<Carousel
-					slides={SLIDES.map((slide) => (
+					slides={NEWS_SLIDES.map((slide) => (
 						<div className={styles.cover}>
 							<Image
 								className={styles.image}
