@@ -1,11 +1,10 @@
-'use server'
-
 import React from 'react'
 
 import {
 	News,
 	Navbar,
 	AboutUs,
+	BrandsGallery,
 	MetricsTable,
 	ProductGroup,
 	PostGroup
@@ -43,6 +42,7 @@ export const Home: React.FC<Props> = async ({ products, posts }) => {
 
 			<MetricsTable />
 			<AboutUs />
+			<BrandsGallery />
 		</div>
 	)
 }

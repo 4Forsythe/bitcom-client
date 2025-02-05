@@ -2,6 +2,7 @@ export * from './forms'
 export * from './ui'
 
 export { AboutUs } from './AboutUs'
+export { BrandsGallery } from './BrandsGallery'
 export { Breadcrumb } from './Breadcrumb'
 export { Carousel } from './Carousel'
 export { Cart } from './Cart'
