@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 
 import { NavButtons } from './NavButtons'
+import { useWindowSize } from '@/hooks/useWindowSize'
 
 import styles from './Carousel.module.scss'
 
@@ -47,9 +48,33 @@ export const Carousel: React.FC<CarouselProps> = ({
 }) => {
 	SwiperCore.use([Autoplay])
 
+	const getSlidesPerView = (): number => {
+		if (!breakpoints) return slidesPerView
+
+		const { width } = useWindowSize()
+
+		if (!width) return slidesPerView
+
+		const matches = Object.keys(breakpoints)
+			.map(Number)
+			.filter((breakpoint) => breakpoint <= width)
+			.sort((a, b) => b - a)
+
+		if (matches.length > 0) {
+			const lastBreakpoint = matches[0]
+			return breakpoints[lastBreakpoint]?.slidesPerView ?? slidesPerView
+		}
+
+		return slidesPerView
+	}
+
+	const isNavButtonsVisible = navigation && slides.length > getSlidesPerView()
+
 	return (
 		<>
 			<Swiper
+				tag='menu'
+				role='list'
 				className={clsx(styles.container, className)}
 				modules={[Navigation, Autoplay]}
 				loop={loop}
@@ -70,9 +95,15 @@ export const Carousel: React.FC<CarouselProps> = ({
 				breakpoints={breakpoints}
 			>
 				{slides.map((slide, index) => (
-					<SwiperSlide key={index}>{slide}</SwiperSlide>
+					<SwiperSlide
+						key={index}
+						role='listitem'
+					>
+						{slide}
+					</SwiperSlide>
 				))}
-				{navigation && <NavButtons />}
+
+				{isNavButtonsVisible && <NavButtons />}
 			</Swiper>
 		</>
 	)

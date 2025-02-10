@@ -35,10 +35,10 @@ export const Navbar: React.FC = () => {
 
 	return (
 		<div className={styles.container}>
-			<ul className={styles.items}>
+			<nav className={styles.items}>
 				<Carousel
 					slides={FEATURES.map((item) => (
-						<li
+						<div
 							key={item.title}
 							className={clsx(styles.item, 'animate-slide')}
 						>
@@ -49,7 +49,7 @@ export const Navbar: React.FC = () => {
 								<h2 className={styles.title}>{item.title}</h2>
 								<p className={styles.text}>{item.description}</p>
 							</Link>
-						</li>
+						</div>
 					))}
 					slidesPerView={6}
 					spaceBetween={14}
@@ -75,7 +75,7 @@ export const Navbar: React.FC = () => {
 						}
 					}}
 				/>
-			</ul>
+			</nav>
 		</div>
 	)
 }

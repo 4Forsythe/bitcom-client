@@ -13,12 +13,14 @@ export const NavButtons = () => {
 	return (
 		<div className={styles.navigation}>
 			<button
+				aria-label='Предыдущий слайд'
 				className={clsx(styles.button, styles.prev)}
 				onClick={() => swiper.slidePrev()}
 			>
 				<ChevronLeft className={styles.icon} />
 			</button>
 			<button
+				aria-label='Следующий слайд'
 				className={clsx(styles.button, styles.next)}
 				onClick={() => swiper.slideNext()}
 			>

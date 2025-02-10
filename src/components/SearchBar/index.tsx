@@ -153,6 +153,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 					{value && (
 						<>
 							<button
+								aria-label='Очистить'
 								className={styles.control}
 								onClick={onClear}
 							>
@@ -162,6 +163,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 						</>
 					)}
 					<button
+						aria-label='Найти'
 						className={styles.control}
 						onClick={onSearch}
 					>

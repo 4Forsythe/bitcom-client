@@ -40,7 +40,7 @@ export const Home: React.FC<Props> = async ({ products, posts }) => {
 				/>
 			)}
 
-			<MetricsTable />
+			{/* <MetricsTable /> */}
 			<AboutUs />
 			<BrandsGallery />
 		</div>

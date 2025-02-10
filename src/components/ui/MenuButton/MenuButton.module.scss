@@ -1,8 +1,8 @@
 .container {
-	@apply w-[95px] px-1.5 py-2.5 flex flex-col items-center text-zinc-400 font-medium rounded-lg outline-none truncate relative
-  hover:text-zinc-500 hover:bg-zinc-100 hover:shadow-sm transition-all duration-200;
+	@apply w-[95px] px-1.5 py-2.5 flex flex-col items-center text-zinc-500 font-medium rounded-lg outline-none truncate relative
+  hover:text-zinc-700 hover:bg-zinc-100 hover:shadow-sm transition-all duration-200;
 	.icon {
-		@apply w-auto h-5 mb-0.5 text-zinc-400;
+		@apply w-auto h-5 mb-0.5 text-zinc-500;
 	}
 	.text {
 		@apply max-w-[75px] text-sm truncate;

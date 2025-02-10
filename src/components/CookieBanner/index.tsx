@@ -37,6 +37,7 @@ export const CookieBanner: React.FC = () => {
 				<button
 					className={styles.control}
 					onClick={onHide}
+					aria-label='Скрыть'
 				>
 					<X className={styles.icon} />
 				</button>
