@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { MapPin } from 'lucide-react'
+import { MapPin, Sheet } from 'lucide-react'
 import { ADDRESS, PHONE } from '@/constants/contacts.constants'
 
 import { HeaderMenu, SearchBar, SearchBarSkeleton } from '@/components'
@@ -29,6 +29,14 @@ export const Header: React.FC = () => {
 						href='tel:88482411212'
 					>
 						{PHONE}
+					</Link>
+
+					<Link
+						className={styles.prices}
+						href={ROUTE.PRICES}
+					>
+						<Sheet className={styles.icon} />
+						Прайс-листы
 					</Link>
 				</div>
 			</div>

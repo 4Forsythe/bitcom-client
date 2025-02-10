@@ -6,7 +6,13 @@
 			@apply px-2.5 py-1 gap-1 flex items-center bg-zinc-200/50 font-medium outline-none rounded-xl hover:text-zinc-50 hover:bg-zinc-600
 			transition-all duration-300;
 			.icon {
-				@apply w-auto h-4 text-red-400;
+				@apply w-auto h-4 text-red-700;
+			}
+		}
+		.prices {
+			@apply ml-auto px-2.5 gap-1 flex items-center text-zinc-500 text-sm font-medium hover:text-zinc-700 hover:*:text-zinc-700 transition duration-300;
+			.icon {
+				@apply w-auto h-3.5 text-zinc-500;
 			}
 		}
 	}
