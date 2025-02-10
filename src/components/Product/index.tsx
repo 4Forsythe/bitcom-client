@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 import { AddWishlistButton, Badge, Button } from '@/components'
 
@@ -41,9 +41,10 @@ export const Product: React.FC<IProduct> = ({
 	price
 }) => {
 	const router = useRouter()
+	const pathname = usePathname()
 
 	const [imagePath, setImagePath] = React.useState<string | undefined>()
-	const [imageSrc, setImageSrc] = React.useState<string | undefined>(
+	const [imageSrc, setImageSrc] = React.useState<string>(
 		`${SERVER_BASE_URL}/${imageUrl}`
 	)
 
@@ -85,15 +86,15 @@ export const Product: React.FC<IProduct> = ({
 			<div className={styles.container}>
 				<div className={styles.cover}>
 					<Link
-						href={imageUrl ?? imagePath ?? window.location.href}
-						target={imageUrl ? '_blank' : '_self'}
+						href={imageUrl ?? imagePath ?? pathname}
+						target='_blank'
 					>
 						<Image
 							className={styles.image}
 							width={750}
 							height={750}
 							src={
-								imageSrc
+								imageUrl
 									? imageSrc
 									: category?.imageUrl
 										? `/static/${category.imageUrl}`
