@@ -8,7 +8,7 @@ import { Badge, Carousel, HomeWidget } from '@/components'
 
 import { SOCIALS } from './socials.data'
 import { NEWS_SLIDES } from './slides.data'
-import { EMAIL, PHONE } from '@/constants/contacts.constants'
+import { EMAIL } from '@/constants/contacts.constants'
 import { MARKETPLACES } from '@/constants/marketplaces.constants'
 
 import styles from './news.module.scss'
@@ -17,44 +17,33 @@ export const News: React.FC = () => {
 	return (
 		<section className={styles.container}>
 			<div className={styles.inner}>
-				<Carousel
-					slides={NEWS_SLIDES.map((slide) => (
-						<div className={styles.cover}>
-							<Image
-								className={styles.image}
-								width={1000}
-								height={500}
-								src={slide.imageUrl || '/static/image-placeholder.png'}
-								blurDataURL='/static/image-placeholder.png'
-								placeholder='blur'
-								alt={slide.tag}
-								priority
-							/>
-						</div>
-					))}
-					spaceBetween={14}
-					slidesPerView={1}
-					autoplay={5000}
-					navigation
-					loop
-				/>
-				<div className={styles.column}>
-					<HomeWidget title='Полезные ссылки'>
-						<div className={styles.socials}>
-							<Badge
-								className={styles.item}
-								href={`tel:${PHONE}`}
-								variant='outlined'
-							>
+				<div className={styles.slider}>
+					<Carousel
+						slides={NEWS_SLIDES.map((slide) => (
+							<div className={styles.cover}>
 								<Image
-									className={styles.icon}
-									width={64}
-									height={64}
-									src='/icons/Phone.svg'
-									alt='Телефон'
+									className={styles.image}
+									width={1000}
+									height={500}
+									src={slide.imageUrl || '/static/image-placeholder.png'}
+									blurDataURL='/static/image-placeholder.png'
+									placeholder='blur'
+									alt={slide.tag}
 									priority
 								/>
-							</Badge>
+							</div>
+						))}
+						spaceBetween={14}
+						slidesPerView={1}
+						autoplay={5000}
+						navigation
+						loop
+					/>
+				</div>
+
+				<div className={styles.column}>
+					<HomeWidget title='Контакты'>
+						<div className={styles.socials}>
 							<Badge
 								className={styles.item}
 								href={`mailto:${EMAIL}`}

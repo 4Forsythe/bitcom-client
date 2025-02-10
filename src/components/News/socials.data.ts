@@ -11,6 +11,11 @@ export const SOCIALS: SocialsType[] = [
 		imageUrl: '/icons/VK.svg'
 	},
 	{
+		tag: 'Whatsapp',
+		href: 'https://wa.me/79277839022',
+		imageUrl: '/icons/Whatsapp.svg'
+	},
+	{
 		tag: 'Telegram',
 		href: 'https://t.me/bitcom63',
 		imageUrl: '/icons/Telegram.svg'
