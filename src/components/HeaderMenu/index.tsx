@@ -25,6 +25,8 @@ export const HeaderMenu: React.FC = () => {
 	const router = useRouter()
 	const { onOpen } = useModal()
 
+	const isMounted = React.useRef(false)
+
 	const { isProfileLoading } = useProfile()
 	const { isCartLoading } = useCart()
 	const { isWishlistLoading } = useWishlist()
@@ -38,6 +40,10 @@ export const HeaderMenu: React.FC = () => {
 	const onAuthClick = () => {
 		!user ? onOpen(<AuthForm />) : router.push(ROUTE.PROFILE)
 	}
+
+	React.useEffect(() => {
+		isMounted.current = true
+	}, [])
 
 	const list: MenuButtonProps[] = [
 		{
@@ -61,7 +67,7 @@ export const HeaderMenu: React.FC = () => {
 
 	return (
 		<div className={styles.container}>
-			{isLoading ? (
+			{!isMounted.current && isLoading ? (
 				<React.Fragment>
 					{[...new Array(3)].map((_, index) => (
 						<Skeleton key={index} />
