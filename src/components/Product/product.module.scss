@@ -61,3 +61,37 @@
 		}
 	}
 }
+
+@media (max-width: 768px) {
+	.container {
+		@apply flex flex-col;
+	}
+}
+@media (max-width: 560px) {
+	.container {
+		.information {
+			.overview {
+				.head {
+					@apply flex-col-reverse items-start;
+				}
+			}
+			.options {
+				.availables {
+					@apply flex-wrap;
+				}
+			}
+		}
+	}
+}
+@media (max-width: 490px) {
+	.container {
+		@apply mb-0 p-4;
+		.information {
+			.options {
+				.features {
+					@apply flex-col-reverse items-start;
+				}
+			}
+		}
+	}
+}

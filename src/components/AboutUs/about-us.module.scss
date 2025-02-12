@@ -18,9 +18,14 @@
 }
 @media (max-width: 768px) {
 	.container {
-		@apply items-center;
+		@apply my-0;
+		.head {
+			.title {
+				@apply text-3xl;
+			}
+		}
 		.paragraph {
-			@apply pr-0;
+			@apply pr-0 text-[.95rem];
 		}
 	}
 }

@@ -33,8 +33,22 @@
 @media (max-width: 460px) {
 	.container {
 		.block {
-			.emoji {
-				@apply mb-3.5 text-5xl;
+			.icon {
+				@apply mb-2.5 h-16;
+			}
+		}
+	}
+}
+@media (max-width: 380px) {
+	.container {
+		@apply py-5;
+		.block {
+			@apply max-w-[80%];
+			.icon {
+				@apply mb-2 h-14;
+			}
+			.title {
+				@apply text-base;
 			}
 		}
 	}

@@ -8,3 +8,9 @@
 		}
 	}
 }
+
+@media (max-width: 380px) {
+	.container {
+		@apply my-1.5;
+	}
+}

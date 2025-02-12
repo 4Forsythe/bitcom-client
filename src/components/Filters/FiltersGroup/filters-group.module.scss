@@ -32,3 +32,16 @@
 		}
 	}
 }
+
+@media (max-width: 490px) {
+	.container {
+		.title {
+			@apply text-sm;
+		}
+		.items {
+			.item {
+				@apply text-xs;
+			}
+		}
+	}
+}

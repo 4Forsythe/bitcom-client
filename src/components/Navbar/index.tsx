@@ -23,9 +23,9 @@ export const Navbar: React.FC = () => {
 	if (!isMounted) {
 		return (
 			<div className={styles.container}>
-				<div className={styles.skeleton}>
+				<div className='w-full h-[220px] flex items-center justify-center bg-gray-600/10 animate-pulse rounded-xl shadow-sm'>
 					<Loader2
-						className={styles.loader}
+						className='opacity-35 animate-spin'
 						size={32}
 					/>
 				</div>

@@ -17,6 +17,9 @@
 }
 @media (max-width: 768px) {
 	.container {
+		.title {
+			@apply text-2xl;
+		}
 		.inner {
 			@apply grid-cols-2;
 		}

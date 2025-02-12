@@ -2,10 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import { MARKETPLACES } from '@/constants/marketplaces.constants'
 import { INFOS, SERVICES, CONTACTS } from './menu.data'
 
 import styles from './footer.module.scss'
-import { MARKETPLACES } from '@/constants/marketplaces.constants'
 
 export const Footer: React.FC = () => {
 	return (

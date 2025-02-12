@@ -19,14 +19,14 @@
 			}
 		}
 		.dropdown {
-			@apply max-w-[460px] min-w-[300px] left-0 top-[40px] bg-zinc-50 border border-zinc-200 absolute overflow-hidden rounded-xl shadow-lg;
+			@apply max-w-[460px] min-w-[300px] top-[100%] left-0 bg-zinc-50 border border-zinc-200 rounded-xl shadow-lg overflow-hidden absolute;
 			.menu {
 				@apply py-2 flex flex-col;
 				.item {
 					@apply px-2 py-0.5 text-sm;
 				}
 				.select {
-					@apply w-full h-full px-4 py-2 text-left rounded-xl hover:bg-zinc-200/70
+					@apply w-full h-full px-4 py-2 text-left rounded-lg hover:bg-zinc-200/70
 					transition-colors duration-200;
 					&.target {
 						@apply text-zinc-50 bg-red-400;
@@ -45,7 +45,7 @@
 }
 
 .popup {
-	@apply min-w-[20rem] max-w-[50rem] flex flex-1 flex-col;
+	@apply min-w-[20rem] max-w-[50rem] max-h-screen flex flex-1 flex-col;
 	.head {
 		@apply my-4 gap-2.5 inline-flex items-center;
 		.title {
@@ -80,6 +80,25 @@
 		.list {
 			.item {
 				@apply flex-col items-start;
+			}
+		}
+	}
+
+	.popup {
+		@apply w-full min-w-[10rem];
+		.head {
+			@apply my-1.5;
+			.title {
+				@apply text-xl;
+			}
+		}
+	}
+}
+@media (max-width: 380px) {
+	.container {
+		.list {
+			.dropdown {
+				@apply max-w-[250px];
 			}
 		}
 	}

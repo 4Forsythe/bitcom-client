@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { LayoutGrid, StretchHorizontal } from 'lucide-react'
 
 import { ViewType } from '@/components/ProductList'
+import { useWindowSize } from '@/hooks/useWindowSize'
 
 import styles from './list-view-button.module.scss'
 
@@ -20,6 +21,14 @@ export const ListViewButton: React.FC<IListViewButton> = ({
 	className,
 	onChange
 }) => {
+	const { width } = useWindowSize()
+
+	React.useEffect(() => {
+		if (width && width <= 768) {
+			onChange(ViewType.SIMPLE)
+		}
+	}, [width])
+
 	return (
 		<div className={clsx(styles.container, className)}>
 			<button

@@ -31,3 +31,11 @@
 		}
 	}
 }
+@media (max-width: 380px) {
+	.container {
+		@apply mb-0 px-4 flex flex-col;
+		.card {
+			@apply w-full;
+		}
+	}
+}

@@ -16,18 +16,23 @@
 			}
 		}
 	}
-	.skeleton {
-		@apply w-full h-[220px] flex items-center justify-center bg-gray-600/10 animate-pulse rounded-xl shadow-sm;
-		.loader {
-			@apply opacity-35 animate-spin;
-		}
-	}
 }
 
-@media (max-width: 768px) {
+@media (max-width: 940px) {
 	.container {
 		.items {
 			@apply gap-2.5;
+			.item {
+				.link {
+					@apply px-4 py-5;
+				}
+			}
+		}
+	}
+}
+@media (max-width: 768px) {
+	.container {
+		.items {
 			.item {
 				.link {
 					@apply px-3 py-3.5;

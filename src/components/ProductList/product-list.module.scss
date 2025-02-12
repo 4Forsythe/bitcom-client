@@ -37,13 +37,29 @@
 				@apply flex;
 			}
 			.list {
-				@apply gap-2 grid grid-cols-2;
+				&.vertical,
+				&.horizontal {
+					@apply gap-2 grid grid-cols-2;
+				}
 			}
 		}
 	}
 }
-@media (max-width: 768px) {
+@media (max-width: 530px) {
 	.container {
+		.inner {
+			.list {
+				&.vertical,
+				&.horizontal {
+					@apply gap-2 grid grid-cols-1;
+				}
+			}
+		}
+	}
+}
+@media (max-width: 380px) {
+	.container {
+		@apply px-1.5;
 		.inner {
 			.list {
 				@apply grid-cols-1;

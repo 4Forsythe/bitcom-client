@@ -1,5 +1,5 @@
 .container {
-	@apply my-2.5;
+	@apply my-2.5 px-2;
 	.items {
 		@apply flex items-center;
 		.item {
@@ -9,6 +9,16 @@
 			}
 			.divider {
 				@apply mx-2.5;
+			}
+		}
+	}
+}
+
+@media (max-width: 380px) {
+	.container {
+		.items {
+			.item {
+				@apply text-xs;
 			}
 		}
 	}

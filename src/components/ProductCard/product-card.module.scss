@@ -83,7 +83,10 @@
 			@apply w-full;
 		}
 		.details {
-			@apply ml-0 items-start;
+			@apply ml-0 flex-row flex-wrap items-center justify-between;
+			.avails {
+				@apply flex-col items-start;
+			}
 		}
 	}
 }
