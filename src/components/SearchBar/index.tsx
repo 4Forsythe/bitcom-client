@@ -126,6 +126,16 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 		}
 	}, [handleClickOutside])
 
+	React.useEffect(() => {
+		if (isFocused) {
+			document.body.style.overflow = 'hidden'
+
+			return () => {
+				document.body.style.overflow = 'auto'
+			}
+		}
+	}, [isFocused])
+
 	return (
 		<>
 			{isFocused && <div className={styles.overlay} />}
