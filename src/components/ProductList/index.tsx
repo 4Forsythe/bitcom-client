@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import clsx from 'clsx'
 import {
+	BackToTop,
 	SearchBar,
 	ProductCard,
 	EmptyBlock,
@@ -145,6 +146,8 @@ export const ProductList: React.FC<Props> = ({
 					<Pagination total={count} />
 				)}
 			</div>
+
+			<BackToTop />
 		</div>
 	)
 }

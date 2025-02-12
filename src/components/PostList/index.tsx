@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Pagination, PostCard, EmptyBlock } from '@/components'
+import { BackToTop, Pagination, PostCard, EmptyBlock } from '@/components'
 
 import type { FrontmatterPostType } from '@/types/post.types'
 
@@ -31,6 +31,8 @@ export const PostList: React.FC<IPostList> = ({ items }) => {
 
 				{items.length > 0 && <Pagination total={items.length} />}
 			</div>
+
+			<BackToTop />
 		</div>
 	)
 }

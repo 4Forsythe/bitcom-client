@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Clock } from 'lucide-react'
 import Markdown from 'markdown-to-jsx'
 
-import { Breadcrumb } from '../Breadcrumb'
+import { BackToTop, Breadcrumb } from '@/components'
 
 import { calcNounDate } from '@/utils/calc-noun-date'
 import { calcReadingTime } from '@/utils/calc-reading-time'
@@ -48,6 +48,8 @@ export const Post: React.FC<PostType> = ({
 			<div className={styles.content}>
 				<Markdown>{content.content}</Markdown>
 			</div>
+
+			<BackToTop />
 		</article>
 	)
 }

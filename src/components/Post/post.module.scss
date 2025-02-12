@@ -1,5 +1,5 @@
 .container {
-	@apply max-w-[1056px] w-full mx-auto px-28 pt-10 pb-14 bg-zinc-50 shadow-sm;
+	@apply max-w-[1056px] w-full mx-auto px-28 pt-10 pb-14 bg-zinc-50 shadow-sm relative;
 	.head {
 		@apply mt-5 mb-4 gap-2.5 inline-flex items-center;
 		.title {

@@ -1,5 +1,5 @@
 .container {
-	@apply h-fit gap-3 flex flex-1;
+	@apply h-fit gap-3 flex flex-1 relative;
 	.sidebar {
 		@apply w-[230px] h-full flex flex-col;
 	}
