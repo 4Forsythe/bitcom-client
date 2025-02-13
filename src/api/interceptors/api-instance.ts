@@ -10,7 +10,7 @@ import { authService } from '@/services/auth.service'
 const isServerFetch = typeof window === 'undefined'
 
 const options: CreateAxiosDefaults = {
-	baseURL: isServerFetch ? process.env.API_BASE_URL : '/api',
+	baseURL: isServerFetch ? process.env.API_BASE_URL : '/server/api',
 	headers: {
 		'Content-Type': 'application/json'
 	},
