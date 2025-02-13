@@ -139,7 +139,9 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 						<Trash size={18} />
 					</button>
 				</div>
-				<span className={styles.price}>{product.price} ₽</span>
+				<span className={styles.price}>
+					{+product.price > 0 ? `${product.price} ₽` : 'Цена по запросу'}
+				</span>
 			</div>
 		</div>
 	)

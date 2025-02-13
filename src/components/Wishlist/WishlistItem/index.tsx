@@ -15,10 +15,10 @@ import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 import { useDeleteCartItem } from '@/hooks/useDeleteCartItem'
 
 import { ROUTE } from '@/config/routes.config'
+import { SERVER_BASE_URL } from '@/constants'
 import type { WishlistItemType } from '@/types/wishlist.types'
 
 import styles from './wishlist-item.module.scss'
-import { SERVER_BASE_URL } from '@/constants'
 
 export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 	const { isCartLoading } = useCart()
@@ -88,7 +88,9 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 				</p>
 			</div>
 			<div className={styles.details}>
-				<p className={styles.price}>{product.price} ₽</p>
+				<p className={styles.price}>
+					{+product.price > 0 ? `${product.price} ₽` : 'Цена по запросу'}
+				</p>
 				<span className={styles.count}>В наличии {product.count} шт.</span>
 				<div className={styles.controls}>
 					<AddWishlistButton

@@ -33,7 +33,9 @@ export const Sidebar = () => {
 								: 'Нет товаров'}
 						</span>
 						<div className={styles.divider} />
-						<span className={styles.text}>{total} ₽</span>
+						<span className={styles.text}>
+							{+total > 0 ? `${total} ₽` : 'Цена на месте'}
+						</span>
 					</div>
 				</div>
 				<Button

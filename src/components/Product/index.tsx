@@ -159,7 +159,9 @@ export const Product: React.FC<IProduct> = ({
 									/>
 								</div>
 							)}
-							<span className={styles.price}>{price} ₽</span>
+							<span className={styles.price}>
+								{+price > 0 ? `${price} ₽` : 'Цена по запросу'}
+							</span>
 						</div>
 					</div>
 					<div className={styles.details}>

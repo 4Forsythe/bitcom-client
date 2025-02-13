@@ -47,7 +47,9 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 				<h1 className={styles.name}>{name}</h1>
 				<div className={styles.details}>
 					<span className={styles.text}>В наличии {count} шт.</span>
-					<span className={styles.price}>{price} ₽</span>
+					<span className={styles.price}>
+						{+price > 0 ? `${price} ₽` : 'Цена по запросу'}
+					</span>
 				</div>
 			</div>
 		</Link>

@@ -119,7 +119,9 @@ export const ProductCard: React.FC<IProductCard> = ({
 			</div>
 			<div className={styles.details}>
 				<div className={styles.avails}>
-					<p className={styles.price}>{price} ₽</p>
+					<p className={styles.price}>
+						{+price > 0 ? `${price} ₽` : 'Цена по запросу'}
+					</p>
 					<span className={styles.count}>В наличии {count} шт.</span>
 				</div>
 				{!isLoading && (
