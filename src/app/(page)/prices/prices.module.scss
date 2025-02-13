@@ -4,10 +4,9 @@
 		@apply w-fit mb-3.5 pb-1.5 border-b border-zinc-700/40 text-lg font-semibold;
 	}
 	.list {
-		@apply gap-1.5 flex items-center;
+		@apply py-2.5 gap-2 flex flex-col;
 		.chip {
-			@apply w-fit px-2.5 py-1.5 inline-flex font-medium text-zinc-700 bg-zinc-300 outline-none hover:text-zinc-50 hover:bg-zinc-700 rounded-md
-        transition-all duration-300;
+			@apply w-fit inline-flex font-medium text-zinc-700 underline;
 		}
 	}
 }

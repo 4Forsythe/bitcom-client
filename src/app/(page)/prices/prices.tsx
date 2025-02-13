@@ -10,12 +10,12 @@ interface IPrices {
 }
 
 export const Prices: React.FC<IPrices> = ({ items }) => {
-	const [prices, setPrices] = React.useState(items)
+	const [prices, setPrices] = React.useState<string[]>(items)
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.section}>
-				<h5 className={styles.title}>Наши прайс-листы</h5>
+				<h5 className={styles.title}>Скачать прайс-листы</h5>
 				<div className={styles.list}>
 					{prices.map((file, index) => (
 						<Link
