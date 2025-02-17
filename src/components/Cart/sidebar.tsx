@@ -6,13 +6,13 @@ import { calcNounDeclension } from '@/utils/calc-noun-declension'
 import { Badge } from '@/components/ui'
 import { Button } from '@/components/ui/Button'
 
+import { useUserStore } from '@/store/user'
 import { useCartStore } from '@/store/cart'
 import { useDeleteCart } from '@/hooks/useDeleteCart'
 import { useCreateOrder } from '@/hooks/useCreateOrder'
 import { EMAIL, PHONE, SECOND_PHONE } from '@/constants/contacts.constants'
 
 import styles from './cart.module.scss'
-import { useUserStore } from '@/store/user'
 
 export const Sidebar = () => {
 	const { isDeleteCartPending } = useDeleteCart()
@@ -28,24 +28,28 @@ export const Sidebar = () => {
 					<span className={styles.total}>Итого</span>
 					<div className={styles.amount}>
 						<span className={styles.text}>
-							{items.length
+							{items?.length > 0
 								? calcNounDeclension(items.length, 'товар', 'товара', 'товаров')
 								: 'Нет товаров'}
 						</span>
 						<div className={styles.divider} />
 						<span className={styles.text}>
-							{+total > 0 ? `${total} ₽` : 'Цена на месте'}
+							{items?.length > 0
+								? +total > 0
+									? `${total} ₽`
+									: 'Цена на месте'
+								: ''}
 						</span>
 					</div>
 				</div>
 				<Button
 					className={styles.action}
-					variant={!user || items.length === 0 ? 'outlined' : 'contained'}
+					variant={!user || items?.length === 0 ? 'outlined' : 'contained'}
 					type='submit'
 					isLoading={isCreateOrderPending || isDeleteCartPending}
 					disabled={
 						!user &&
-						(items.length === 0 || isCreateOrderPending || isDeleteCartPending)
+						(items?.length === 0 || isCreateOrderPending || isDeleteCartPending)
 					}
 				>
 					{!user ? 'Сначала войдите' : 'Оформить заказ'}

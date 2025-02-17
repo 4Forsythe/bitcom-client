@@ -37,7 +37,6 @@ import styles from './cart.module.scss'
 
 export const Cart: React.FC = () => {
 	const { onOpen } = useModal()
-	const { isProfileSuccess } = useProfile()
 	const { isCartLoading } = useCart()
 	const { createOrder } = useCreateOrder()
 
@@ -59,12 +58,12 @@ export const Cart: React.FC = () => {
 	React.useEffect(() => {
 		if (user) {
 			methods.reset({
-				customerName: user.name,
-				customerEmail: user.email,
-				customerPhone: user.phone
+				customerName: user.name || '',
+				customerEmail: user.email || '',
+				customerPhone: user.phone || ''
 			})
 		}
-	}, [isProfileSuccess])
+	}, [user])
 
 	const onSubmit = (data: OrderFormType) => {
 		if (!user) {
@@ -90,24 +89,25 @@ export const Cart: React.FC = () => {
 								{`Обратите внимание! Ваша корзина будет очищена через ${calcNounDeclension(calcDaysDifference(createdAt, 14), 'день', 'дня', 'дней')}. Войдите в систему, чтобы снять ограничения.`}
 							</InfoBlock>
 						)}
-						{isCartLoading
-							? [...new Array(3)].map((_, index) => (
-									<CartItemSkeleton key={index} />
-								))
-							: items.map((item) => (
-									<CartItem
-										key={item.id}
-										{...item}
-									/>
-								))}
+						{isCartLoading &&
+							[...new Array(3)].map((_, index) => (
+								<CartItemSkeleton key={index} />
+							))}
+						{items?.length > 0 &&
+							items.map((item) => (
+								<CartItem
+									key={item.id}
+									{...item}
+								/>
+							))}
 					</div>
-					{!isCartLoading && items.length === 0 && (
+					{!isCartLoading && (!items || items.length === 0) && (
 						<EmptyBlock
 							title='У вас пустая корзина'
 							description='Вы можете найти нужный товар в каталоге или через поиск сверху.'
 						/>
 					)}
-					{!isCartLoading && items.length > 0 && <OrderForm />}
+					{!isCartLoading && items?.length > 0 && <OrderForm />}
 				</div>
 				<Sidebar />
 			</form>

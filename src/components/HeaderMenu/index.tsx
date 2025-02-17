@@ -49,13 +49,13 @@ export const HeaderMenu: React.FC = () => {
 		{
 			title: 'Корзина',
 			icon: ShoppingCart,
-			badge: String(cart.length),
+			badge: String(cart ? cart.length : 0),
 			onClick: () => router.push(ROUTE.CART)
 		},
 		{
 			title: 'Желаемое',
 			icon: Heart,
-			badge: String(wishlist.length),
+			badge: String(wishlist ? wishlist.length : 0),
 			onClick: () => router.push(ROUTE.WISHLIST)
 		},
 		{
