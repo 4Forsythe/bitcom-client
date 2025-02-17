@@ -15,7 +15,7 @@
 						@apply text-sm hover:text-zinc-400 transition-colors duration-200;
 					}
 					.marketplaces {
-						@apply py-1.5 gap-1.5 flex items-center;
+						@apply py-1.5 gap-1.5 flex flex-wrap items-center;
 						.market {
 							@apply w-fit px-3 py-1 flex items-center justify-center grayscale bg-zinc-100 rounded-lg hover:bg-neutral-100/80 hover:grayscale-0 transition-colors duration-300;
 							.image {
@@ -81,6 +81,9 @@
 					.list {
 						.item {
 							@apply text-xs;
+						}
+						.marketplaces {
+							@apply flex-col items-start;
 						}
 					}
 				}

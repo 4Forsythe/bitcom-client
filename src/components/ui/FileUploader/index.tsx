@@ -21,9 +21,26 @@ export const FileUploader = React.forwardRef<HTMLInputElement, IFileUploader>(
 		{ label, placeholder, className, isError, isLoading, isSuccess, ...rest },
 		ref
 	) => {
+		const [isDragging, setIsDragging] = React.useState(false)
+
+		const handleDragLeave = (event: React.DragEvent) => {
+			event.preventDefault()
+			setIsDragging(false)
+		}
+
+		const handleDragEnter = (event: React.DragEvent) => {
+			event.preventDefault()
+			event.stopPropagation()
+
+			if (event.type === 'dragenter' || event.type === 'dragover') {
+				setIsDragging(true)
+			}
+		}
+
 		return (
 			<div
 				className={clsx(styles.container, className, {
+					[styles.dragging]: isDragging,
 					[styles.disabled]: rest.disabled,
 					[styles.warned]: isError,
 					[styles.loaded]: isLoading,
@@ -50,6 +67,9 @@ export const FileUploader = React.forwardRef<HTMLInputElement, IFileUploader>(
 					className={styles.input}
 					type='file'
 					disabled={isLoading}
+					onDragEnter={handleDragEnter}
+					onDragLeave={handleDragLeave}
+					onDrop={() => setIsDragging(false)}
 					{...rest}
 				/>
 

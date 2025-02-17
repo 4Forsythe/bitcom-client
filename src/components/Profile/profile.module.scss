@@ -19,3 +19,12 @@
 		@apply pt-1.5;
 	}
 }
+@media (max-width: 390px) {
+	.container {
+		.form {
+			.controls {
+				@apply pl-0;
+			}
+		}
+	}
+}

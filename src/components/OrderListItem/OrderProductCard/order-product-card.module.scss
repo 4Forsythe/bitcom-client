@@ -28,3 +28,9 @@
 		@apply text-sm font-semibold tracking-tighter text-center truncate transition duration-200;
 	}
 }
+
+@media (max-width: 362px) {
+	.container {
+		@apply max-w-full h-[180px];
+	}
+}

@@ -1,5 +1,5 @@
 .container {
-	@apply h-fit px-2.5 gap-5 flex;
+	@apply h-fit my-2 px-2.5 gap-5 flex;
 	.aside {
 		@apply w-fit h-full flex flex-col;
 	}
@@ -26,7 +26,7 @@
 @media (max-width: 390px) {
 	.container {
 		.inner {
-			@apply px-1.5;
+			@apply px-2.5;
 		}
 	}
 }

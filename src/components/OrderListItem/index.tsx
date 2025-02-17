@@ -2,7 +2,7 @@
 
 import clsx from 'clsx'
 
-import { Info, ChevronDown } from 'lucide-react'
+import { Info } from 'lucide-react'
 
 import { Badge } from '@/components/ui'
 import { OrderProductCard } from './OrderProductCard'
@@ -76,7 +76,10 @@ export const OrderListItem: React.FC<OrderType> = ({
 					>{`Всего ${calcNounDeclension(count, 'товар', 'товара', 'товаров')}`}</p>
 					<ul className={styles.list}>
 						{items.map((item) => (
-							<li key={item.id}>
+							<li
+								className={styles.listItem}
+								key={item.id}
+							>
 								<OrderProductCard {...item} />
 							</li>
 						))}

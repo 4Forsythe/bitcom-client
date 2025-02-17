@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ProfilePage() {
 	return (
 		<>
-			<Heading title='Личный кабинет' />
+			<Heading title='Настройки профиля' />
 			<Profile />
 		</>
 	)

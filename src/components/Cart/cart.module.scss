@@ -52,3 +52,24 @@
 		}
 	}
 }
+@media (max-width: 390px) {
+	.container {
+		.sidebar {
+			.block {
+				.summary {
+					.total {
+						@apply text-base;
+					}
+					.text {
+						@apply text-base;
+					}
+				}
+			}
+			.danger {
+				.text {
+					@apply text-xs;
+				}
+			}
+		}
+	}
+}

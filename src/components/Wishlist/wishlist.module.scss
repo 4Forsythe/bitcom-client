@@ -8,11 +8,11 @@
 @media (max-width: 768px) {
 	.container {
 		.list {
-			@apply px-1.5 grid grid-cols-2;
+			@apply px-1.5 gap-1.5 grid grid-cols-2;
 		}
 	}
 }
-@media (max-width: 560px) {
+@media (max-width: 530px) {
 	.container {
 		.list {
 			@apply grid grid-cols-1;

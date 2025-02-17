@@ -54,9 +54,15 @@
 	.container {
 		.form {
 			.fields {
+				.title {
+					@apply text-lg;
+				}
 				.field {
 					@apply grid-cols-1;
 				}
+			}
+			.policy {
+				@apply text-xs;
 			}
 		}
 	}

@@ -32,7 +32,7 @@ export const Wishlist: React.FC = () => {
 					</InfoBlock>
 				)}
 				{isWishlistLoading
-					? [...new Array(3)].map((_, index) => (
+					? [...new Array(4)].map((_, index) => (
 							<WishlistItemSkeleton key={index} />
 						))
 					: items.map((item) => (

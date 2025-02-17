@@ -1,6 +1,12 @@
 .container {
 	@apply w-full px-5 py-8 space-y-1.5 flex flex-col items-center justify-center text-zinc-500 border-2 border-dashed border-zinc-300 rounded-xl relative hover:text-zinc-700 hover:border-zinc-500
-	transition-colors duration-200;
+	transition duration-200;
+	&.dragging {
+		@apply bg-zinc-200/70 border-zinc-500 animate-pulse;
+		.label {
+			@apply text-xl;
+		}
+	}
 	&.disabled {
 		@apply bg-zinc-50 shadow-none;
 	}
@@ -27,5 +33,16 @@
 	}
 	.loader {
 		@apply w-10 h-10 text-zinc-700 animate-spin absolute;
+	}
+}
+
+@media (max-width: 564px) {
+	.container {
+		.label {
+			@apply text-lg;
+		}
+		.description {
+			@apply text-xs;
+		}
 	}
 }

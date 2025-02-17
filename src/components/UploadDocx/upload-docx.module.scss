@@ -25,3 +25,17 @@
 		}
 	}
 }
+
+@media (max-width: 564px) {
+	.container {
+		.uploads {
+			@apply my-2.5 pt-5;
+			.head {
+				@apply mb-1.5 text-base;
+			}
+			.description {
+				@apply text-sm;
+			}
+		}
+	}
+}

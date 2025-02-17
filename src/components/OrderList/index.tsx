@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { OrderListItem, Pagination, EmptyBlock } from '@/components'
+import { BackToTop, OrderListItem, Pagination, EmptyBlock } from '@/components'
 
 import { useOrders } from '@/hooks/useOrders'
 
@@ -38,6 +38,8 @@ export const OrderList: React.FC = () => {
 			)}
 
 			{items.length > 0 && <Pagination total={count} />}
+
+			<BackToTop />
 		</div>
 	)
 }
