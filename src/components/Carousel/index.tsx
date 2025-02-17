@@ -103,7 +103,12 @@ export const Carousel: React.FC<CarouselProps> = ({
 					</SwiperSlide>
 				))}
 
-				{isNavButtonsVisible && <NavButtons asHint={!!autoplay} />}
+				{isNavButtonsVisible && (
+					<NavButtons
+						asHint={!!autoplay}
+						isLoop={loop}
+					/>
+				)}
 			</Swiper>
 		</>
 	)

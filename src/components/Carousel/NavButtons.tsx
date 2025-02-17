@@ -10,9 +10,10 @@ import styles from './Carousel.module.scss'
 
 interface NavButtonsProps {
 	asHint?: boolean
+	isLoop?: boolean
 }
 
-export const NavButtons: React.FC<NavButtonsProps> = ({ asHint }) => {
+export const NavButtons: React.FC<NavButtonsProps> = ({ asHint, isLoop }) => {
 	const swiper = useSwiper()
 
 	const [hasReachBeginning, setHasReachBeginning] = React.useState(
@@ -20,33 +21,22 @@ export const NavButtons: React.FC<NavButtonsProps> = ({ asHint }) => {
 	)
 	const [hasReachEnd, setHasReachEnd] = React.useState(swiper.isEnd)
 
+	const setSwiperReaches = React.useCallback(() => {
+		setHasReachBeginning(swiper.isBeginning)
+		setHasReachEnd(swiper.isEnd)
+	}, [])
+
 	React.useEffect(() => {
-		swiper.on('slideChange', () => {
-			setHasReachBeginning(swiper.isBeginning)
-			setHasReachEnd(swiper.isEnd)
-		})
+		if (isLoop) {
+			swiper.on('slideChange', setSwiperReaches)
+			swiper.on('reachBeginning', setSwiperReaches)
+			swiper.on('reachEnd', setSwiperReaches)
 
-		swiper.on('reachBeginning', () => {
-			setHasReachBeginning(swiper.isBeginning)
-		})
-
-		swiper.on('reachEnd', () => {
-			setHasReachEnd(swiper.isEnd)
-		})
-
-		return () => {
-			swiper.off('slideChange', () => {
-				setHasReachBeginning(swiper.isBeginning)
-				setHasReachEnd(swiper.isEnd)
-			})
-
-			swiper.off('reachBeginning', () => {
-				setHasReachBeginning(swiper.isBeginning)
-			})
-
-			swiper.off('reachEnd', () => {
-				setHasReachEnd(swiper.isEnd)
-			})
+			return () => {
+				swiper.off('slideChange', setSwiperReaches)
+				swiper.off('reachBeginning', setSwiperReaches)
+				swiper.off('reachEnd', setSwiperReaches)
+			}
 		}
 	}, [swiper])
 
