@@ -1,7 +1,7 @@
 .container {
 	@apply inset-0 z-[1000] flex items-center justify-center fixed;
 	.inner {
-		@apply w-full max-w-[90%] gap-1 z-[1000] inline-flex items-center justify-center;
+		@apply p-3.5 gap-1 z-[1000] inline-flex items-center justify-center;
 		.dialog {
 			@apply w-full min-w-[20rem] max-w-[30rem] p-8 bg-zinc-50 rounded-xl shadow-xl;
 		}
@@ -20,7 +20,6 @@
 @media (max-width: 768px) {
 	.container {
 		.inner {
-			@apply gap-0;
 			.dialog {
 				@apply min-w-[50%] max-w-full p-4;
 			}
