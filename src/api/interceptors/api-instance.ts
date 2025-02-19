@@ -11,6 +11,7 @@ const isServerFetch = typeof window === 'undefined'
 
 const API_BASE_URL = process.env.API_BASE_URL
 const API_REWRITE_URL = process.env.NEXT_PUBLIC_API_GLOBAL_PREFIX
+const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL
 
 const options: CreateAxiosDefaults = {
 	baseURL: isServerFetch ? API_BASE_URL : API_REWRITE_URL,
@@ -23,12 +24,16 @@ const options: CreateAxiosDefaults = {
 export const api = axios.create(options)
 export const apiWithHeaders = axios.create(options)
 
+export const wp = axios.create({
+	baseURL: WORDPRESS_API_URL
+})
+
 apiWithHeaders.interceptors.request.use((config) => {
 	const accessToken = getAccessToken()
 
-	// if (!accessToken) {
-	// 	return Promise.reject(new Error('unauthorized or token expired'))
-	// }
+	if (!accessToken) {
+		return Promise.reject(new Error('[Unauthorized]: Access token is expired'))
+	}
 
 	if (config?.headers && accessToken) {
 		config.headers.Authorization = `Bearer ${accessToken}`
