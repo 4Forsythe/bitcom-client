@@ -40,8 +40,8 @@ export const OrderForm = () => {
 					<h5 className={styles.title}>1 Персональные данные</h5>
 					{user && (
 						<>
-							{!user.isActive && (
-								<InfoBlock>
+							{user && !user.isActive && (
+								<InfoBlock variant='outlined'>
 									Ваша учетная запись не активирована, поэтому при оформлении мы
 									отправим вам письмо для подтверждения заказа на{' '}
 									<b>{user.email}</b>.

@@ -25,7 +25,7 @@ export const useCreateOrder = () => {
 
 	const { deleteCart } = useDeleteCart()
 
-	const { mutate, isPending, isSuccess, isError } = useMutation({
+	const { mutate, isPending, isSuccess, isError, error } = useMutation({
 		mutationKey: ['create order'],
 		mutationFn: (data: OrderFormType) => orderService.create(data),
 		onSuccess: (response) => {
@@ -50,7 +50,7 @@ export const useCreateOrder = () => {
 				}
 
 				if (order.status === OrderStatus.CREATED) {
-					router.push(ROUTE.ORDERLIST)
+					router.push(`${ROUTE.THANKS}?order=${order.id}`)
 				}
 			}
 		}
@@ -60,6 +60,7 @@ export const useCreateOrder = () => {
 		createOrder: mutate,
 		isCreateOrderPending: isPending,
 		isCreateOrderSuccess: isSuccess,
-		isCreateOrderError: isError
+		isCreateOrderError: isError,
+		createOrderError: error
 	}
 }

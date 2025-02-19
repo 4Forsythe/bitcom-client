@@ -5,12 +5,12 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import { Button } from '@/components'
 import { ROUTE } from '@/config/routes.config'
+import { PHONE, SECOND_PHONE } from '@/constants'
 
 import type { UserType } from '@/types/user.types'
 import type { OrderType } from '@/types/order.types'
 
 import styles from './thanks.module.scss'
-import { PHONE, SECOND_PHONE } from '@/constants'
 
 interface IThanks {
 	user: UserType
