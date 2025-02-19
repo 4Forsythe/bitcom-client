@@ -16,7 +16,7 @@ const nextConfig = {
 					destination: `${API_BASE_URL}/:path*`
 				}
 			]
-		}
+		} else return []
 	},
 	images: {
 		remotePatterns: [
