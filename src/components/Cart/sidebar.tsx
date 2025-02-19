@@ -55,7 +55,10 @@ export const Sidebar = () => {
 					{!user ? 'Сначала войдите' : 'Оформить заказ'}
 				</Button>
 			</div>
-			<Badge className={styles.danger}>
+			<Badge
+				className={styles.danger}
+				variant='contained'
+			>
 				<span className={styles.text}>
 					К сожалению, на данный момент у нас отсутствуют некоторые способы
 					оплаты и доставки заказов.

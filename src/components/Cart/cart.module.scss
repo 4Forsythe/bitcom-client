@@ -7,7 +7,7 @@
 		}
 	}
 	.sidebar {
-		@apply w-[350px] h-fit top-[120px] sticky;
+		@apply w-[350px] h-fit top-[120px] flex flex-col sticky;
 		.block {
 			@apply mb-5 px-4 pt-4 pb-5 gap-5 flex flex-col bg-zinc-50 rounded-lg shadow-sm;
 			.summary {
@@ -30,7 +30,7 @@
 			}
 		}
 		.danger {
-			@apply p-4 leading-[1.6] rounded-lg;
+			@apply w-full p-4 leading-[1.6] text-zinc-700 bg-neutral-200 rounded-lg shadow;
 			.text {
 				@apply text-sm;
 				.divider {
@@ -48,7 +48,7 @@
 			@apply mb-4;
 		}
 		.sidebar {
-			@apply w-full;
+			@apply w-full flex-col-reverse;
 		}
 	}
 }

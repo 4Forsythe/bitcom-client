@@ -2,8 +2,9 @@
 
 import React from 'react'
 
-import { FormProvider, useForm } from 'react-hook-form'
+import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
 
 import { Sidebar } from './sidebar'
 import { VerifyOrderModal } from './VerifyOrderModal'
@@ -38,10 +39,18 @@ import styles from './cart.module.scss'
 export const Cart: React.FC = () => {
 	const { onOpen } = useModal()
 	const { isCartLoading } = useCart()
-	const { createOrder } = useCreateOrder()
+	const { createOrder, isCreateOrderError, createOrderError } = useCreateOrder()
 
 	const { user } = useUserStore()
 	const { items, createdAt } = useCartStore()
+
+	const isTooManyOrders =
+		axios.isAxiosError(createOrderError) &&
+		createOrderError.response?.data.message === 'TOO_MANY_ORDERS'
+
+	React.useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+	}, [isTooManyOrders])
 
 	const methods = useForm<OrderFormType>({
 		mode: 'onSubmit',
@@ -55,12 +64,16 @@ export const Cart: React.FC = () => {
 		}
 	})
 
+	console.log(methods.getValues())
+
 	React.useEffect(() => {
 		if (user) {
 			methods.reset({
 				customerName: user.name || '',
 				customerEmail: user.email || '',
-				customerPhone: user.phone || ''
+				customerPhone: user.phone || '',
+				paymentMethod: methods.getValues('paymentMethod'),
+				gettingMethod: methods.getValues('gettingMethod')
 			})
 		}
 	}, [user])
@@ -87,6 +100,17 @@ export const Cart: React.FC = () => {
 						{createdAt && items.length > 0 && !user && (
 							<InfoBlock>
 								{`Обратите внимание! Ваша корзина будет очищена через ${calcNounDeclension(calcDaysDifference(createdAt, 14), 'день', 'дня', 'дней')}. Войдите в систему, чтобы снять ограничения.`}
+							</InfoBlock>
+						)}
+						{isTooManyOrders && (
+							<InfoBlock variant='dangerous'>
+								<p>
+									Приносим свои извинения, но мы не можем отслеживать более 10
+									активных заказов за раз.
+									<br />
+									Попробуйте повторить попытку <u>через 24 часа</u> после
+									получения или отмены заказа по номеру телефона.
+								</p>
 							</InfoBlock>
 						)}
 						{isCartLoading &&
