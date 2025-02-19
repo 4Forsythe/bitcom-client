@@ -7,7 +7,7 @@ import styles from './InfoBlock.module.scss'
 
 interface InfoBlockProps {
 	children: string | React.ReactNode
-	variant?: 'contained' | 'outlined'
+	variant?: 'contained' | 'outlined' | 'dangerous' | 'knowledge'
 }
 
 export const InfoBlock = ({
@@ -18,11 +18,17 @@ export const InfoBlock = ({
 		<div
 			className={clsx(styles.container, {
 				[styles.contained]: variant === 'contained',
-				[styles.outlined]: variant === 'outlined'
+				[styles.outlined]: variant === 'outlined',
+				[styles.dangerous]: variant === 'dangerous',
+				[styles.knowledge]: variant === 'knowledge'
 			})}
 		>
 			<div className={styles.inner}>
-				<Info className={styles.icon} />
+				{variant === 'dangerous' ? (
+					<div className={styles.separator} />
+				) : (
+					<Info className={styles.icon} />
+				)}
 				<p>{children}</p>
 			</div>
 		</div>

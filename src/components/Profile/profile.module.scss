@@ -1,15 +1,12 @@
 .container {
 	@apply h-full pt-5 border-t border-zinc-300;
 	.form {
-		@apply max-w-96 mb-3.5 gap-3 flex flex-col;
-		.message {
-			@apply w-fit px-2.5 py-0.5 gap-0.5 inline-flex items-center text-sm text-red-600 bg-red-200/50 rounded-md;
-			.icon {
-				@apply w-auto h-3;
-			}
+		@apply mb-3.5 gap-3 flex flex-col;
+		.settings {
+			@apply w-full max-w-96 gap-3 flex flex-col;
 		}
 		.controls {
-			@apply mt-1.5 pl-2.5 gap-3 inline-flex items-center;
+			@apply mt-1.5 gap-3 inline-flex items-center;
 		}
 	}
 }

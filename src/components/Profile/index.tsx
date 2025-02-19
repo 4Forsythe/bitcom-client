@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form'
 
 import { ProfileSkeleton } from './skeleton'
-import { Button, Field, FormField } from '@/components'
+import { Button, Field, FormField, InfoBlock } from '@/components'
 
 import { useProfile } from '@/hooks/useProfile'
 import { useUpdateProfile } from '@/hooks/useUpdateProfile'
@@ -46,6 +46,7 @@ export const Profile: React.FC = () => {
 			reset({
 				id: profile.id,
 				name: profile.name,
+				phone: profile.phone,
 				email: profile.email
 			})
 		}
@@ -68,42 +69,50 @@ export const Profile: React.FC = () => {
 						className={clsx(styles.form, 'animate-opacity')}
 						onSubmit={handleSubmit(onSubmit)}
 					>
-						{message && <span className={styles.message}>{message}</span>}
-						<FormField
-							name='name'
-							label='Ваше имя'
-							isError={isUpdateProfileError}
-							isLoading={isUpdateProfilePending}
-						/>
-						<Controller
-							name='phone'
-							control={control}
-							render={({ field: { onChange, value } }) => (
-								<FormField
-									name='phone'
-									label='Номер телефона'
-									value={value}
-									onChange={(event) =>
-										onChange(formatPhone(event.target.value))
-									}
-									isError={isUpdateProfileError}
-									isLoading={isUpdateProfilePending}
-								/>
-							)}
-						/>
-						<FormField
-							name='email'
-							label='Электронная почта'
-							readOnly
-							disabled
-						/>
-						<FormField
-							name='password'
-							label='Сменить пароль'
-							type='password'
-							isError={isUpdateProfileError}
-							isLoading={isUpdateProfilePending}
-						/>
+						<InfoBlock variant='knowledge'>
+							Сейчас мы только лишь ведем разработку над этим разделом. В
+							будущем появится больше информации.
+						</InfoBlock>
+
+						<div className={styles.settings}>
+							{message && <span className={styles.message}>{message}</span>}
+							<FormField
+								name='name'
+								label='Ваше имя'
+								isError={isUpdateProfileError}
+								isLoading={isUpdateProfilePending}
+							/>
+							<Controller
+								name='phone'
+								control={control}
+								render={({ field: { onChange, value } }) => (
+									<FormField
+										name='phone'
+										label='Номер телефона'
+										value={value}
+										onChange={(event) =>
+											onChange(formatPhone(event.target.value))
+										}
+										isError={isUpdateProfileError}
+										isLoading={isUpdateProfilePending}
+									/>
+								)}
+							/>
+							<FormField
+								name='email'
+								label='Электронная почта'
+								readOnly
+								disabled
+							/>
+							<FormField
+								name='password'
+								label='Сменить пароль'
+								type='password'
+								isError={isUpdateProfileError}
+								isLoading={isUpdateProfilePending}
+							/>
+						</div>
+
 						<div className={styles.controls}>
 							<Button
 								variant={
@@ -115,7 +124,7 @@ export const Profile: React.FC = () => {
 								isLoading={isUpdateProfilePending}
 								disabled={!isDirty || (!isDirty && isSubmitted)}
 							>
-								Сохранить изменения
+								Обновить
 							</Button>
 						</div>
 					</form>
