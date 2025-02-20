@@ -1,0 +1,15 @@
+.container {
+	@apply p-10 gap-5 flex flex-col bg-neutral-50 shadow-sm;
+	.paragraph {
+		@apply text-base font-medium;
+	}
+}
+
+@media (max-width: 460px) {
+	.container {
+		@apply p-2.5;
+		.paragraph {
+			@apply text-sm;
+		}
+	}
+}

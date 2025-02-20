@@ -1,5 +1,3 @@
-import type { Metadata } from 'next'
-
 import { Breadcrumb, Heading, PostList } from '@/components'
 
 import { getSearchParams } from '@/utils/get-search-params'
@@ -18,25 +16,6 @@ const getPosts = async (searchParams?: {
 	})
 }
 
-export const generateMetadata = async ({
-	searchParams
-}: BlogPageProps): Promise<Metadata> => {
-	const data = await getPosts(searchParams)
-
-	if (!data) {
-		return {
-			title: 'Техноблог «БитКом» — самое интересное в мире техники'
-		}
-	}
-
-	const items = data.map((item) => item.title).join(', ')
-
-	return {
-		title: 'Техноблог «БитКом» — полезные статьи в мире техники',
-		description: `Читать самые последние статьи на техноблоге «БитКом» о промышленной и электронной технике. ${items} и т.д.`
-	}
-}
-
 interface BlogPageProps {
 	searchParams?: { [key: string]: string | undefined }
 }
@@ -50,7 +29,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 				value='Блог'
 				items={[{ href: ROUTE.HOME, value: 'Главная' }]}
 			/>
-			<Heading title='Блог' />
+			<Heading title='Техноблог' />
 			<PostList items={posts} />
 		</>
 	)

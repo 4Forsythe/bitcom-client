@@ -17,7 +17,7 @@ export const generateMetadata = async ({
 
 		return {
 			title: title,
-			description: `Статья «${title}» опубликована ${new Date(lastModified).toLocaleDateString()} г. Ожидаемая продолжительность изучения — ${reading > 0 ? `${reading} минут` : 'менее минуты'}.`
+			description: `Статья «${title}» опубликована ${new Date(lastModified).toLocaleDateString()} г. Ожидаемая продолжительность чтения — ${reading > 0 ? `${reading} минут` : 'менее минуты'}.`
 		}
 	}
 

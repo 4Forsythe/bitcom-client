@@ -7,8 +7,7 @@ import { Source_Sans_3 } from 'next/font/google'
 import { Providers } from './providers'
 import { ModalProvider } from '@/contexts/ModalContext'
 import { Header, Footer, CookieBanner, YandexMetrika } from '@/components'
-
-import { SITE_NAME, SITE_DESCRIPTION } from '@/constants/seo.constants'
+import { SITE_NAME, SITE_DESCRIPTION } from '@/constants'
 
 import '@/styles/main.scss'
 
@@ -22,6 +21,7 @@ const sourceSans = Source_Sans_3({
 })
 
 export const metadata: Metadata = {
+	metadataBase: new URL(process.env.BASE_URL as string),
 	title: {
 		default: SITE_NAME,
 		template: `%s | ${SITE_NAME}`

@@ -1,9 +1,18 @@
+import type { Metadata } from 'next'
+
 import { ProfileSidebar } from '@/components/Profile/Sidebar'
 
 import { Breadcrumb } from '@/components'
 import { ROUTE } from '@/config/routes.config'
 
 import styles from './dashboard.module.scss'
+
+export const metadata: Metadata = {
+	title: {
+		default: 'БитКом — Личный кабинет',
+		template: '%s | БитКом — Личный кабинет'
+	}
+}
 
 export default function DashboardLayout({
 	children

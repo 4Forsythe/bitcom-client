@@ -5,7 +5,7 @@ import { Heading, Profile } from '@/components'
 import { NO_INDEX } from '@/constants'
 
 export const metadata: Metadata = {
-	title: 'Личный кабинет',
+	title: 'Настройки профиля',
 	...NO_INDEX
 }
 
