@@ -18,6 +18,7 @@ class ROUTES {
 	UPLOAD_DOCX = `${this.BASE_URL}my/upload-docx`
 
 	BLOG = `${this.BASE_URL}blog`
+	ARTICLES = `${this.BASE_URL}articles`
 
 	SERVICE = `${this.BASE_URL}service-center`
 	ASSEMBLY = `${this.BASE_URL}build-pc`
