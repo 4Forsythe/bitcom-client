@@ -1,0 +1,21 @@
+.container {
+	@apply p-10 gap-5 flex flex-col bg-neutral-50 shadow-sm;
+	.title {
+		@apply w-fit mb-3.5 pb-1.5 border-b border-zinc-700/40 text-lg font-semibold;
+	}
+	.list {
+		@apply py-2.5 gap-2 flex flex-col;
+		.link {
+			@apply w-fit inline-flex font-medium text-zinc-700/70 hover:text-zinc-700 underline transition duration-200;
+		}
+	}
+}
+
+@media (max-width: 460px) {
+	.container {
+		@apply px-2.5;
+		.title {
+			@apply text-base;
+		}
+	}
+}

@@ -3,40 +3,43 @@ import Image from 'next/image'
 
 import { Clock } from 'lucide-react'
 import Markdown from 'markdown-to-jsx'
+import sanitizeHtml from 'sanitize-html'
 
-import { BackToTop, Breadcrumb } from '@/components'
-
-import { calcNounDate } from '@/utils/calc-noun-date'
-import { calcReadingTime } from '@/utils/calc-reading-time'
 import { ROUTE } from '@/config/routes.config'
+import { BackToTop, Breadcrumb } from '@/components'
+import { calcReadingTime } from '@/utils/calc-reading-time'
 
-import type { PostType } from '@/types/post.types'
+import type { WP_REST_API_Page } from 'wp-types'
 
 import styles from './post.module.scss'
 
-export const Post: React.FC<PostType> = ({
+export const StaticPage: React.FC<WP_REST_API_Page> = ({
 	title,
 	content,
-	reading,
-	lastModified
+	modified
 }) => {
+	const reading = calcReadingTime(content.rendered)
+	const cleanHtml = sanitizeHtml(content.rendered)
+	const readyHtml = cleanHtml.replace(/ class=/g, ' className=')
+
 	return (
 		<article className={styles.container}>
 			<Breadcrumb
-				value={title}
+				value={title.rendered}
 				items={[
 					{ href: ROUTE.HOME, value: 'Главная' },
-					{ href: ROUTE.BLOG, value: 'Блог' }
+					{ href: ROUTE.ARTICLES, value: 'Информация' }
 				]}
 			/>
+
 			<div className={styles.head}>
-				<h1 className={styles.title}>{title}</h1>
+				<h1 className={styles.title}>{title.rendered}</h1>
 			</div>
 
 			<div className={styles.information}>
 				<div className={styles.meta}>
 					<span className={styles.tag}>
-						{`Опубликовано ${new Date(lastModified).toLocaleDateString()}`}
+						{`Опубликовано ${new Date(modified).toLocaleDateString()}`}
 					</span>
 					<div className={styles.tag}>
 						<Clock className={styles.icon} />
@@ -46,12 +49,10 @@ export const Post: React.FC<PostType> = ({
 			</div>
 
 			<div className={styles.content}>
-				<Markdown>{content.content}</Markdown>
+				<Markdown>{readyHtml}</Markdown>
 			</div>
 
 			<BackToTop />
 		</article>
 	)
 }
-
-export { StaticPage } from './static-page'
