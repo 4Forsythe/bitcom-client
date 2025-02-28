@@ -3,6 +3,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
+import toast from 'react-hot-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { ROUTE } from '@/config/routes.config'
@@ -30,6 +31,9 @@ export const useCreateOrder = () => {
 		mutationFn: (data: OrderFormType) => orderService.create(data),
 		onSuccess: (response) => {
 			setOrder(response)
+		},
+		onError: () => {
+			toast.error('Возникла ошибка при создании заказа')
 		}
 	})
 
