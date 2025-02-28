@@ -54,4 +54,4 @@ export const Post: React.FC<PostType> = ({
 	)
 }
 
-export { StaticPage } from './static-page'
+export { WordpressPage } from './wordpress-page'

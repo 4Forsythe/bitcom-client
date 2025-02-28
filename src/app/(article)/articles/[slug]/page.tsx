@@ -1,18 +1,27 @@
 import type { Metadata } from 'next'
 
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
 
-import { Breadcrumb, StaticPage } from '@/components'
+import { WordpressPage } from '@/components'
 
-import { ROUTE } from '@/config/routes.config'
 import { wordpressService } from '@/services/wordpress.service'
+
+const getWordpressPage = cache(async (slug: string) => {
+	try {
+		const data = await wordpressService.getPage(slug)
+		return data
+	} catch (error) {
+		console.error('[WORDPRESS_PAGE] Failed to getWordpressPage:', error)
+	}
+})
 
 export const generateMetadata = async ({
 	params
 }: Props): Promise<Metadata> => {
 	const { slug } = params
 
-	const data = await wordpressService.getPage(slug)
+	const data = await getWordpressPage(slug)
 
 	if (data) {
 		const { title, excerpt } = data
@@ -29,10 +38,10 @@ interface Props {
 	params: { slug: string }
 }
 
-export default async function WordpressPage({ params }: Props) {
-	const data = await wordpressService.getPage(params.slug)
+export default async function ArticlePage({ params }: Props) {
+	const data = await getWordpressPage(params.slug)
 
 	if (!data) return notFound()
 
-	return <StaticPage {...data} />
+	return <WordpressPage {...data} />
 }
