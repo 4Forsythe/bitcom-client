@@ -31,10 +31,6 @@ export const wp = axios.create({
 apiWithHeaders.interceptors.request.use((config) => {
 	const accessToken = getAccessToken()
 
-	if (!accessToken) {
-		return Promise.reject(new Error('[Unauthorized]: Access token is expired'))
-	}
-
 	if (config?.headers && accessToken) {
 		config.headers.Authorization = `Bearer ${accessToken}`
 	}
@@ -45,21 +41,24 @@ apiWithHeaders.interceptors.request.use((config) => {
 apiWithHeaders.interceptors.response.use(
 	(config) => config,
 	async (error) => {
-		const req = error.config
+		const errorConfig = error.config
 
-		if (
+		const conditions =
 			(error?.response?.status === 401 ||
 				catchErrorMessage(error) === 'JWT is expired' ||
 				catchErrorMessage(error) === 'JWT must be provided') &&
-			error.config &&
+			Boolean(error.config) &&
 			!error.config._isRetry
-		) {
-			req._isRetry = true
+
+		if (conditions) {
+			errorConfig._isRetry = true
+
 			try {
 				await authService.getTokens()
-				return apiWithHeaders.request(req)
+				return apiWithHeaders.request(errorConfig)
 			} catch (error) {
-				catchErrorMessage(error) === 'JWT is expired' && removeAccessToken()
+				catchErrorMessage(error) === 'Refresh token is not passed' &&
+					removeAccessToken()
 			}
 		}
 
