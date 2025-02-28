@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
 
+import clsx from 'clsx'
 import { AddWishlistButton, Badge, Button } from '@/components'
 
 import { useCartStore } from '@/store/cart'
@@ -90,7 +91,9 @@ export const Product: React.FC<IProduct> = ({
 						target='_blank'
 					>
 						<Image
-							className={styles.image}
+							className={clsx(styles.image, {
+								[styles.placeholder]: !imageUrl
+							})}
 							width={750}
 							height={750}
 							src={

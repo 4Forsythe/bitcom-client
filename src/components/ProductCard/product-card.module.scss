@@ -5,6 +5,9 @@
 		.image {
 			@apply w-[80%] max-h-[80%] h-auto object-cover;
 		}
+		.placeholder {
+			@apply grayscale opacity-50 contrast-200;
+		}
 	}
 	.information {
 		@apply gap-1.5 flex flex-1 flex-col grow;

@@ -15,7 +15,10 @@
 			.link {
 				@apply w-[100px] block;
 				.image {
-					@apply max-w-[100px] max-h-[100px] m-auto rounded object-cover;
+					@apply w-full max-h-full h-auto object-cover;
+				}
+				.placeholder {
+					@apply grayscale opacity-50 contrast-200;
 				}
 			}
 			.barcode {

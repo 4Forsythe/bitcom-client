@@ -80,7 +80,9 @@ export const ProductCard: React.FC<IProductCard> = ({
 				href={`${ROUTE.PRODUCT}/${id}`}
 			>
 				<Image
-					className={styles.image}
+					className={clsx(styles.image, {
+						[styles.placeholder]: !imageUrl
+					})}
 					width={450}
 					height={450}
 					src={

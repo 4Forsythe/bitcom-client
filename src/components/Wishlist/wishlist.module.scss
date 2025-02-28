@@ -1,5 +1,8 @@
 .container {
 	@apply h-full flex flex-col;
+	.heading {
+		@apply mb-1.5 px-4;
+	}
 	.list {
 		@apply px-4 gap-3.5 flex flex-col;
 	}

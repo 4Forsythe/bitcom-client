@@ -3,7 +3,10 @@
 	.cover {
 		@apply w-[200px] h-[200px] flex items-center justify-center rounded-lg overflow-hidden;
 		.image {
-			@apply w-full h-full object-cover;
+			@apply w-full max-h-full h-auto object-cover;
+		}
+		.placeholder {
+			@apply grayscale opacity-50 contrast-200;
 		}
 	}
 	.information {

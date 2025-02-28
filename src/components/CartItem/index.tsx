@@ -71,13 +71,17 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 						href={`${ROUTE.PRODUCT}/${product.id}`}
 					>
 						<Image
-							className={styles.image}
+							className={clsx(styles.image, {
+								[styles.placeholder]: !product.imageUrl
+							})}
 							width={100}
 							height={100}
 							src={
 								product.imageUrl
 									? `${SERVER_BASE_URL}/${product.imageUrl}`
-									: '/static/image-placeholder.png'
+									: product.category?.imageUrl
+										? `/static/${product.category.imageUrl}`
+										: '/static/image-placeholder.png'
 							}
 							placeholder='blur'
 							blurDataURL='/static/image-placeholder.png'

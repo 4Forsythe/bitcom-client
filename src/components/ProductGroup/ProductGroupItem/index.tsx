@@ -26,7 +26,8 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 			<div className={styles.cover}>
 				<Image
 					className={clsx(styles.image, {
-						[styles.placeholder]: !imageUrl && category?.imageUrl
+						[styles.placeholder]: !imageUrl && !category?.imageUrl,
+						[styles.categoryImage]: !imageUrl && category?.imageUrl
 					})}
 					width={200}
 					height={200}
