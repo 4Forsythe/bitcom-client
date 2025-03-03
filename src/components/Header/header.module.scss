@@ -22,7 +22,7 @@
 	.inner {
 		@apply max-w-[1280px] mx-auto my-0 px-2.5 gap-2 flex flex-col;
 		.menu {
-			@apply h-20 pt-1.5 gap-7 flex items-center;
+			@apply h-20 px-3.5 pt-1.5 gap-7 flex items-center;
 			.logotype {
 				@apply outline-none select-none;
 				.image {
@@ -66,7 +66,7 @@
 		}
 	}
 }
-@media (max-width: 350px) {
+@media (max-width: 430px) {
 	.container {
 		.inner {
 			.menu {

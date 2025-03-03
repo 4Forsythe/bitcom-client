@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { CircleUser, Heart, Search, ShoppingCart } from 'lucide-react'
 
 import { AuthForm } from '@/components'
-import { Skeleton } from '@/components/ui/MenuButton/Skeleton'
 import { MenuButton, type MenuButtonProps } from '@/components/ui/MenuButton'
 
 import { useModal } from '@/hooks/useModal'
@@ -67,29 +66,22 @@ export const HeaderMenu: React.FC = () => {
 
 	return (
 		<div className={styles.container}>
-			{!isMounted.current && isLoading ? (
-				<React.Fragment>
-					{[...new Array(3)].map((_, index) => (
-						<Skeleton key={index} />
-					))}
-				</React.Fragment>
-			) : (
-				<React.Fragment>
-					<div className={styles.search}>
-						<MenuButton
-							title='Поиск'
-							icon={Search}
-							onClick={() => router.push(ROUTE.SEARCH)}
-						/>
-					</div>
-					{list.map((item, index) => (
-						<MenuButton
-							key={index}
-							{...item}
-						/>
-					))}
-				</React.Fragment>
-			)}
+			<React.Fragment>
+				<div className={styles.search}>
+					<MenuButton
+						title='Поиск'
+						icon={Search}
+						onClick={() => router.push(ROUTE.SEARCH)}
+					/>
+				</div>
+				{list.map((item, index) => (
+					<MenuButton
+						key={index}
+						{...item}
+						isLoading={isLoading}
+					/>
+				))}
+			</React.Fragment>
 		</div>
 	)
 }

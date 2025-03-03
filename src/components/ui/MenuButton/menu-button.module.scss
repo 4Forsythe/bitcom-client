@@ -1,6 +1,9 @@
 .container {
 	@apply w-[95px] px-1.5 py-2.5 flex flex-col items-center text-zinc-500 font-medium rounded-lg outline-none truncate relative
   hover:text-zinc-700 hover:bg-zinc-100 hover:shadow-sm transition-all duration-200;
+	&.loading {
+		@apply *:opacity-15 bg-gray-500/10;
+	}
 	.icon {
 		@apply w-auto h-5 mb-0.5 text-zinc-500;
 	}
@@ -9,6 +12,12 @@
 	}
 	.badge {
 		@apply top-0 right-0 m-0.5 px-2 text-sm leading-5 text-zinc-200 bg-red-500 rounded-xl absolute;
+	}
+	.loader {
+		@apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75 absolute;
+		.icon {
+			@apply w-auto h-5 animate-spin;
+		}
 	}
 }
 
