@@ -1,0 +1,30 @@
+.wrapper {
+	@apply bottom-0 w-full p-3.5 z-[1000] fixed;
+	.container {
+		@apply w-full max-w-[30rem] ml-auto gap-5 p-5 flex items-end bg-zinc-50 border-2 border-zinc-400/30 rounded-2xl shadow-xl shadow-zinc-500/30 relative;
+		.inner {
+			@apply flex flex-col;
+			.head {
+				@apply mb-1.5 gap-1.5 flex items-center;
+				.title {
+					@apply text-lg font-bold;
+				}
+			}
+			.text {
+				@apply text-sm;
+			}
+			.allow {
+				@apply w-fit self-end rounded-2xl;
+			}
+		}
+		.close {
+			@apply top-2 right-2 absolute;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.wrapper {
+		@apply p-2.5;
+	}
+}

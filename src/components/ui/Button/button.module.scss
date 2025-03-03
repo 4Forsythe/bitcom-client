@@ -2,6 +2,9 @@
 	@apply gap-2.5 flex flex-col;
 	.variant {
 		@apply px-7 py-2.5 gap-1.5 flex flex-1 items-center justify-center font-semibold rounded-md relative;
+		&.small {
+			@apply px-5 py-1.5 text-sm;
+		}
 		&.contained {
 			@apply text-zinc-200 bg-red-600/90 hover:bg-red-700/90 active:bg-red-600/90
 			transition-colors duration-200;
@@ -36,5 +39,13 @@
 	}
 	.error {
 		@apply w-fit px-2.5 py-0.5 gap-0.5 inline-flex items-center text-sm text-red-600 bg-red-100 rounded-md;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		.variant {
+			@apply px-5 py-1.5 text-sm;
+		}
 	}
 }

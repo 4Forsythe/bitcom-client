@@ -4,6 +4,7 @@ import { LoaderCircle } from 'lucide-react'
 import styles from './button.module.scss'
 
 interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	size?: 'sm' | 'md'
 	variant?: 'contained' | 'outlined' | 'transparent'
 	error?: string
 	isLoading?: boolean
@@ -12,6 +13,7 @@ interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = ({
 	children,
+	size = 'md',
 	variant = 'contained',
 	error,
 	isLoading,
@@ -22,6 +24,7 @@ export const Button = ({
 		<div className={styles.container}>
 			<button
 				className={cn(styles.variant, className, {
+					[styles.small]: size === 'sm',
 					[styles.contained]: variant === 'contained',
 					[styles.outlined]: variant === 'outlined',
 					[styles.transparent]: variant === 'transparent',
