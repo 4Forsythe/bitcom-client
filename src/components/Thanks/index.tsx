@@ -46,7 +46,7 @@ export const Thanks: React.FC<IThanks> = ({ user, order }) => {
 				</p>
 				<ul className={styles.list}>
 					<li className={styles.listItem}>{PHONE}</li>
-					<li className={styles.listItem}>{PHONE}</li>
+					<li className={styles.listItem}>{SECOND_PHONE}</li>
 				</ul>
 
 				<div className={styles.controls}>
