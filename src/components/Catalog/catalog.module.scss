@@ -1,5 +1,5 @@
 .container {
-	@apply mb-10 gap-4 grid grid-cols-subgrid;
+	@apply mb-10 gap-2.5 grid grid-cols-4;
 	.card {
 		@apply w-[294px] grid grid-rows-[auto,1fr] items-center text-center bg-zinc-50 rounded-xl shadow-md
     hover:shadow-lg transition-all duration-200;
@@ -23,19 +23,31 @@
 	}
 }
 
+@media (max-width: 1230px) {
+	.container {
+		@apply gap-3.5 grid-cols-5;
+		.card {
+			@apply w-full;
+		}
+	}
+}
+@media (max-width: 1080px) {
+	.container {
+		@apply grid-cols-4;
+	}
+}
+@media (max-width: 870px) {
+	.container {
+		@apply grid-cols-3;
+	}
+}
 @media (max-width: 768px) {
 	.container {
-		@apply gap-3.5;
-		.card {
-			@apply w-[234px];
-		}
+		@apply grid-cols-2;
 	}
 }
 @media (max-width: 430px) {
 	.container {
 		@apply mb-0 px-4 flex flex-col;
-		.card {
-			@apply w-full;
-		}
 	}
 }
