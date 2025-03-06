@@ -1,5 +1,5 @@
 .container {
-	@apply mb-10 gap-4 flex flex-wrap;
+	@apply mb-10 gap-4 grid grid-cols-subgrid;
 	.card {
 		@apply w-[294px] grid grid-rows-[auto,1fr] items-center text-center bg-zinc-50 rounded-xl shadow-md
     hover:shadow-lg transition-all duration-200;
@@ -31,7 +31,7 @@
 		}
 	}
 }
-@media (max-width: 380px) {
+@media (max-width: 430px) {
 	.container {
 		@apply mb-0 px-4 flex flex-col;
 		.card {
