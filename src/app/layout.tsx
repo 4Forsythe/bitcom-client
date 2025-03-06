@@ -10,6 +10,7 @@ import { Header, Footer, CookieBanner, YandexMetrika } from '@/components'
 import { SITE_NAME, SITE_DESCRIPTION } from '@/constants'
 
 import '@/styles/main.scss'
+import { AllowCookies } from '@/components/AllowCookies'
 
 const YM_ID = Number(process.env.NEXT_PUBLIC_YM_ID)
 
@@ -80,6 +81,7 @@ export default function AppLayout({
 				<Providers>
 					<ModalProvider>
 						<CookieBanner />
+						<AllowCookies />
 						<Header />
 						<div className='container'>{children}</div>
 						<Footer />

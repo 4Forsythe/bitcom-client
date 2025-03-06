@@ -13,8 +13,6 @@ import styles from './allow-cookies.module.scss'
 export const AllowCookies: React.FC = () => {
 	const [isAllow, setIsAllow] = React.useState(true)
 
-	console.log(window.location.hostname)
-
 	React.useEffect(() => {
 		const delay = setTimeout(() => {
 			const cookie = Cookies.get('allow-cookies')
