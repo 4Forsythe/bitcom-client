@@ -17,9 +17,11 @@ export const NavButtons: React.FC<NavButtonsProps> = ({ asHint, isLoop }) => {
 	const swiper = useSwiper()
 
 	const [hasReachBeginning, setHasReachBeginning] = React.useState(
-		swiper.isBeginning
+		!isLoop ? swiper.isBeginning : false
 	)
-	const [hasReachEnd, setHasReachEnd] = React.useState(swiper.isEnd)
+	const [hasReachEnd, setHasReachEnd] = React.useState(
+		!isLoop ? swiper.isEnd : false
+	)
 
 	const setSwiperReaches = React.useCallback(() => {
 		setHasReachBeginning(swiper.isBeginning)
@@ -27,7 +29,7 @@ export const NavButtons: React.FC<NavButtonsProps> = ({ asHint, isLoop }) => {
 	}, [])
 
 	React.useEffect(() => {
-		if (isLoop) {
+		if (!isLoop) {
 			swiper.on('slideChange', setSwiperReaches)
 			swiper.on('reachBeginning', setSwiperReaches)
 			swiper.on('reachEnd', setSwiperReaches)
