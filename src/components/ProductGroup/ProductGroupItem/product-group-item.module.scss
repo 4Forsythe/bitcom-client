@@ -5,9 +5,12 @@
 		@apply w-full h-[140px] flex items-center justify-center overflow-hidden hover:*:scale-110;
 		.image {
 			@apply w-full h-auto object-cover transition-transform duration-300;
-		}
-		.placeholder {
-			@apply w-auto h-full object-cover transition-transform duration-300;
+			&.categoryImage {
+				@apply w-auto h-full object-cover grayscale opacity-50 contrast-200;
+			}
+			&.placeholder {
+				@apply w-full h-full object-cover grayscale opacity-50 contrast-200;
+			}
 		}
 	}
 	.information {

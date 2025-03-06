@@ -39,7 +39,12 @@ import styles from './cart.module.scss'
 export const Cart: React.FC = () => {
 	const { onOpen } = useModal()
 	const { isCartLoading } = useCart()
-	const { createOrder, isCreateOrderError, createOrderError } = useCreateOrder()
+	const {
+		createOrder,
+		isCreateOrderSuccess,
+		isCreateOrderError,
+		createOrderError
+	} = useCreateOrder()
 
 	const { user } = useUserStore()
 	const { items, createdAt } = useCartStore()
@@ -50,7 +55,7 @@ export const Cart: React.FC = () => {
 
 	React.useEffect(() => {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
-	}, [isTooManyOrders])
+	}, [isCreateOrderSuccess, isCreateOrderError, isTooManyOrders])
 
 	const methods = useForm<OrderFormType>({
 		mode: 'onSubmit',
@@ -63,8 +68,6 @@ export const Cart: React.FC = () => {
 			gettingMethod: GettingType.PICKUP
 		}
 	})
-
-	console.log(methods.getValues())
 
 	React.useEffect(() => {
 		if (user) {

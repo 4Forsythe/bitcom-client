@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form'
 
 import { ProfileSkeleton } from './skeleton'
-import { Button, Field, FormField, InfoBlock } from '@/components'
+import { Button, Field, FormField, InfoBlock, SwitchButton } from '@/components'
 
 import { useProfile } from '@/hooks/useProfile'
 import { useUpdateProfile } from '@/hooks/useUpdateProfile'
@@ -24,7 +24,14 @@ import styles from './profile.module.scss'
 
 export const Profile: React.FC = () => {
 	const methods = useForm<UserFormType>({
-		mode: 'onChange'
+		mode: 'onChange',
+		defaultValues: {
+			id: '',
+			name: '',
+			phone: '',
+			email: '',
+			isSubscribed: false
+		}
 	})
 
 	const {
@@ -47,15 +54,20 @@ export const Profile: React.FC = () => {
 				id: profile.id,
 				name: profile.name,
 				phone: profile.phone,
-				email: profile.email
+				email: profile.email,
+				isSubscribed: profile.isSubscribed
 			})
 		}
 	}, [isProfileSuccess])
 
 	const onSubmit: SubmitHandler<UserFormType> = (data) => {
+		console.log(data)
+
 		updateProfile({
 			name: data.name?.trim(),
-			password: data.password?.trim() || undefined
+			phone: data.phone,
+			password: data.password?.trim() || undefined,
+			isSubscribed: data.isSubscribed
 		})
 	}
 
@@ -110,6 +122,10 @@ export const Profile: React.FC = () => {
 								type='password'
 								isError={isUpdateProfileError}
 								isLoading={isUpdateProfilePending}
+							/>
+							<SwitchButton
+								name='isSubscribed'
+								label='Получать важные уведомления по почте'
 							/>
 						</div>
 

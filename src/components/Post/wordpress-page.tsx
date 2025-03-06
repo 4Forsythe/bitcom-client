@@ -13,7 +13,7 @@ import type { WP_REST_API_Page } from 'wp-types'
 
 import styles from './post.module.scss'
 
-export const StaticPage: React.FC<WP_REST_API_Page> = ({
+export const WordpressPage: React.FC<WP_REST_API_Page> = ({
 	title,
 	content,
 	modified

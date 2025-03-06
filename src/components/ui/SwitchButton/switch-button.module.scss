@@ -1,0 +1,24 @@
+.container {
+	@apply my-2.5 gap-2.5 flex items-center;
+	.checkbox {
+		@apply flex cursor-pointer select-none items-center relative;
+		.input {
+			@apply sr-only;
+		}
+		.control {
+			@apply w-10 h-5 block bg-zinc-300 rounded-full transition duration-200;
+			&.toggled {
+				@apply bg-red-200;
+			}
+		}
+		.indicator {
+			@apply left-0.5 top-0.5 w-4 h-4 bg-zinc-50 rounded-full absolute transition duration-200;
+			&.toggled {
+				@apply bg-red-500 translate-x-5;
+			}
+		}
+	}
+	.label {
+		@apply cursor-pointer select-none;
+	}
+}

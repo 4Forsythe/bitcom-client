@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
 
 import { Breadcrumb, ArticleList } from '@/components'
@@ -5,10 +6,19 @@ import { Breadcrumb, ArticleList } from '@/components'
 import { ROUTE } from '@/config/routes.config'
 import { wordpressService } from '@/services/wordpress.service'
 
-export default async function ArticlesPage() {
-	const data = await wordpressService.getAllPages()
+const getArticles = cache(async () => {
+	try {
+		const data = await wordpressService.getAllPages()
+		return data
+	} catch (error) {
+		console.error('[ARTICLES] Failed to getArticles:', error)
+	}
+})
 
-	if (!data) return notFound()
+export default async function ArticlesPage() {
+	const articles = await getArticles()
+
+	if (!articles || articles.length === 0) return notFound()
 
 	return (
 		<>
@@ -16,7 +26,7 @@ export default async function ArticlesPage() {
 				value='Информация'
 				items={[{ href: ROUTE.HOME, value: 'Главная' }]}
 			/>
-			<ArticleList items={data} />
+			<ArticleList items={articles} />
 		</>
 	)
 }

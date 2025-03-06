@@ -7,6 +7,7 @@ export type UserType = {
 
 	role: boolean
 	isActive: boolean
+	isSubscribed: boolean
 
 	createdAt: string
 	updatedAt: string
@@ -19,4 +20,6 @@ export type UserFormType = {
 	email?: string
 	phone?: string
 	password?: string
+
+	isSubscribed?: boolean
 }

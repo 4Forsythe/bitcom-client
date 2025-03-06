@@ -25,12 +25,14 @@ export const Wishlist: React.FC = () => {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.list}>
-				{createdAt && items.length > 0 && !user && (
+			{createdAt && items.length > 0 && !user && (
+				<div className={styles.heading}>
 					<InfoBlock>
 						{`Обратите внимание! Ваш список желаемого будет очищен через ${calcNounDeclension(calcDaysDifference(createdAt, 14), 'день', 'дня', 'дней')}. Войдите в систему, чтобы снять ограничения.`}
 					</InfoBlock>
-				)}
+				</div>
+			)}
+			<div className={styles.list}>
 				{isWishlistLoading
 					? [...new Array(4)].map((_, index) => (
 							<WishlistItemSkeleton key={index} />

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
+import clsx from 'clsx'
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
 
@@ -21,7 +22,9 @@ export const OrderProductCard: React.FC<OrderItemType> = ({
 			<div className={styles.cover}>
 				<div className={styles.preview}>
 					<Image
-						className={styles.image}
+						className={clsx(styles.image, {
+							[styles.placeholder]: !product.imageUrl
+						})}
 						width={100}
 						height={100}
 						src={

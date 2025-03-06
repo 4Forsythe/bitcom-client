@@ -45,6 +45,8 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: createCartItem({ productId: product.id })
 	}
 
+	console.log(product)
+
 	return (
 		<article className={clsx(styles.container, 'animate-opacity')}>
 			<Link
@@ -52,7 +54,9 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 				href={`${ROUTE.PRODUCT}/${product.id}`}
 			>
 				<Image
-					className={styles.image}
+					className={clsx(styles.image, {
+						[styles.placeholder]: !product.imageUrl
+					})}
 					width={1000}
 					height={1000}
 					src={

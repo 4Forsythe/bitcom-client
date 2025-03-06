@@ -21,7 +21,7 @@ export const Thanks: React.FC<IThanks> = ({ user, order }) => {
 	return (
 		<div className={styles.container}>
 			<div className={clsx(styles.block, 'animate-bounce')}>
-				<h5 className={styles.heading}>Спасибо за покупку!</h5>
+				<h5 className={styles.heading}>Спасибо за заказ!</h5>
 
 				<span className={styles.caption}>
 					<Image
@@ -30,19 +30,24 @@ export const Thanks: React.FC<IThanks> = ({ user, order }) => {
 						src='/icons/Success.svg'
 						alt='Успешная операция'
 					/>
-					Ваш заказ был подтвержден по почте <b>{user.email}</b>
+					Ваш заказ был оформлен на <b>{user.email}</b>
 				</span>
 
 				<div className={styles.divider} />
 
 				<p className={styles.paragraph}>
-					Благодарим вас за покупку на сумму {order.total} ₽
+					Благодарим вас за{' '}
+					{+order.total > 0
+						? `покупку на сумму ${order.total} ₽`
+						: 'предварительную покупку'}
 				</p>
 				<p className={styles.paragraph}>
-					Детали можно узнать в статусе или у наших специалистов —{' '}
-					<b className={styles.phone}>{PHONE}</b> /{' '}
-					<b className={styles.phone}>{SECOND_PHONE}</b>
+					Детали можно посмотреть в статусе или уточнить у наших специалистов:
 				</p>
+				<ul className={styles.list}>
+					<li className={styles.listItem}>{PHONE}</li>
+					<li className={styles.listItem}>{PHONE}</li>
+				</ul>
 
 				<div className={styles.controls}>
 					<Link href={ROUTE.HOME}>
