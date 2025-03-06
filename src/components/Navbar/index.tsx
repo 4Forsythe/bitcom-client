@@ -3,9 +3,6 @@
 import React from 'react'
 import Link from 'next/link'
 
-import clsx from 'clsx'
-import { Loader2 } from 'lucide-react'
-
 import { FEATURES } from './navbar.data'
 import { Carousel } from '@/components/Carousel'
 
@@ -23,12 +20,22 @@ export const Navbar: React.FC = () => {
 	if (!isMounted) {
 		return (
 			<div className={styles.container}>
-				<div className='w-full h-[220px] flex items-center justify-center bg-gray-600/10 animate-pulse rounded-xl shadow-sm'>
-					<Loader2
-						className='opacity-35 animate-spin'
-						size={32}
-					/>
-				</div>
+				<nav className={styles.loadingItems}>
+					{FEATURES.slice(0, 6).map((item) => (
+						<div
+							key={item.title}
+							className={styles.item}
+						>
+							<Link
+								className={styles.link}
+								href={item.href}
+							>
+								<h2 className={styles.title}>{item.title}</h2>
+								<p className={styles.text}>{item.description}</p>
+							</Link>
+						</div>
+					))}
+				</nav>
 			</div>
 		)
 	}
@@ -40,7 +47,7 @@ export const Navbar: React.FC = () => {
 					slides={FEATURES.map((item) => (
 						<div
 							key={item.title}
-							className={clsx(styles.item, 'animate-slide')}
+							className={styles.item}
 						>
 							<Link
 								className={styles.link}
