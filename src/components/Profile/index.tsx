@@ -61,8 +61,6 @@ export const Profile: React.FC = () => {
 	}, [isProfileSuccess])
 
 	const onSubmit: SubmitHandler<UserFormType> = (data) => {
-		console.log(data)
-
 		updateProfile({
 			name: data.name?.trim(),
 			phone: data.phone,

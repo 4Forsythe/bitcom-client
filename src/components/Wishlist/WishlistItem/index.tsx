@@ -45,8 +45,6 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: createCartItem({ productId: product.id })
 	}
 
-	console.log(product)
-
 	return (
 		<article className={clsx(styles.container, 'animate-opacity')}>
 			<Link
