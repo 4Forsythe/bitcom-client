@@ -26,7 +26,8 @@ export const Header: React.FC = () => {
 					</Link>
 					<Link
 						className={styles.link}
-						href='tel:88482411212'
+						href={'https://t.me/+79277839022'}
+						target='_blank'
 					>
 						{PHONE}
 					</Link>

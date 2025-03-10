@@ -35,16 +35,16 @@
 		.items {
 			@apply py-3 flex flex-col;
 			.item {
-				@apply w-full px-4 py-2.5 gap-2 flex items-center hover:bg-zinc-200/60 truncate
+				@apply w-full max-w-full px-4 py-2.5 gap-2 flex items-center hover:bg-zinc-200/60
 				transition-colors duration-200;
 				&.target {
 					@apply font-semibold bg-zinc-200;
 				}
 				.title {
-					@apply text-zinc-700 text-left grow;
+					@apply text-zinc-700 text-left truncate overflow-hidden grow;
 				}
 				.icon {
-					@apply w-auto h-5 text-zinc-700/80;
+					@apply w-5 h-5 text-zinc-700/80 flex-shrink-0;
 				}
 			}
 		}
