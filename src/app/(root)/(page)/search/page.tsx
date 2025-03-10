@@ -38,7 +38,11 @@ const getProducts = cache(
 export const generateMetadata = async ({ searchParams }: SearchPageProps) => {
 	const data = await getProducts(searchParams)
 
-	const { query, device, brand } = getSearchParams(searchParams)
+	const {
+		query,
+		device: deviceId,
+		brand: brandId
+	} = getSearchParams(searchParams)
 
 	if (!data) {
 		return {
@@ -48,9 +52,11 @@ export const generateMetadata = async ({ searchParams }: SearchPageProps) => {
 
 	const items = data.items.map((item) => item.name).join(', ')
 
+	const device = deviceId ? await deviceService.getOne(deviceId) : null
+
 	return {
-		title: `${query ? `Поиск — ${query}` : device ? device : 'Каталог — поиск'}`,
-		description: `${device || brand || query || 'Поиск'} — купить Б/У по самым выгодным ценам в городе Тольятти. ${items}. Всего ${data.count} шт. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
+		title: `${device || query ? `Поиск — ${device?.name || query}` : 'Каталог — поиск'}`,
+		description: `${device?.name || query || 'Поиск'} — купить Б/У по самым выгодным ценам в городе Тольятти. ${items}. Всего ${data.count} шт. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
 	}
 }
 
