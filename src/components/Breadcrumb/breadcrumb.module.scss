@@ -1,7 +1,7 @@
 .container {
 	@apply my-2.5 px-2;
 	.items {
-		@apply flex items-center;
+		@apply flex items-center flex-wrap;
 		.item {
 			@apply opacity-60 text-sm hover:opacity-100 transition duration-200;
 			&.target {
