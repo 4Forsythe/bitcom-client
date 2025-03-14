@@ -1,9 +1,11 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import clsx from 'clsx'
+import { Loader2 } from 'lucide-react'
 
 import { Button, AddWishlistButton } from '@/components'
 
@@ -21,6 +23,16 @@ import type { WishlistItemType } from '@/types/wishlist.types'
 import styles from './wishlist-item.module.scss'
 
 export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
+	const { imageUrl } = product
+	const [hasImageError, setHasImageError] = React.useState(false)
+	const [isImageLoading, setIsImageLoading] = React.useState(true)
+
+	const [imageSrc, setImageSrc] = React.useState<string>(
+		imageUrl
+			? `${SERVER_BASE_URL}/${imageUrl}`
+			: '/static/image-placeholder.png'
+	)
+
 	const { isCartLoading } = useCart()
 
 	const { items: cart } = useCartStore()
@@ -45,21 +57,31 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: createCartItem({ productId: product.id })
 	}
 
+	const handleImageError = () => {
+		setHasImageError(true)
+		setImageSrc(
+			product.category?.imageUrl
+				? `/static/${product.category?.imageUrl}`
+				: '/static/image-placeholder.png'
+		)
+	}
+
 	return (
 		<article className={clsx(styles.container, 'animate-opacity')}>
 			<Link
-				className={styles.cover}
 				href={`${ROUTE.PRODUCT}/${product.id}`}
+				className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}
 			>
+				{isImageLoading && <Loader2 className={styles.loader} />}
 				<Image
 					className={clsx(styles.image, {
-						[styles.placeholder]: !product.imageUrl
+						[styles.placeholder]: isImageLoading || hasImageError || !imageUrl
 					})}
 					width={1000}
 					height={1000}
 					src={
-						product.imageUrl
-							? `${SERVER_BASE_URL}/${product.imageUrl}`
+						imageUrl
+							? imageSrc
 							: product.category?.imageUrl
 								? `/static/${product.category.imageUrl}`
 								: '/static/image-placeholder.png'
@@ -68,6 +90,8 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 					blurDataURL='/static/image-placeholder.png'
 					alt={product.name}
 					priority
+					onError={handleImageError}
+					onLoadingComplete={() => setIsImageLoading(false)}
 				/>
 			</Link>
 			<div className={styles.information}>

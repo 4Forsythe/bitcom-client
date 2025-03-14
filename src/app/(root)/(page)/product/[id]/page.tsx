@@ -52,9 +52,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 	if (product.imageUrl) {
 		const response = await getImage(`${SERVER_BASE_URL}/${product.imageUrl}`)
 
-		if (response) imagePlaceholder = response.base64
-	} else if (product.category && product.category.imageUrl) {
-		imagePlaceholder = `/static/${product.category.imageUrl}`
+		if (response) {
+			imagePlaceholder = response.base64
+		} else if (product.category?.imageUrl) {
+			imagePlaceholder = `/static/${product.category.imageUrl}`
+		}
 	}
 
 	return (

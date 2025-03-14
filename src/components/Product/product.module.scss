@@ -2,6 +2,19 @@
 	@apply mb-5 p-8 gap-8 grid grid-cols-[0.5fr,1fr] bg-zinc-50 shadow-sm;
 	.cover {
 		@apply h-fit max-h-[600px] rounded-lg overflow-hidden;
+		&.loaded {
+			@apply w-full relative;
+			&::before {
+				content: '';
+				@apply inset-0 z-10 bg-zinc-50/50 absolute;
+			}
+			.loader {
+				@apply w-full h-full flex items-center justify-center absolute;
+				.icon {
+					@apply w-8 h-8 z-20 text-zinc-500 animate-spin;
+				}
+			}
+		}
 		.image {
 			@apply w-full h-auto object-cover;
 		}
@@ -14,12 +27,12 @@
 		.overview {
 			@apply gap-2.5 inline-flex flex-col;
 			.head {
-				@apply flex items-center justify-between;
+				@apply flex items-start justify-between;
 				.title {
 					@apply mb-1.5 text-2xl font-bold;
 				}
 				.article {
-					@apply text-sm font-medium text-zinc-300/80 uppercase underline;
+					@apply my-1.5 text-sm font-medium text-zinc-300/80 uppercase underline;
 				}
 			}
 			.category {

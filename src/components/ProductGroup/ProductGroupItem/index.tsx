@@ -1,8 +1,11 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import clsx from 'clsx'
+import { Loader2 } from 'lucide-react'
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
 
@@ -18,30 +21,53 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 	imageUrl,
 	category
 }) => {
+	const [hasImageError, setHasImageError] = React.useState(false)
+	const [isImageLoading, setIsImageLoading] = React.useState(true)
+
+	const [imageSrc, setImageSrc] = React.useState<string>(
+		imageUrl
+			? `${SERVER_BASE_URL}/${imageUrl}`
+			: '/static/image-placeholder.png'
+	)
+
+	const handleImageError = () => {
+		setHasImageError(true)
+		setImageSrc(
+			category?.imageUrl
+				? `/static/${category.imageUrl}`
+				: '/static/image-placeholder.png'
+		)
+	}
+
 	return (
 		<Link
 			className={clsx(styles.container, 'animate-bounce')}
 			href={`${ROUTE.PRODUCT}/${id}`}
 		>
-			<div className={styles.cover}>
+			<div className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}>
+				{isImageLoading && <Loader2 className={styles.loader} />}
 				<Image
 					className={clsx(styles.image, {
-						[styles.placeholder]: !imageUrl && !category?.imageUrl,
-						[styles.categoryImage]: !imageUrl && category?.imageUrl
+						[styles.placeholder]:
+							isImageLoading || (!imageUrl && !category?.imageUrl),
+						[styles.categoryImage]:
+							(!imageUrl || hasImageError) && category?.imageUrl
 					})}
-					width={200}
-					height={200}
+					width={350}
+					height={150}
 					src={
 						imageUrl
-							? `${SERVER_BASE_URL}/${imageUrl}`
+							? imageSrc
 							: category?.imageUrl
 								? `/static/${category.imageUrl}`
 								: '/static/image-placeholder.png'
 					}
 					placeholder='blur'
-					blurDataURL='/static/image-placeholder.png'
+					blurDataURL={'/static/image-placeholder.png'}
 					alt={name}
 					priority
+					onError={handleImageError}
+					onLoadingComplete={() => setIsImageLoading(false)}
 				/>
 			</div>
 			<div className={styles.information}>

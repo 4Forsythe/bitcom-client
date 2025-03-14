@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
 
 import clsx from 'clsx'
+import { Loader2 } from 'lucide-react'
 import { AddWishlistButton, Badge, Button } from '@/components'
 
 import { useCartStore } from '@/store/cart'
@@ -24,7 +25,7 @@ import type { ProductType } from '@/types/product.types'
 import styles from './product.module.scss'
 
 type IProduct = ProductType & {
-	imagePlaceholder?: string
+	imagePlaceholder: string
 }
 
 export const Product: React.FC<IProduct> = ({
@@ -43,11 +44,15 @@ export const Product: React.FC<IProduct> = ({
 }) => {
 	const router = useRouter()
 	const pathname = usePathname()
+	const [hasImageError, setHasImageError] = React.useState(false)
+	const [isImageLoading, setIsImageLoading] = React.useState(true)
 
-	const [imagePath, setImagePath] = React.useState<string | undefined>()
 	const [imageSrc, setImageSrc] = React.useState<string>(
-		`${SERVER_BASE_URL}/${imageUrl}`
+		imageUrl
+			? `${SERVER_BASE_URL}/${imageUrl}`
+			: '/static/image-placeholder.png'
 	)
+	const [imagePath, setImagePath] = React.useState<string | undefined>()
 
 	const { isCartLoading } = useCart()
 	const { isWishlistLoading } = useWishlist()
@@ -58,7 +63,8 @@ export const Product: React.FC<IProduct> = ({
 	const { items: cart } = useCartStore()
 	const { items: wishlist } = useWishlistStore()
 
-	const isLoading = isCartLoading || isWishlistLoading || isProfileLoading
+	const isLoading =
+		isCartLoading || isWishlistLoading || isProfileLoading || isImageLoading
 
 	const isInCart = Boolean(cart.find((item) => item.product.id === id))
 	const isInWishlist = Boolean(wishlist.find((item) => item.product.id === id))
@@ -79,23 +85,35 @@ export const Product: React.FC<IProduct> = ({
 	}
 
 	const handleImageError = () => {
-		setImageSrc('/static/image-placeholder.png')
+		setHasImageError(true)
+		setImageSrc(
+			category?.imageUrl
+				? `/static/${category.imageUrl}`
+				: '/static/image-placeholder.png'
+		)
 	}
 
 	return (
 		<>
 			<div className={styles.container}>
-				<div className={styles.cover}>
+				<div
+					className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}
+				>
+					{isImageLoading && (
+						<div className={styles.loader}>
+							<Loader2 className={styles.icon} />
+						</div>
+					)}
 					<Link
-						href={imageUrl ?? imagePath ?? pathname}
+						href={imagePath || pathname}
 						target='_blank'
 					>
 						<Image
 							className={clsx(styles.image, {
-								[styles.placeholder]: !imageUrl
+								[styles.placeholder]: isLoading || hasImageError || !imageUrl
 							})}
-							width={750}
-							height={750}
+							width={400}
+							height={250}
 							src={
 								imageUrl
 									? imageSrc
@@ -103,14 +121,13 @@ export const Product: React.FC<IProduct> = ({
 										? `/static/${category.imageUrl}`
 										: '/static/image-placeholder.png'
 							}
-							blurDataURL={
-								imageUrl ? imagePlaceholder : '/static/image-placeholder.png'
-							}
 							placeholder='blur'
+							blurDataURL={imagePlaceholder}
 							alt={name}
 							priority
 							onLoad={handleImageUrl}
 							onError={handleImageError}
+							onLoadingComplete={() => setIsImageLoading(false)}
 						/>
 					</Link>
 				</div>
