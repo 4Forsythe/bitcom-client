@@ -33,7 +33,7 @@ export const generateMetadata = async ({ params }: ProductPageProps) => {
 	}
 }
 
-export const revalidate = 60
+export const revalidate = 3600
 
 interface ProductPageProps {
 	params: { id: string }
