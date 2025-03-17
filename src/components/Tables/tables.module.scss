@@ -1,0 +1,38 @@
+.container {
+	@apply max-w-full w-full space-y-8 overflow-x-auto relative;
+	.category {
+		@apply p-4 overflow-x-auto;
+		.categoryName {
+			@apply w-fit gap-1.5 mt-0 mb-6 flex items-center text-xl font-semibold;
+			.icon {
+				@apply px-1.5 py-1 bg-neutral-300/80 rounded hover:scale-110 transition duration-200;
+			}
+			&:hover {
+				.icon {
+					@apply scale-110;
+				}
+			}
+		}
+		.categoryBody {
+			@apply w-full overflow-x-auto;
+			.table {
+				@apply max-w-full w-full prose prose-slate rounded-xl overflow-hidden;
+				.tableHead {
+					@apply text-sm font-semibold bg-gray-200;
+					.tableCell {
+						@apply px-6 py-3 border border-gray-300/80;
+					}
+				}
+				.tableBody {
+					@apply text-xs font-medium;
+					.tableCell {
+						@apply px-6 py-3 border border-gray-300/80;
+					}
+					.tableRow {
+						@apply odd:bg-white even:bg-slate-50;
+					}
+				}
+			}
+		}
+	}
+}

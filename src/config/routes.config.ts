@@ -7,6 +7,7 @@ class ROUTES {
 	CATALOG = `${this.BASE_URL}catalog`
 	DEVICES = `${this.BASE_URL}devices`
 	PRICES = `${this.BASE_URL}prices`
+	TABLES = `${this.BASE_URL}tables`
 
 	CART = `${this.BASE_URL}cart`
 	WISHLIST = `${this.BASE_URL}wish-list`
