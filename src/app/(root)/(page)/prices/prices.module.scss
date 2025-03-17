@@ -6,7 +6,15 @@
 	.list {
 		@apply py-2.5 gap-2 flex flex-col;
 		.chip {
-			@apply w-fit inline-flex font-medium text-zinc-700 underline;
+			@apply w-fit gap-1.5 inline-flex items-center font-medium text-zinc-700;
+			.icon {
+				@apply p-1 text-zinc-500 bg-neutral-200 rounded-md hover:scale-110 transition duration-200;
+			}
+			&:hover {
+				.icon {
+					@apply scale-110;
+				}
+			}
 		}
 	}
 }
