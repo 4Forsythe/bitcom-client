@@ -12,6 +12,8 @@ const isServerFetch = typeof window === 'undefined'
 const API_BASE_URL = process.env.API_BASE_URL
 const API_REWRITE_URL = process.env.NEXT_PUBLIC_API_GLOBAL_PREFIX
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL
+const YANDEX_CLOUD_API_URL = process.env.YANDEX_CLOUD_API_URL
+const YANDEX_OAUTH_TOKEN = process.env.YANDEX_OAUTH_TOKEN
 
 const options: CreateAxiosDefaults = {
 	baseURL: isServerFetch ? API_BASE_URL : API_REWRITE_URL,
@@ -26,6 +28,12 @@ export const apiWithHeaders = axios.create(options)
 
 export const wp = axios.create({
 	baseURL: WORDPRESS_API_URL
+})
+export const cloud = axios.create({
+	baseURL: YANDEX_CLOUD_API_URL,
+	headers: {
+		Authorization: `OAuth ${YANDEX_OAUTH_TOKEN}`
+	}
 })
 
 apiWithHeaders.interceptors.request.use((config) => {
