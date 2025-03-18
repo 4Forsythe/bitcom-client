@@ -72,9 +72,12 @@ async function getData() {
 			} as ITablesItem
 		})
 
-		return (await Promise.all(files)).filter((file) => file !== undefined)
+		return (await Promise.all(files)).filter(
+			(file): file is ITablesItem => file !== undefined
+		)
 	} catch (error) {
 		console.error(error)
+		return []
 	}
 }
 
