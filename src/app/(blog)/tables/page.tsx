@@ -25,11 +25,16 @@ export const generateMetadata = async (): Promise<Metadata> => {
 	return {}
 }
 
+const tableMimeType =
+	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+
 async function getData() {
 	try {
 		const response = await cloudService.getResource('Site/Tables')
 
 		const files = response._embedded.items.map(async (item) => {
+			if (!tableMimeType.includes(item.mime_type)) return
+
 			const file = await getFileArrayBuffer(item.file)
 
 			const workbook = xlsx.read(file, { type: 'buffer' })
@@ -67,7 +72,7 @@ async function getData() {
 			} as ITablesItem
 		})
 
-		return Promise.all(files)
+		return (await Promise.all(files)).filter((file) => file !== undefined)
 	} catch (error) {
 		console.error(error)
 	}

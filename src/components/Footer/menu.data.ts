@@ -17,6 +17,10 @@ export const INFOS: FooterMenuType[] = [
 		label: 'Прайс-листы'
 	},
 	{
+		href: ROUTE.TABLES,
+		label: 'Таблицы компонентов'
+	},
+	{
 		href: ROUTE.POLICIES,
 		label: 'Политика конфиденциальности'
 	}
