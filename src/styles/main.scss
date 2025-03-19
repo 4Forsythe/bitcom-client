@@ -29,6 +29,10 @@ body {
 	transition-timing-function: linear !important;
 }
 
+* {
+	@apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-400/80;
+}
+
 .animate-opacity {
 	animation: animate-opacity 0.5s;
 }
