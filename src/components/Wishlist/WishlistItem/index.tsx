@@ -90,8 +90,8 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 					blurDataURL='/static/image-placeholder.png'
 					alt={product.name}
 					priority
+					onLoad={() => setIsImageLoading(false)}
 					onError={handleImageError}
-					onLoadingComplete={() => setIsImageLoading(false)}
 				/>
 			</Link>
 			<div className={styles.information}>

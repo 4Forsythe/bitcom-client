@@ -66,8 +66,8 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 					blurDataURL={'/static/image-placeholder.png'}
 					alt={name}
 					priority
+					onLoad={() => setIsImageLoading(false)}
 					onError={handleImageError}
-					onLoadingComplete={() => setIsImageLoading(false)}
 				/>
 			</div>
 			<div className={styles.information}>
