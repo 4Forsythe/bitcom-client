@@ -24,10 +24,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
 async function getData() {
 	try {
 		const response = await cloudService.getResource('Site/Prices')
-		const files = response._embedded.items.map((item) => ({
-			href: item.file,
-			name: item.name
-		}))
+		const files = response._embedded.items
+			.filter((item) => !item.name.endsWith('.txt'))
+			.map((item) => ({
+				href: item.file,
+				name: item.name
+			}))
 		return files
 	} catch (error) {
 		console.error(error)
