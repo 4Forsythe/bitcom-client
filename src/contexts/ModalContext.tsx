@@ -26,13 +26,12 @@ export const ModalProvider = ({ children }: React.PropsWithChildren) => {
 	}
 
 	const onClose = () => {
-		setContext(null)
 		setIsOpen(false)
 	}
 
 	return (
 		<ModalContext.Provider value={{ isOpen, onOpen, onClose }}>
-			{isOpen && <Modal>{context}</Modal>}
+			<Modal>{context}</Modal>
 			{children}
 		</ModalContext.Provider>
 	)
