@@ -4,7 +4,7 @@
 		@apply mb-2.5 pl-2.5 text-2xl font-semibold uppercase;
 	}
 	.inner {
-		@apply gap-3.5 grid grid-cols-[auto,auto];
+		@apply gap-3.5 grid grid-cols-[3.5fr,1fr];
 		.slider {
 			@apply w-full flex flex-1 items-center justify-center overflow-hidden;
 			.cover {

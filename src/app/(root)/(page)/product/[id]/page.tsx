@@ -1,8 +1,8 @@
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 
+import { getImage } from '@/utils/get-image'
 import { Breadcrumb, Product } from '@/components'
-import { getImage } from '@/components/dynamic-image'
 
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
