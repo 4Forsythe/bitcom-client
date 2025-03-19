@@ -3,7 +3,7 @@
 	.inner {
 		@apply p-3.5 gap-1 z-[1000] inline-flex items-center justify-center;
 		.dialog {
-			@apply w-full min-w-[20rem] max-w-[30rem] p-8 bg-zinc-50 rounded-xl shadow-xl;
+			@apply w-full min-w-[20rem] p-8 bg-zinc-50 rounded-xl shadow-xl;
 		}
 		.exit {
 			@apply h-fit p-1 flex self-start text-zinc-200 hover:text-white transition duration-200;
@@ -15,6 +15,19 @@
 	.overlay {
 		@apply inset-0 z-[900] bg-zinc-800/50 fixed;
 	}
+}
+
+.fadeEnter {
+	@apply opacity-0;
+}
+.fadeEnterActive {
+	@apply opacity-100 transition-opacity duration-300;
+}
+.fadeExit {
+	@apply opacity-100;
+}
+.fadeExitActive {
+	@apply opacity-0 transition-opacity duration-300;
 }
 
 @media (max-width: 768px) {
@@ -36,7 +49,7 @@
 		.inner {
 			@apply flex-col-reverse;
 			.dialog {
-				@apply p-3;
+				@apply max-w-[30rem] p-3;
 			}
 			.exit {
 				@apply p-0 self-end;

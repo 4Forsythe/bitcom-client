@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { X } from 'lucide-react'
+import { CSSTransition } from 'react-transition-group'
 
 import { useModal } from '@/hooks/useModal'
 
@@ -15,31 +16,41 @@ interface ModalProps {
 export const Modal = ({ children }: ModalProps) => {
 	const { isOpen, onClose } = useModal()
 
-	React.useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = 'hidden'
-
-			return () => {
-				document.body.style.overflow = 'auto'
-			}
-		}
-	}, [isOpen])
+	const nodeRef = React.useRef<HTMLDivElement>(null)
 
 	return (
-		<div className={styles.container}>
-			<div className={styles.inner}>
-				<div className={styles.dialog}>{children}</div>
-				<button
-					className={styles.exit}
-					onClick={onClose}
-				>
-					<X className={styles.icon} />
-				</button>
-			</div>
+		<CSSTransition
+			nodeRef={nodeRef}
+			in={isOpen}
+			timeout={300}
+			unmountOnExit
+			classNames={{
+				enter: styles.fadeEnter,
+				enterActive: styles.fadeEnterActive,
+				exit: styles.fadeExit,
+				exitActive: styles.fadeExitActive
+			}}
+		>
 			<div
-				className={styles.overlay}
-				onClick={onClose}
-			/>
-		</div>
+				ref={nodeRef}
+				className={styles.container}
+			>
+				<div className={styles.inner}>
+					<div className={styles.dialog}>{children}</div>
+					<button
+						className={styles.exit}
+						aria-label='Свернуть модальное окно'
+						onClick={onClose}
+					>
+						<X className={styles.icon} />
+					</button>
+				</div>
+				<div
+					className={styles.overlay}
+					aria-label='Свернуть модальное окно'
+					onClick={onClose}
+				/>
+			</div>
+		</CSSTransition>
 	)
 }
