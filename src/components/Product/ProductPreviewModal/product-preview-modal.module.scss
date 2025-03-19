@@ -1,0 +1,15 @@
+.container {
+	@apply w-full h-full;
+	.frame {
+		@apply w-auto h-[500px] cursor-crosshair relative;
+		.image {
+			@apply w-full h-full object-contain;
+		}
+		.zoom {
+			@apply w-[400px] h-[240px] object-cover border-2 border-zinc-400/50 shadow-lg overflow-hidden pointer-events-none absolute;
+			.zoomImage {
+				@apply scale-[350%] transition duration-150;
+			}
+		}
+	}
+}

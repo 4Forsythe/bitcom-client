@@ -11,6 +11,7 @@ import { AddWishlistButton, Badge, Button } from '@/components'
 
 import { useCartStore } from '@/store/cart'
 import { useWishlistStore } from '@/store/wishlist'
+import { useModal } from '@/hooks/useModal'
 import { useProfile } from '@/hooks/useProfile'
 import { useCart } from '@/hooks/useCart'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -23,6 +24,7 @@ import { SERVER_BASE_URL } from '@/constants'
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
+import { ProductPreviewModal } from './ProductPreviewModal'
 
 type IProduct = ProductType & {
 	imagePlaceholder: string
@@ -54,6 +56,7 @@ export const Product: React.FC<IProduct> = ({
 	)
 	const [imagePath, setImagePath] = React.useState<string | undefined>()
 
+	const { onOpen } = useModal()
 	const { isCartLoading } = useCart()
 	const { isWishlistLoading } = useWishlist()
 	const { isProfileLoading } = useProfile()
@@ -80,7 +83,8 @@ export const Product: React.FC<IProduct> = ({
 		createWishlistItem({ productId: id })
 	}
 
-	const handleImageUrl = (event: React.SyntheticEvent<HTMLImageElement>) => {
+	const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+		setIsImageLoading(false)
 		setImagePath(event.currentTarget.src)
 	}
 
@@ -93,21 +97,30 @@ export const Product: React.FC<IProduct> = ({
 		)
 	}
 
+	const onShowPreview = () => {
+		if (imageUrl && !hasImageError) {
+			onOpen(
+				<ProductPreviewModal
+					imageUrl={`${SERVER_BASE_URL}/${imageUrl}`}
+					alt={name}
+				/>
+			)
+		}
+	}
+
 	return (
 		<>
 			<div className={styles.container}>
 				<div
 					className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}
+					style={{ cursor: imageUrl && !hasImageError ? 'pointer' : 'default' }}
 				>
 					{isImageLoading && (
 						<div className={styles.loader}>
 							<Loader2 className={styles.icon} />
 						</div>
 					)}
-					<Link
-						href={imagePath || pathname}
-						target='_blank'
-					>
+					<div onClick={onShowPreview}>
 						<Image
 							className={clsx(styles.image, {
 								[styles.placeholder]: isLoading || hasImageError || !imageUrl
@@ -125,11 +138,10 @@ export const Product: React.FC<IProduct> = ({
 							blurDataURL={imagePlaceholder}
 							alt={name}
 							priority
-							onLoad={handleImageUrl}
+							onLoad={handleImageLoad}
 							onError={handleImageError}
-							onLoadingComplete={() => setIsImageLoading(false)}
 						/>
-					</Link>
+					</div>
 				</div>
 				<div className={styles.information}>
 					<div className={styles.overview}>
