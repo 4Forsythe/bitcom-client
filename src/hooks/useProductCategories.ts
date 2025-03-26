@@ -7,11 +7,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useFiltersStore } from '@/store/filters'
 import { productCategoryService } from '@/services/product-category.service'
 
-import type { ProductCharacteristicsType } from '@/types/product.types'
+import type { ProductCategoriesType } from '@/types/product-category.types'
 
-export const useProductCategories = (
-	initialData?: ProductCharacteristicsType
-) => {
+export const useProductCategories = (initialData?: ProductCategoriesType) => {
 	const { setProductCategories } = useFiltersStore()
 
 	const { data, isLoading, isSuccess, isError } = useQuery({
