@@ -2,7 +2,7 @@ const BASE_URL = process.env.BASE_URL
 
 export async function getPrices() {
 	const response = await fetch(BASE_URL + '/api/price-list', {
-		next: { revalidate: 60 }
+		next: { revalidate: 3600 }
 	})
 
 	if (!response.ok) {
