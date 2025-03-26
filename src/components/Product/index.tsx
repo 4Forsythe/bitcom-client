@@ -55,6 +55,9 @@ export const Product: React.FC<IProduct> = ({
 			: '/static/image-placeholder.png'
 	)
 	const [imagePath, setImagePath] = React.useState<string | undefined>()
+	const [hasDescriptionHidden, setHasDescriptionHidden] = React.useState(false)
+	const [isDescriptionExpanded, setIsDescriptionExpanded] =
+		React.useState(false)
 
 	const { onOpen } = useModal()
 	const { isCartLoading } = useCart()
@@ -71,6 +74,11 @@ export const Product: React.FC<IProduct> = ({
 
 	const isInCart = Boolean(cart.find((item) => item.product.id === id))
 	const isInWishlist = Boolean(wishlist.find((item) => item.product.id === id))
+
+	const descriptionRef = React.useRef<HTMLParagraphElement>(null)
+	const descriptionHtml = description
+		? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
+		: 'Описание отсуствует'
 
 	const { createWishlistItem, isCreateWishlistItemPending } =
 		useCreateWishlistItem()
@@ -107,6 +115,27 @@ export const Product: React.FC<IProduct> = ({
 			)
 		}
 	}
+
+	const onToggleDescriptionExpander = () => {
+		setIsDescriptionExpanded((prev) => {
+			if (prev && descriptionRef.current) {
+				window.scrollTo({ top: 0, behavior: 'smooth' })
+			}
+
+			return !prev
+		})
+	}
+
+	React.useEffect(() => {
+		if (descriptionRef.current) {
+			const element = descriptionRef.current
+			const lineHeight = parseFloat(getComputedStyle(element).lineHeight)
+			const maxLines = 8
+			const maxHeight = lineHeight * maxLines
+
+			setHasDescriptionHidden(element.scrollHeight > maxHeight)
+		}
+	}, [descriptionHtml])
 
 	return (
 		<>
@@ -164,11 +193,27 @@ export const Product: React.FC<IProduct> = ({
 							)}
 							<span className={styles.breadcrumb}>В наличии {count} шт.</span>
 						</div>
-						<p className={styles.description}>
-							{description || (
-								<span className={styles.text}>Описание отсутствует</span>
+						<div className={styles.description}>
+							<p
+								ref={descriptionRef}
+								className={clsx(styles.descriptionText, {
+									[styles.expanded]: isDescriptionExpanded
+								})}
+								dangerouslySetInnerHTML={{
+									__html: descriptionHtml
+								}}
+							/>
+							{hasDescriptionHidden && (
+								<button
+									className={clsx(styles.descriptionExpand, 'animate-opacity')}
+									onClick={onToggleDescriptionExpander}
+								>
+									{hasDescriptionHidden && !isDescriptionExpanded
+										? 'Подробнее'
+										: 'Скрыть'}
+								</button>
 							)}
-						</p>
+						</div>
 						<div className={styles.features}>
 							{isLoading ? (
 								<div className={styles.controls}>

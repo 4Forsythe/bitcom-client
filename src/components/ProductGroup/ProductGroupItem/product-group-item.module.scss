@@ -14,7 +14,7 @@
 			}
 		}
 		.image {
-			@apply w-full h-auto object-cover transition-transform duration-300;
+			@apply w-auto h-full object-cover transition-transform duration-300;
 			&.categoryImage {
 				@apply w-auto h-full object-cover grayscale opacity-50 contrast-200;
 			}

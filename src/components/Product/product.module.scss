@@ -43,8 +43,14 @@
 			@apply gap-4 flex flex-col;
 			.description {
 				@apply my-1.5;
-				.text {
-					@apply text-zinc-400/70;
+				.descriptionText {
+					@apply text-sm text-zinc-500 line-clamp-[8];
+					&.expanded {
+						@apply line-clamp-none;
+					}
+				}
+				.descriptionExpand {
+					@apply mt-3.5 mb-1.5 font-medium text-blue-700/70 hover:text-blue-700 transition duration-200;
 				}
 			}
 			.availables {
