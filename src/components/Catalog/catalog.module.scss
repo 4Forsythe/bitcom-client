@@ -18,7 +18,7 @@
 			}
 		}
 		.title {
-			@apply p-4 font-semibold transition-colors duration-200;
+			@apply p-4 font-semibold text-wrap whitespace-normal break-words truncate transition-colors duration-200;
 		}
 	}
 }

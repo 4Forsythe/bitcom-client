@@ -13,13 +13,14 @@ import { formatCase } from '@/utils/format-case'
 import type { FilterItemType } from '../filters.data'
 
 import styles from './filters-group.module.scss'
+import { FiltersRecursiveItem } from './filters-recursive-item'
 
 interface IFiltersGroup {
 	path: string
 	title: string
 	items: FilterItemType[]
 	limit?: number
-	showmoreHref: string
+	showmoreHref?: string
 }
 
 export const FiltersGroup: React.FC<IFiltersGroup> = ({
@@ -33,25 +34,12 @@ export const FiltersGroup: React.FC<IFiltersGroup> = ({
 
 	const { isOpen, onClose } = useModal()
 
-	const pathname = usePathname()
-	const searchParams = useSearchParams()
-
-	const checkTargetItem = (id: string) => {
-		if (path.includes('?')) {
-			const key = path.split('?')[1].split('=')[0]
-			const value = searchParams.get(key)
-
-			return value === id
-		}
-
-		return decodeURIComponent(pathname).includes(path + id)
-	}
-
 	const handleClick = () => {
 		if (isOpen) onClose()
 	}
 
-	const list = items.length > limit ? items.slice(0, limit) : items
+	const list =
+		showmoreHref && items.length > limit ? items.slice(0, limit) : items
 
 	return (
 		<div
@@ -68,18 +56,15 @@ export const FiltersGroup: React.FC<IFiltersGroup> = ({
 			{isDropdown && (
 				<div className={styles.items}>
 					{list.map((item) => (
-						<Link
+						<FiltersRecursiveItem
 							key={item.id}
-							className={clsx(styles.item, {
-								[styles.target]: checkTargetItem(item.id)
-							})}
-							href={path + item.id}
+							path={path}
+							item={item}
+							nesting={0}
 							onClick={handleClick}
-						>
-							{formatCase(item.name)}
-						</Link>
+						/>
 					))}
-					{items.length > limit && (
+					{showmoreHref && items.length > limit && (
 						<div className={styles.showmore}>
 							<Link href={showmoreHref}>Показать больше</Link>
 						</div>

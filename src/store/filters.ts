@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 
 import type { ProductCharacteristicsType } from '@/types/product.types'
+import type { ProductCategoriesType } from '@/types/product-category.types'
 
 interface IFiltersState {
-	productCategories: ProductCharacteristicsType | null
+	productCategories: ProductCategoriesType | null
 	postCategories: ProductCharacteristicsType | null
 	devices: ProductCharacteristicsType | null
-	setProductCategories: (data: ProductCharacteristicsType | null) => void
+	setProductCategories: (data: ProductCategoriesType | null) => void
 	setPostCategories: (data: ProductCharacteristicsType | null) => void
 	setDevices: (data: ProductCharacteristicsType | null) => void
 }

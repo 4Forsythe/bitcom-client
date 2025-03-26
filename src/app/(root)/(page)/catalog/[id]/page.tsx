@@ -5,6 +5,7 @@ import { Breadcrumb, ProductList } from '@/components'
 
 import { formatCase } from '@/utils/format-case'
 import { getSearchParams } from '@/utils/get-search-params'
+import { findLatestCategory } from '@/utils/find-latest-category'
 
 import { ROUTE } from '@/config/routes.config'
 import { productService } from '@/services/product.service'
@@ -61,7 +62,7 @@ export const generateMetadata = async ({
 	}
 }
 
-export const revalidate = 60
+export const revalidate = 3600
 
 interface ProductsPageProps {
 	params: { id: string }
@@ -80,14 +81,27 @@ export default async function ProductsPage({
 	if (!category) notFound()
 
 	const products = await getProducts(id, searchParams)
+	const latestCategory = findLatestCategory(category)
 
 	return (
 		<>
 			<Breadcrumb
-				value={category.name}
+				value={latestCategory.name}
 				items={[
 					{ href: ROUTE.HOME, value: 'Главная' },
-					{ href: ROUTE.CATALOG, value: 'Каталог' }
+					{ href: ROUTE.CATALOG, value: 'Каталог' },
+					...(category.id !== latestCategory.id
+						? [
+								{
+									href: `${ROUTE.CATALOG}/${category.id}`,
+									value: category.name
+								}
+							]
+						: []),
+					...category.children.slice(0, -1).map((child) => ({
+						href: `${ROUTE.CATALOG}/${child.id}`,
+						value: child.name
+					}))
 				]}
 			/>
 			<ProductList

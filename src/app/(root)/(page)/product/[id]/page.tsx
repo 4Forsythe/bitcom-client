@@ -2,12 +2,12 @@ import { cache } from 'react'
 import { notFound } from 'next/navigation'
 
 import { getImage } from '@/utils/get-image'
-import { Breadcrumb, Product } from '@/components'
+import { findLatestCategory } from '@/utils/find-latest-category'
+import { Breadcrumb, Product, SimilarList } from '@/components'
 
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
 import { productService } from '@/services/product.service'
-import { SimilarList } from '@/components/SimilarList'
 
 const getProduct = cache(async (id: string) => {
 	try {
@@ -59,13 +59,31 @@ export default async function ProductPage({ params }: ProductPageProps) {
 		}
 	}
 
+	const latestCategory = product.category
+		? findLatestCategory(product.category)
+		: undefined
+
 	return (
 		<>
 			<Breadcrumb
 				value={product.name}
 				items={[
 					{ href: ROUTE.HOME, value: 'Главная' },
-					{ href: ROUTE.CATALOG, value: 'Каталог' }
+					{ href: ROUTE.CATALOG, value: 'Каталог' },
+					...(product.category && product.category?.id !== latestCategory?.id
+						? [
+								{
+									href: `${ROUTE.CATALOG}/${product.category?.id}`,
+									value: product.category.name
+								}
+							]
+						: []),
+					...(product.category
+						? product.category.children.map((child) => ({
+								href: `${ROUTE.CATALOG}/${child.id}`,
+								value: child.name
+							}))
+						: [])
 				]}
 			/>
 			<Product

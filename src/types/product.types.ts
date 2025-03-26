@@ -1,3 +1,5 @@
+import type { ProductCategoryType } from './product-category.types'
+
 export type ProductCharacteristicType = {
 	id: string
 	name: string
@@ -25,7 +27,7 @@ export type ProductType = {
 	imageUrl?: string
 	model?: string
 
-	category?: ProductCharacteristicType
+	category?: ProductCategoryType
 	device?: ProductCharacteristicType
 	brand?: ProductCharacteristicType
 

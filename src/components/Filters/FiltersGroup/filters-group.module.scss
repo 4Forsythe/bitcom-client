@@ -1,5 +1,5 @@
 .container {
-	@apply flex flex-col bg-zinc-50 shadow-lg shadow-zinc-200 overflow-hidden;
+	@apply w-full flex flex-col bg-zinc-50 shadow-lg shadow-zinc-200 overflow-hidden;
 	&.opened {
 		.title {
 			@apply font-bold bg-transparent;
@@ -21,9 +21,20 @@
 	.items {
 		@apply hidden;
 		.item {
-			@apply px-4 py-2.5 text-sm border-l-4 border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-100 hover:bg-zinc-50 transition-colors duration-200;
+			@apply px-4 py-2.5 text-sm border-l-[3px] border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-100 hover:bg-zinc-200/50
+			break-all transition-colors duration-200;
 			&.target {
-				@apply border-l-zinc-700;
+				@apply font-medium border-l-zinc-700 bg-zinc-200/50;
+			}
+		}
+		.nestedItem {
+			@apply px-4 py-2 gap-0.5 flex items-center text-xs border-l-[3px] border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-200/80 hover:bg-zinc-300/70
+			break-all transition-colors duration-200;
+			&.target {
+				@apply font-medium border-l-zinc-700 bg-zinc-200/80;
+			}
+			.icon {
+				@apply w-3 h-3 flex-shrink-0;
 			}
 		}
 		.showmore {

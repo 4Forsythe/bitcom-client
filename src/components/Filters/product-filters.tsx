@@ -1,31 +1,30 @@
 'use client'
 
 import React from 'react'
+import { usePathname } from 'next/navigation'
 
 import { FiltersGroup } from './FiltersGroup'
+import { FiltersSearchBar } from './FiltersSearchBar'
 import { FiltersSkeleton } from './skeleton'
 
 import { ROUTE } from '@/config/routes.config'
 
 import { useFiltersStore } from '@/store/filters'
 import { useProductCategories } from '@/hooks/useProductCategories'
-import { useDevices } from '@/hooks/useDevices'
 
 import styles from './filters.module.scss'
 
 export const ProductFilters: React.FC = () => {
+	const pathname = usePathname()
+
 	const { isProductCategoriesLoading } = useProductCategories()
-	const { isDevicesLoading } = useDevices()
+	const { productCategories } = useFiltersStore()
 
-	const isLoading = isProductCategoriesLoading || isDevicesLoading
-
-	const { productCategories, devices } = useFiltersStore()
-
-	if (isLoading) {
+	if (isProductCategoriesLoading) {
 		return (
 			<div className={styles.container}>
 				<div className={styles.inner}>
-					{[...new Array(2)].map((_, index) => (
+					{[...new Array(1)].map((_, index) => (
 						<FiltersSkeleton key={index} />
 					))}
 				</div>
@@ -37,20 +36,14 @@ export const ProductFilters: React.FC = () => {
 		<div className={styles.container}>
 			<div className={styles.inner}>
 				{productCategories && productCategories.items.length > 0 && (
-					<FiltersGroup
-						path={`${ROUTE.CATALOG}/`}
-						title='Категории'
-						items={productCategories.items}
-						showmoreHref={ROUTE.CATALOG}
-					/>
-				)}
-				{devices && (
-					<FiltersGroup
-						path={`${ROUTE.SEARCH}?device=`}
-						title='Устройства'
-						items={devices.items}
-						showmoreHref={ROUTE.DEVICES}
-					/>
+					<>
+						{pathname !== ROUTE.SEARCH && <FiltersSearchBar />}
+						<FiltersGroup
+							path={`${ROUTE.CATALOG}/`}
+							title='Категории'
+							items={productCategories.items}
+						/>
+					</>
 				)}
 			</div>
 		</div>

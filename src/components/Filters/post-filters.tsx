@@ -15,7 +15,6 @@ export const PostFilters: React.FC = () => {
 					path={`${ROUTE.BLOG}/`}
 					title='Категории'
 					items={POST_CATEGORIES}
-					showmoreHref={`${ROUTE.BLOG}/`}
 				/>
 			</div>
 		</div>

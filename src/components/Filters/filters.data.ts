@@ -4,6 +4,8 @@ export type FilterItemType = {
 	id: string
 	name: string
 	imageUrl?: string
+	parentId?: string
+	children?: FilterItemType[]
 }
 
 export const POST_CATEGORIES: FilterItemType[] = [
