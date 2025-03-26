@@ -4,8 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { getImage } from '@/utils/get-image'
-import { cloudService } from '@/services/yandex-cloud.service'
+import { NEWS_SLIDES } from './slides.data'
 import { Badge, Carousel, HomeWidget } from '@/components'
 
 import { SOCIALS } from './socials.data'
@@ -14,57 +13,34 @@ import { MARKETPLACES } from '@/constants/marketplaces.constants'
 
 import styles from './news.module.scss'
 
-async function getSlides() {
-	try {
-		const response = await cloudService.getResource('Site/Banners')
-		const files = response._embedded.items
-			.filter((item) => item.mime_type.startsWith('image'))
-			.map(async (item) => {
-				const buffer = await getImage(item.file)
-				return {
-					url: item.file,
-					base64: buffer?.base64,
-					name: item.name
-				}
-			})
-		return Promise.all(files)
-	} catch (error) {
-		console.error(error)
-	}
-}
-
 export const News: React.FC = async () => {
-	const slides = await getSlides()
-
 	return (
 		<section className={styles.container}>
 			<div className={styles.inner}>
 				<div className={styles.slider}>
-					{slides && slides.length > 0 && (
-						<Carousel
-							slides={slides.map((slide) => (
-								<div className={styles.cover}>
-									<Image
-										className={styles.image}
-										width={1000}
-										height={500}
-										src={slide.url}
-										blurDataURL={
-											slide.base64 || '/static/image-placeholder.png'
-										}
-										placeholder='blur'
-										alt={`Баннер: ${slide.name}`}
-										priority
-									/>
-								</div>
-							))}
-							spaceBetween={14}
-							slidesPerView={1}
-							autoplay={5000}
-							navigation
-							loop
-						/>
-					)}
+					<Carousel
+						slides={NEWS_SLIDES.map((slide) => (
+							<div className={styles.cover}>
+								<Image
+									className={styles.image}
+									width={1000}
+									height={500}
+									src={slide.imageUrl}
+									blurDataURL={
+										slide.imageUrl || '/static/image-placeholder.png'
+									}
+									placeholder='blur'
+									alt={`Баннер: ${slide.tag}`}
+									priority
+								/>
+							</div>
+						))}
+						spaceBetween={14}
+						slidesPerView={1}
+						autoplay={5000}
+						navigation
+						loop
+					/>
 				</div>
 
 				<div className={styles.column}>
