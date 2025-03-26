@@ -34,7 +34,8 @@ export const ProductSortBar: React.FC<IProductSortBar> = ({ className }) => {
 	}
 
 	const [isDropdown, setIsDropdown] = React.useState(false)
-	const dropdownRef = React.useRef<HTMLDivElement>(null)
+
+	const dropdownRef = React.useRef<HTMLUListElement>(null)
 
 	const [sort, setSort] = React.useState<SortType>(
 		initializeSorts(PRODUCT_SORTS)
@@ -70,11 +71,11 @@ export const ProductSortBar: React.FC<IProductSortBar> = ({ className }) => {
 	}
 
 	return (
-		<div
-			className={clsx(styles.container, className)}
-			ref={dropdownRef}
-		>
-			<ul className={styles.list}>
+		<div className={clsx(styles.container, className)}>
+			<ul
+				ref={dropdownRef}
+				className={styles.list}
+			>
 				<li className={styles.item}>
 					<span className={styles.label}>Сортировка:</span>
 					<button

@@ -30,9 +30,8 @@ export enum ViewType {
 }
 
 export enum RenderType {
-	SMALL = 10,
-	MEDIUM = 20,
-	LARGE = 30,
+	SMALL = 15,
+	MEDIUM = 30,
 	INFINITE = 'infinite'
 }
 
@@ -95,7 +94,7 @@ export const ProductList: React.FC<Props> = ({
 			qs.delete('renderType')
 		}
 
-		router.push(`?${qs.toString()}`)
+		router.push(`?${qs.toString()}`, { scroll: false })
 	}
 
 	return (
@@ -107,10 +106,6 @@ export const ProductList: React.FC<Props> = ({
 				<div className={styles.search}>
 					<SearchBar variant='contained' />
 				</div>
-				<ListRenderButton
-					mode={renderType}
-					onChange={onChangeRenderType}
-				/>
 				<div className='gap-3.5 flex items-center'>
 					<ProductSortBar className='flex-1' />
 					<ListViewButton
@@ -142,9 +137,17 @@ export const ProductList: React.FC<Props> = ({
 						<EmptyBlock title='К сожалению, товары не были найдены на нашем складе. Очень скоро мы это исправим!' />
 					))}
 
-				{renderType !== RenderType.INFINITE && items.length > 0 && (
-					<Pagination total={count} />
-				)}
+				{items.length > 0 &&
+					items.length < count &&
+					renderType !== RenderType.INFINITE && (
+						<>
+							<ListRenderButton
+								mode={renderType}
+								onChange={onChangeRenderType}
+							/>
+							<Pagination total={count} />
+						</>
+					)}
 			</div>
 
 			<BackToTop />

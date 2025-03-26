@@ -37,7 +37,7 @@ export const ListViewButton: React.FC<IListViewButton> = ({
 				})}
 				onClick={() => onChange(ViewType.TILE)}
 			>
-				<LayoutGrid size={24} />
+				<LayoutGrid size={20} />
 			</button>
 			<button
 				className={clsx(styles.button, {
@@ -45,7 +45,7 @@ export const ListViewButton: React.FC<IListViewButton> = ({
 				})}
 				onClick={() => onChange(ViewType.SIMPLE)}
 			>
-				<StretchHorizontal size={24} />
+				<StretchHorizontal size={20} />
 			</button>
 		</div>
 	)

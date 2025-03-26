@@ -21,12 +21,12 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 	const router = useRouter()
 	const searchParams = useSearchParams()
 
-	// if (total === undefined) {
-	// 	return <Skeleton />
-	// }
+	if (total === undefined) {
+		return null
+	}
 
 	const page = Number(searchParams.get('page')) || 1
-	const limit = Number(searchParams.get('limit')) || 10
+	const limit = Number(searchParams.get('limit')) || 15
 
 	const pages = Math.ceil(total / limit)
 	const pageNumbers = []

@@ -1,5 +1,5 @@
 .container {
-	@apply w-full px-4 py-3.5 z-0 flex items-center justify-between bg-zinc-50 rounded-lg shadow-lg shadow-zinc-200;
+	@apply w-full px-4 py-3.5 z-10 flex items-center justify-between bg-zinc-50 rounded-lg shadow-lg shadow-zinc-200;
 	.list {
 		@apply h-full gap-1.5 flex items-center relative;
 		.item {
@@ -19,7 +19,7 @@
 			}
 		}
 		.dropdown {
-			@apply max-w-[460px] min-w-[300px] top-[100%] left-0 bg-zinc-50 border border-zinc-200 rounded-xl shadow-lg overflow-hidden absolute;
+			@apply max-w-[460px] min-w-[300px] top-[120%] left-0 bg-zinc-50 border border-zinc-200 rounded-xl shadow-lg overflow-hidden absolute;
 			.menu {
 				@apply py-2 flex flex-col;
 				.item {
@@ -79,7 +79,19 @@
 		@apply gap-3.5 flex-col items-start;
 		.list {
 			.item {
-				@apply flex-col items-start;
+				@apply gap-0.5 flex-col items-start;
+				.label {
+					@apply text-sm;
+				}
+				.drop {
+					@apply text-sm;
+				}
+			}
+		}
+		.filters {
+			@apply text-sm;
+			.icon {
+				@apply w-auto h-3;
 			}
 		}
 	}
