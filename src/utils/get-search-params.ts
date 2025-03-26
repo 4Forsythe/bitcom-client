@@ -17,18 +17,18 @@ export const getSearchParams = (searchParams?: SearchParamsType) => {
 		searchParams && searchParams['model'] ? searchParams['model'] : undefined
 
 	const sortBy =
-		searchParams && searchParams['sortBy'] ? searchParams['sortBy'] : undefined
+		searchParams && searchParams['sortBy']
+			? searchParams['sortBy']
+			: 'createdAt'
 	const orderBy =
-		searchParams && searchParams['orderBy']
-			? searchParams['orderBy']
-			: undefined
+		searchParams && searchParams['orderBy'] ? searchParams['orderBy'] : 'desc'
 
 	const page =
 		searchParams && searchParams['page'] ? Number(searchParams['page']) ?? 1 : 1
 	const limit =
 		searchParams && searchParams['limit']
-			? Number(searchParams['limit']) ?? 10
-			: 10
+			? Number(searchParams['limit']) ?? 15
+			: 15
 	const renderType =
 		searchParams && searchParams['renderType']
 			? searchParams['renderType']

@@ -14,7 +14,7 @@ export function useOrders() {
 
 	const [page, setPage] = React.useState(Number(searchParams.get('page')) || 1)
 	const [limit, setLimit] = React.useState(
-		Number(searchParams.get('limit')) || 10
+		Number(searchParams.get('limit')) || 15
 	)
 
 	const { data, isLoading, isSuccess, isError } = useQuery({
@@ -25,7 +25,7 @@ export function useOrders() {
 
 	React.useEffect(() => {
 		setPage(Number(searchParams.get('page')) || 1)
-		setLimit(Number(searchParams.get('limit')) || 10)
+		setLimit(Number(searchParams.get('limit')) || 15)
 	}, [searchParams])
 
 	React.useEffect(() => {

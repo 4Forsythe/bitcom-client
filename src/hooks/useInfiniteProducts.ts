@@ -41,7 +41,7 @@ export function useInfiniteProducts({
 		fetchNextPage
 	} = useInfiniteQuery({
 		queryKey: ['products', skip],
-		queryFn: ({ pageParam = skip || 10 }) =>
+		queryFn: ({ pageParam = skip || 15 }) =>
 			productService.getAll({
 				name: query,
 				categoryId: category,
@@ -50,10 +50,10 @@ export function useInfiniteProducts({
 				modelId: model,
 				sortBy: sortBy,
 				orderBy: orderBy,
-				take: 10,
+				take: 15,
 				skip: pageParam
 			}),
-		initialPageParam: skip || 10,
+		initialPageParam: skip || 15,
 		getNextPageParam: (lastPage, allPages) => {
 			const total =
 				allPages.reduce((sum, page) => sum + page.items.length, 0) + skip
