@@ -1,5 +1,5 @@
 .container {
-	@apply w-full h-full;
+	@apply w-full h-full px-7 py-5;
 	.frame {
 		@apply w-auto h-[500px] cursor-crosshair relative;
 		.image {

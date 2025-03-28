@@ -3,10 +3,11 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import clsx from 'clsx'
 import { Loader2 } from 'lucide-react'
+import { ProductPreviewModal } from './ProductPreviewModal'
 import { AddWishlistButton, Badge, Button } from '@/components'
 
 import { useCartStore } from '@/store/cart'
@@ -24,7 +25,6 @@ import { SERVER_BASE_URL } from '@/constants'
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
-import { ProductPreviewModal } from './ProductPreviewModal'
 
 type IProduct = ProductType & {
 	imagePlaceholder: string
@@ -45,7 +45,6 @@ export const Product: React.FC<IProduct> = ({
 	price
 }) => {
 	const router = useRouter()
-	const pathname = usePathname()
 	const [hasImageError, setHasImageError] = React.useState(false)
 	const [isImageLoading, setIsImageLoading] = React.useState(true)
 
@@ -245,20 +244,28 @@ export const Product: React.FC<IProduct> = ({
 						<p className={styles.title}>Характеристики товара</p>
 						<ul className={styles.characteristics}>
 							<li className={styles.characteristic}>
-								Тип устройства
+								<div className={styles.characteristicType}>
+									<span>Тип</span>
+								</div>
 								<span>{device?.name || '—'}</span>
 							</li>
 							<li className={styles.characteristic}>
-								Бренд
-								<span>{brand?.name || '—'}</span>
-							</li>
-							<li className={styles.characteristic}>
-								Модель
+								<div className={styles.characteristicType}>
+									<span>Модель</span>
+								</div>
 								<span>{model || '—'}</span>
 							</li>
 							<li className={styles.characteristic}>
-								Гарантия
-								<span>3 месяца</span>
+								<div className={styles.characteristicType}>
+									<span>Бренд производителя</span>
+								</div>
+								<span>{brand?.name || '—'}</span>
+							</li>
+							<li className={styles.characteristic}>
+								<div className={styles.characteristicType}>
+									<span>Гарантия продавца</span>
+								</div>
+								<span>3 мес.</span>
 							</li>
 						</ul>
 					</div>

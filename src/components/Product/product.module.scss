@@ -1,5 +1,5 @@
 .container {
-	@apply mb-5 p-8 gap-8 grid grid-cols-[0.5fr,1fr] bg-zinc-50 shadow-sm;
+	@apply mb-5 p-8 gap-8 grid grid-cols-[.85fr,1fr] bg-zinc-50 shadow-sm;
 	.cover {
 		@apply h-fit max-h-[600px] rounded-lg overflow-hidden;
 		&.loaded {
@@ -70,14 +70,24 @@
 			}
 		}
 		.details {
-			@apply p-4 flex flex-col;
+			@apply py-4 flex flex-col;
 			.title {
-				@apply mb-3 text-lg font-semibold;
+				@apply mb-3 text-lg font-bold;
 			}
 			.characteristics {
 				@apply pt-4 pb-2 gap-2 flex flex-col;
 				.characteristic {
-					@apply gap-4 grid grid-cols-2 items-center;
+					@apply gap-1.5 grid grid-cols-[.65fr,1fr] items-center;
+					.characteristicType {
+						@apply relative;
+						span {
+							@apply pr-1.5 z-10 text-zinc-500 bg-zinc-50 font-medium relative;
+						}
+						&::after {
+							content: '';
+							@apply min-w-full right-0 bottom-1.5 z-0 grow border-b border-dashed border-zinc-400/50 absolute;
+						}
+					}
 				}
 			}
 		}

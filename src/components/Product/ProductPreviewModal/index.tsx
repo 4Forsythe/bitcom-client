@@ -80,8 +80,8 @@ export const ProductPreviewModal: React.FC<Props> = ({ imageUrl, alt }) => {
 					>
 						<Image
 							className={styles.zoomImage}
-							width={700}
-							height={700}
+							width={1400}
+							height={1000}
 							style={{
 								transformOrigin: `${zoomStyle.left} ${zoomStyle.top}`
 							}}
