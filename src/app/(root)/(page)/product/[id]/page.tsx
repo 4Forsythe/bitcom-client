@@ -29,7 +29,7 @@ export const generateMetadata = async ({ params }: ProductPageProps) => {
 
 	return {
 		title: `Купить ${product.name} в Тольятти Б/У с гарантией`,
-		description: `${product.name} — купить Б/У с гарантией по самым выгодным ценам в Тольятти, Самаре, Сызрани. В наличии ${product.count} шт. Наш каталог обновляется регулярно, и вы всегда сможете найти самые актуальные предложения и новинки. Кроме того, у нас всегда есть выгодные акции и скидки по разным позициям! Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
+		description: `${product.name} — купить Б/У с гарантией по самым выгодным ценам в Тольятти, Самаре, Сызрани. В наличии ${product.count} шт. Наш каталог обновляется регулярно, и вы всегда сможете найти самые актуальные предложения и новинки. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
 	}
 }
 
@@ -63,6 +63,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 		? findLatestCategory(product.category)
 		: undefined
 
+	const productWithLatestCategory = { ...product, category: latestCategory }
+
 	return (
 		<>
 			<Breadcrumb
@@ -87,12 +89,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
 				]}
 			/>
 			<Product
-				{...product}
+				{...productWithLatestCategory}
 				imagePlaceholder={imagePlaceholder}
 			/>
 			{similar.items.length > 0 && (
 				<SimilarList
-					categoryId={product?.category?.id}
+					categoryId={latestCategory?.id}
 					{...similar}
 				/>
 			)}
