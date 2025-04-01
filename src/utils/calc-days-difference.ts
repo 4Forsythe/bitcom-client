@@ -5,8 +5,10 @@ export function calcDaysDifference(
 	const now = new Date()
 	const createdAt = new Date(timestamp)
 
-	const offset = Math.floor(now.getDay() - createdAt.getDay())
-	const days = difference - offset
+	const msOffset = now.getTime() - createdAt.getTime()
+	const daysOffset = Math.floor(msOffset / (1000 * 60 * 60 * 24))
 
-	return days > 0 ? days : 0
+	const timeLeft = difference - daysOffset
+
+	return timeLeft > 0 ? timeLeft : 0
 }
