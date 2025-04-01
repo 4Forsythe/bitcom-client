@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 import { Thanks } from '@/components'
 import { ROUTE } from '@/config/routes.config'
-
-import { userService } from '@/services/user.service'
 import { orderService } from '@/services/order.service'
 
 export const metadata: Metadata = {
@@ -18,21 +16,21 @@ export default async function ThanksPage({
 }: {
 	searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-	const accessToken = cookies().get('ACCESS_TOKEN')?.value
-	const user = await userService.getProfile(accessToken)
-
 	const orderId = searchParams?.order
 
-	if (!orderId) redirect(ROUTE.ORDERLIST)
+	if (!orderId) return notFound()
 
-	const order = await orderService.getOne(String(orderId), accessToken)
+	const accessToken = cookies().get('ACCESS_TOKEN')?.value
+	const cartToken = 'CART_TOKEN=' + cookies().get('CART_TOKEN')?.value
+
+	const tokens = [cartToken]
+
+	const order = await orderService.getOne(orderId.toString(), {
+		cookies: tokens,
+		bearer: accessToken
+	})
 
 	if (!order) redirect(ROUTE.ORDERLIST)
 
-	return (
-		<Thanks
-			user={user}
-			order={order}
-		/>
-	)
+	return <Thanks order={order} />
 }
