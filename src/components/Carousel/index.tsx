@@ -10,7 +10,7 @@ import { Navigation, Autoplay } from 'swiper/modules'
 import { NavButtons } from './NavButtons'
 import { useWindowSize } from '@/hooks/useWindowSize'
 
-import styles from './Carousel.module.scss'
+import styles from './carousel.module.scss'
 
 import 'swiper/css'
 
@@ -77,6 +77,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 				role='list'
 				className={clsx(styles.container, className)}
 				modules={[Navigation, Autoplay]}
+				style={{ overflow: 'visible' }}
 				loop={loop}
 				speed={speed}
 				spaceBetween={spaceBetween}

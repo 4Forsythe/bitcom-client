@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { useSwiper } from 'swiper/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-import styles from './Carousel.module.scss'
+import styles from './carousel.module.scss'
 
 interface NavButtonsProps {
 	asHint?: boolean

@@ -16,7 +16,8 @@
 	}
 	.navigation {
 		.button {
-			@apply w-[48px] h-[48px] top-[50%] p-1.5 inline-flex items-center justify-center z-50 rounded-full border border-zinc-100 bg-zinc-50 shadow-sm shadow-neutral-300/70 absolute hover:bg-zinc-50 hover:shadow-md transition-all duration-200;
+			@apply w-[48px] h-[48px] top-[50%] p-1.5 inline-flex items-center justify-center z-50 rounded-full overflow-hidden border border-zinc-100 bg-zinc-50
+			shadow-sm shadow-neutral-300/70 absolute hover:bg-zinc-50 hover:shadow-md transition-all duration-200;
 			&:disabled {
 				@apply hidden;
 			}

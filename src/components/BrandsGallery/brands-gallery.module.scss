@@ -1,5 +1,16 @@
 .container {
-	@apply my-8 flex flex-col;
+	@apply my-8 flex flex-col overflow-hidden relative;
+	&::before,
+	&::after {
+		content: '';
+		@apply w-12 h-full top-0 z-10 pointer-events-none absolute;
+	}
+	&::before {
+		@apply inset-y-0 left-0 w-12 bg-gradient-to-r from-zinc-100/80 to-transparent pointer-events-none absolute;
+	}
+	&::after {
+		@apply inset-y-0 right-0 w-12 bg-gradient-to-l from-zinc-100/80 to-transparent pointer-events-none absolute;
+	}
 	.cover {
 		@apply p-3.5 flex flex-1 items-center justify-center overflow-hidden;
 		.image {
