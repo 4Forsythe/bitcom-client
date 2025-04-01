@@ -1,9 +1,15 @@
 .container {
-	@apply w-full min-h-[480px] px-14 py-24 flex flex-col items-center justify-center  bg-zinc-50 rounded-md;
+	@apply w-full min-h-[480px] px-14 py-20 flex flex-col items-start justify-center;
 	.block {
-		@apply flex flex-col items-center;
+		@apply max-w-[530px] w-full ml-20 flex flex-col;
 		.heading {
-			@apply mb-5 text-3xl font-bold uppercase;
+			@apply mb-5 gap-1.5 font-bold flex items-center;
+			.title {
+				@apply text-4xl;
+			}
+			.orderHash {
+				@apply text-5xl text-red-500 uppercase;
+			}
 		}
 		.caption {
 			@apply gap-1.5 text-lg flex items-center;
@@ -18,9 +24,9 @@
 			@apply mt-8 gap-3 inline-flex items-center max-sm:flex-col-reverse;
 		}
 		.list {
-			@apply mt-2.5 flex flex-col items-center;
+			@apply mt-2.5 flex flex-col;
 			&Item {
-				@apply text-lg italic text-nowrap font-bold;
+				@apply text-lg text-nowrap font-bold;
 			}
 		}
 	}
@@ -30,7 +36,10 @@
 	.container {
 		@apply px-5 py-8;
 		.block {
-			@apply text-center;
+			@apply ml-0 text-center items-center;
+			.heading {
+				@apply flex-wrap justify-center;
+			}
 			.caption {
 				@apply gap-0.5 flex-col;
 			}
