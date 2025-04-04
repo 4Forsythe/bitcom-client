@@ -16,30 +16,20 @@ import {
 	LoadMore,
 	ProductCardSkeleton
 } from '@/components'
-import { getSearchParams } from '@/utils/get-search-params'
 
 import { useWindowSize } from '@/hooks/useWindowSize'
-import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
+import { useProductListStore } from '@/store/product-list'
 
-import type { ProductsType, ProductType } from '@/types/product.types'
+import type { ProductsType } from '@/types/product.types'
 
 import styles from './product-list.module.scss'
-import { useProductListStore } from '@/store/product-list'
 
 export enum ViewType {
 	TILE = 'tile',
 	SIMPLE = 'simple'
 }
 
-interface Props extends ProductsType {
-	searchParams: ReturnType<typeof getSearchParams>
-}
-
-export const ProductList: React.FC<Props> = ({
-	items,
-	count,
-	searchParams
-}) => {
+export const ProductList: React.FC<ProductsType> = ({ items, count }) => {
 	const [viewType, setViewType] = React.useState<ViewType>(ViewType.SIMPLE)
 	const [isShowingMore, setIsShowingMore] = React.useState(false)
 
@@ -55,14 +45,20 @@ export const ProductList: React.FC<Props> = ({
 		setViewType(type)
 	}
 
+	const page = Number(params.get('page')) || 1
+	const limit = Number(params.get('limit')) || 15
+	const pages = Math.ceil(count / limit)
+
 	const loadMoreProducts = () => {
-		const page = Number(params.get('page')) || 1
-		const qs = new URLSearchParams(params.toString())
+		if (pages - page >= 1) {
+			const page = Number(params.get('page')) || 1
+			const qs = new URLSearchParams(params.toString())
 
-		qs.set('page', String(page + 1))
-		router.replace(`?${qs.toString()}`, { scroll: false })
+			qs.set('page', String(page + 1))
+			router.replace(`?${qs.toString()}`, { scroll: false })
 
-		setIsShowingMore(true)
+			setIsShowingMore(true)
+		}
 	}
 
 	React.useEffect(() => {
@@ -121,7 +117,7 @@ export const ProductList: React.FC<Props> = ({
 
 				{items.length > 0 && items.length < count && (
 					<>
-						<LoadMore onLoad={loadMoreProducts} />
+						{pages - page >= 1 && <LoadMore onLoad={loadMoreProducts} />}
 						<Pagination total={count} />
 					</>
 				)}
