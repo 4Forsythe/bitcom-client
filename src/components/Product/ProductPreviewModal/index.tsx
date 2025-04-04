@@ -74,8 +74,8 @@ export const ProductPreviewModal: React.FC<Props> = ({ imageUrl, alt }) => {
 					<div
 						className={styles.zoom}
 						style={{
-							top: `${cursor.y - 120}px`,
-							left: `${cursor.x - 200}px`
+							top: `${cursor.y - 125}px`,
+							left: `${cursor.x - 150}px`
 						}}
 					>
 						<Image

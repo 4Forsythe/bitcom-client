@@ -104,10 +104,7 @@ export default async function ProductsPage({
 					}))
 				]}
 			/>
-			<ProductList
-				{...products}
-				searchParams={getSearchParams({ ...searchParams, category: id })}
-			/>
+			<ProductList {...products} />
 		</>
 	)
 }
