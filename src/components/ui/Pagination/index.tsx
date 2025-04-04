@@ -31,6 +31,8 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 	const pages = Math.ceil(total / limit)
 	const pageNumbers = []
 
+	console.log('PAGES', pages)
+
 	if (pages < 2) {
 		return null
 	}
@@ -44,7 +46,7 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 	const onPageChange = (page: number) => {
 		const params = new URLSearchParams(searchParams.toString())
 		params.set('page', page.toString())
-		params.set('limit', limit.toString())
+		params.set('limit', String(15))
 		router.push(`?${params.toString()}`)
 	}
 

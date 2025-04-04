@@ -40,7 +40,7 @@ export function useInfiniteProducts({
 		hasNextPage,
 		fetchNextPage
 	} = useInfiniteQuery({
-		queryKey: ['products', skip],
+		queryKey: ['products', page],
 		queryFn: ({ pageParam = skip || 15 }) =>
 			productService.getAll({
 				name: query,
@@ -77,6 +77,7 @@ export function useInfiniteProducts({
 		isProductsLoading: isLoading,
 		isProductsSuccess: isSuccess,
 		isProductsError: isError,
+		fetchNextPage,
 		intersectionRef: ref
 	}
 }
