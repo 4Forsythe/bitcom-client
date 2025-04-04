@@ -86,10 +86,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 						: [])
 				]}
 			/>
-			<ProductList
-				{...products}
-				searchParams={params}
-			/>
+			<ProductList {...products} />
 		</>
 	)
 }
