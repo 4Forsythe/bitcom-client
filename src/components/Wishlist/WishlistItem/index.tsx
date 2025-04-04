@@ -66,6 +66,10 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 		)
 	}
 
+	const descriptionHtml = product.description
+		? product.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
+		: 'Описание отсуствует'
+
 	return (
 		<article className={clsx(styles.container, 'animate-opacity')}>
 			<Link
@@ -109,9 +113,12 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 						{product.device.name}
 					</Link>
 				)}
-				<p className={styles.description}>
-					{product.description || 'Описание отсутствует'}
-				</p>
+				<p
+					className={styles.description}
+					dangerouslySetInnerHTML={{
+						__html: descriptionHtml
+					}}
+				/>
 			</div>
 			<div className={styles.details}>
 				<p className={styles.price}>

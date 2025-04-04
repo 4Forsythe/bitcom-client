@@ -3,7 +3,7 @@
 	.cover {
 		@apply w-[200px] h-[200px] flex items-center justify-center rounded-lg overflow-hidden;
 		.image {
-			@apply w-full max-h-full h-auto object-cover;
+			@apply max-w-[80%] max-h-[80%] w-auto h-full object-cover;
 		}
 		.placeholder {
 			@apply grayscale opacity-50 contrast-200;
@@ -23,7 +23,7 @@
 			transition-colors duration-200;
 		}
 		.description {
-			@apply my-1.5 px-1.5 text-sm text-gray-400;
+			@apply my-1.5 px-1.5 text-sm text-gray-400 line-clamp-6;
 		}
 	}
 	.details {

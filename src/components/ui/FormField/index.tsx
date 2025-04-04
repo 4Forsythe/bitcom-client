@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { TriangleAlert } from 'lucide-react'
+import { OctagonAlert } from 'lucide-react'
 import { useFormContext, get } from 'react-hook-form'
 
 import { Field, type IField } from '@/components/ui/Field'
@@ -32,7 +32,7 @@ export const FormField: React.FC<IFormField> = ({ name, ...rest }) => {
 
 			{error && (
 				<span className={styles.error}>
-					<TriangleAlert size={14} /> {error.message}
+					<OctagonAlert size={12} /> {error.message}
 				</span>
 			)}
 		</div>
