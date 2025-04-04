@@ -1,0 +1,23 @@
+.container {
+	@apply w-full gap-x-1.5 gap-y-0.5 flex flex-wrap items-center;
+	.select {
+		@apply w-full h-10 px-2 py-1 flex items-center justify-center font-medium text-zinc-500 bg-zinc-50 shadow rounded-lg
+		hover:text-red-400 hover:shadow-none
+		transition duration-200;
+		&.loader {
+			@apply opacity-50 animate-pulse pointer-events-none;
+			.icon {
+				@apply w-5 h-5 animate-spin;
+			}
+		}
+	}
+}
+
+@media (max-width: 380px) {
+	.container {
+		@apply my-1.5;
+		.select {
+			@apply h-auto text-sm;
+		}
+	}
+}

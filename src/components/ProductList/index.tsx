@@ -13,7 +13,8 @@ import {
 	ProductFilters,
 	ProductSortBar,
 	ListViewButton,
-	ListRenderButton
+	LoadMore,
+	ProductCardSkeleton
 } from '@/components'
 import { getSearchParams } from '@/utils/get-search-params'
 
@@ -23,16 +24,11 @@ import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
 import type { ProductsType, ProductType } from '@/types/product.types'
 
 import styles from './product-list.module.scss'
+import { useProductListStore } from '@/store/product-list'
 
 export enum ViewType {
 	TILE = 'tile',
 	SIMPLE = 'simple'
-}
-
-export enum RenderType {
-	SMALL = 15,
-	MEDIUM = 30,
-	INFINITE = 'infinite'
 }
 
 interface Props extends ProductsType {
@@ -44,58 +40,41 @@ export const ProductList: React.FC<Props> = ({
 	count,
 	searchParams
 }) => {
-	const [data, setData] = React.useState<ProductType[]>(items)
-
 	const [viewType, setViewType] = React.useState<ViewType>(ViewType.SIMPLE)
-	const [renderType, setRenderType] = React.useState<RenderType>(
-		Object.values(RenderType).includes(searchParams.renderType as RenderType)
-			? (searchParams.renderType as RenderType)
-			: searchParams.limit
-	)
+	const [isShowingMore, setIsShowingMore] = React.useState(false)
 
 	const router = useRouter()
 	const params = useSearchParams()
-
 	const { width } = useWindowSize()
+	const { products, isLoading, setProducts, combineProducts, setIsLoading } =
+		useProductListStore()
+
 	const isTablet = width && width <= 1024
-
-	const { products, intersectionRef } = useInfiniteProducts({
-		params: searchParams,
-		enabled: renderType === RenderType.INFINITE
-	})
-
-	React.useEffect(() => {
-		if (renderType === RenderType.INFINITE && products) {
-			const iteration = products.pages.flatMap((page) => page.items)
-			const allItems = [...items, ...iteration]
-
-			setData(allItems)
-		}
-
-		if (renderType !== RenderType.INFINITE) {
-			setData(items)
-		}
-	}, [renderType, products, searchParams])
 
 	const onChangeViewType = (type: ViewType) => {
 		setViewType(type)
 	}
 
-	const onChangeRenderType = (type: RenderType) => {
-		setRenderType(type)
-
+	const loadMoreProducts = () => {
+		const page = Number(params.get('page')) || 1
 		const qs = new URLSearchParams(params.toString())
 
-		if (type === RenderType.INFINITE) {
-			qs.set('renderType', String(type))
-			qs.delete('page')
+		qs.set('page', String(page + 1))
+		router.replace(`?${qs.toString()}`, { scroll: false })
+
+		setIsShowingMore(true)
+	}
+
+	React.useEffect(() => {
+		if (isShowingMore) {
+			combineProducts(items, count)
+			setIsShowingMore(false)
 		} else {
-			qs.set('limit', String(type))
-			qs.delete('renderType')
+			setProducts(items, count)
 		}
 
-		router.push(`?${qs.toString()}`, { scroll: false })
-	}
+		setIsLoading(false)
+	}, [items, params])
 
 	return (
 		<div className={styles.container}>
@@ -113,6 +92,11 @@ export const ProductList: React.FC<Props> = ({
 						onChange={onChangeViewType}
 					/>
 				</div>
+				{isLoading &&
+					[...new Array(3)].map((_, index) => (
+						<ProductCardSkeleton key={index} />
+					))}
+
 				{items.length > 0 && (
 					<div
 						className={clsx(styles.list, {
@@ -120,7 +104,7 @@ export const ProductList: React.FC<Props> = ({
 							[styles.horizontal]: viewType === ViewType.TILE
 						})}
 					>
-						{data.map((item) => (
+						{products.map((item) => (
 							<ProductCard
 								key={item.id}
 								variant={viewType}
@@ -130,24 +114,17 @@ export const ProductList: React.FC<Props> = ({
 					</div>
 				)}
 
-				{renderType === RenderType.INFINITE && <div ref={intersectionRef} />}
-
 				{!items ||
 					(items.length === 0 && (
 						<EmptyBlock title='К сожалению, товары не были найдены на нашем складе. Очень скоро мы это исправим!' />
 					))}
 
-				{items.length > 0 &&
-					items.length < count &&
-					renderType !== RenderType.INFINITE && (
-						<>
-							<ListRenderButton
-								mode={renderType}
-								onChange={onChangeRenderType}
-							/>
-							<Pagination total={count} />
-						</>
-					)}
+				{items.length > 0 && items.length < count && (
+					<>
+						<LoadMore onLoad={loadMoreProducts} />
+						<Pagination total={count} />
+					</>
+				)}
 			</div>
 
 			<BackToTop />
