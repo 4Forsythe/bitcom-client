@@ -27,7 +27,11 @@ export type OrderItemType = {
 }
 
 export type OrderFormType = {
-	customerName: string
+	customerName: {
+		firstName: string
+		lastName: string
+		middleName?: string
+	}
 	customerEmail: string
 	customerPhone: string
 	address?: string

@@ -7,11 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { Sidebar } from './sidebar'
-import { VerifyOrderModal } from './VerifyOrderModal'
+
 import {
 	CartItem,
 	CartItemSkeleton,
-	AuthForm,
 	OrderForm,
 	EmptyBlock,
 	InfoBlock
@@ -21,8 +20,6 @@ import { orderSchema } from '@/schemas'
 import { useCartStore } from '@/store/cart'
 import { useUserStore } from '@/store/user'
 import { useCart } from '@/hooks/useCart'
-import { useModal } from '@/hooks/useModal'
-import { useProfile } from '@/hooks/useProfile'
 import { useCreateOrder } from '@/hooks/useCreateOrder'
 
 import {
@@ -37,10 +34,10 @@ import { calcDaysDifference } from '@/utils/calc-days-difference'
 import styles from './cart.module.scss'
 
 export const Cart: React.FC = () => {
-	const { onOpen } = useModal()
 	const { isCartLoading } = useCart()
 	const {
 		createOrder,
+		isCreateOrderPending,
 		isCreateOrderSuccess,
 		isCreateOrderError,
 		createOrderError
@@ -61,7 +58,11 @@ export const Cart: React.FC = () => {
 		mode: 'onSubmit',
 		resolver: zodResolver(orderSchema),
 		defaultValues: {
-			customerName: '',
+			customerName: {
+				firstName: '',
+				lastName: '',
+				middleName: ''
+			},
 			customerEmail: '',
 			customerPhone: '',
 			paymentMethod: PaymentType.CASH,
@@ -72,7 +73,11 @@ export const Cart: React.FC = () => {
 	React.useEffect(() => {
 		if (user) {
 			methods.reset({
-				customerName: user.name || '',
+				customerName: {
+					firstName: user.name || '',
+					lastName: '',
+					middleName: ''
+				},
 				customerEmail: user.email || '',
 				customerPhone: user.phone || '',
 				paymentMethod: methods.getValues('paymentMethod'),
@@ -82,14 +87,7 @@ export const Cart: React.FC = () => {
 	}, [user])
 
 	const onSubmit = (data: OrderFormType) => {
-		if (!user) {
-			onOpen(<AuthForm />)
-		} else if (!user?.isActive) {
-			createOrder(data)
-			onOpen(<VerifyOrderModal />)
-		} else if (user.isActive) {
-			createOrder(data)
-		}
+		createOrder(data)
 	}
 
 	return (
@@ -136,7 +134,7 @@ export const Cart: React.FC = () => {
 					)}
 					{!isCartLoading && items?.length > 0 && <OrderForm />}
 				</div>
-				<Sidebar />
+				<Sidebar isPending={isCreateOrderPending} />
 			</form>
 		</FormProvider>
 	)

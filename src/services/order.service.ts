@@ -8,6 +8,11 @@ import type {
 } from '@/types/order.types'
 import type { PaymentStatusType } from '@/types/payment.types'
 
+interface IGetOrderOptions {
+	bearer?: string
+	cookies?: string[]
+}
+
 class OrderService {
 	private endpoint = '/order'
 
@@ -29,11 +34,19 @@ class OrderService {
 		return response.data
 	}
 
-	async getOne(id: string, token?: string): Promise<OrderType> {
-		if (token) {
-			const headers = { Authorization: `Bearer ${token}` }
+	async getOne(id: string, options?: IGetOrderOptions): Promise<OrderType> {
+		const bearer = options?.bearer ?? ''
+		const cookies = options?.cookies ?? []
+
+		if (cookies) {
+			const headers = {
+				Cookie: cookies.join('; '),
+				Authorization: `Bearer ${bearer}`
+			}
+
 			const response = await api.get<OrderType>(`${this.endpoint}/${id}`, {
-				headers
+				headers,
+				withCredentials: true
 			})
 
 			return response.data

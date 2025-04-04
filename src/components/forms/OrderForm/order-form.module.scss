@@ -8,7 +8,7 @@
 				@apply text-xl font-semibold;
 			}
 			.field {
-				@apply gap-3.5 grid grid-cols-2;
+				@apply my-2.5 gap-3.5 grid grid-cols-2;
 			}
 			.selector {
 				@apply gap-2.5 flex flex-wrap items-center;
@@ -16,35 +16,17 @@
 			.payments {
 				@apply gap-2.5 flex flex-wrap;
 			}
-			.getting {
-				@apply gap-x-10 flex justify-around max-md:flex-col;
-				.details {
-					@apply my-7 gap-3 flex flex-col;
-					.address {
-						@apply flex flex-col;
-						.location {
-							@apply font-semibold;
-						}
-						.text {
-							@apply mb-1.5 text-sm;
-						}
-						.working {
-							@apply text-sm text-zinc-400;
-						}
-					}
-					.avails {
-						@apply w-fit px-3 py-1 inline-flex items-center justify-center font-semibold bg-zinc-300 rounded-xl;
-					}
-				}
-				.map {
-					@apply max-w-[500px] w-full h-[200px] rounded-xl overflow-hidden;
-				}
-			}
 		}
-		.policy {
-			@apply my-1 text-sm;
-			.link {
-				@apply text-red-500 underline;
+		.disclaimer {
+			@apply my-3 gap-2.5 flex flex-col;
+			&Title {
+				@apply text-2xl font-medium;
+			}
+			&Text {
+				@apply text-base;
+				.link {
+					@apply font-medium underline;
+				}
 			}
 		}
 	}

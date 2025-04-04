@@ -49,11 +49,10 @@ export const useCreateOrder = () => {
 			}
 
 			if (order.paymentMethod === PaymentType.CASH) {
-				if (order.status === OrderStatus.WAITING) {
-					router.push(`${ROUTE.THANKS}?order=${order.id}`)
-				}
-
-				if (order.status === OrderStatus.CREATED) {
+				if (
+					order.status === OrderStatus.WAITING ||
+					order.status === OrderStatus.CREATED
+				) {
 					router.push(`${ROUTE.THANKS}?order=${order.id}`)
 				}
 			}

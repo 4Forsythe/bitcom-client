@@ -1,0 +1,33 @@
+.location {
+	@apply gap-x-10 flex flex-col;
+	&Block {
+		@apply my-7 gap-3 flex flex-col;
+		.locationDetails {
+			@apply gap-x-10 flex justify-between max-md:flex-col;
+			.locationAddress {
+				@apply max-w-[280px] w-full flex flex-col;
+				h5 {
+					@apply font-semibold;
+				}
+				span {
+					@apply mb-1.5 text-sm;
+				}
+				.worktime {
+					@apply text-sm text-zinc-400;
+				}
+				.availables {
+					@apply w-fit px-3 py-1 inline-flex items-center justify-center font-semibold bg-zinc-300 rounded-xl;
+				}
+			}
+			.map {
+				@apply max-w-[500px] w-full h-[200px] rounded-xl overflow-hidden;
+			}
+		}
+	}
+	.policy {
+		@apply my-1 text-sm;
+		.link {
+			@apply text-red-500 underline;
+		}
+	}
+}
