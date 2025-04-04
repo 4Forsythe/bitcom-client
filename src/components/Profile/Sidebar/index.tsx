@@ -29,14 +29,14 @@ export const ProfileSidebar: React.FC = () => {
 	const { onOpen, onClose } = useModal()
 	const { user, setUser } = useUserStore()
 
-	const { mutate, isPending } = useMutation({
+	const { mutate: mutateLogout, isPending: isLogoutPending } = useMutation({
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
 		onSuccess: () => {
 			queryClient.removeQueries({ queryKey: ['profile'] })
-			onClose()
+			router.replace(ROUTE.HOME)
 			setUser(null)
-			router.push(ROUTE.HOME)
+			onClose()
 		}
 	})
 
@@ -45,7 +45,7 @@ export const ProfileSidebar: React.FC = () => {
 			<div className={styles.dialog}>
 				<h5 className={styles.dialogTitle}>Вы точно хотите выйти?</h5>
 				<div className={styles.dialogContent}>
-					<Button onClick={() => mutate()}>Да, хочу</Button>
+					<Button onClick={() => mutateLogout()}>Да, хочу</Button>
 					<Button
 						variant='outlined'
 						onClick={onClose}
@@ -107,7 +107,7 @@ export const ProfileSidebar: React.FC = () => {
 			<div className={styles.item}>
 				<button
 					className={styles.tab}
-					disabled={isPending}
+					disabled={isLogoutPending}
 					onClick={logout}
 				>
 					<LogOut className={styles.icon} />

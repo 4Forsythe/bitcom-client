@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form'
 
 import { ProfileSkeleton } from './skeleton'
-import { Button, Field, FormField, InfoBlock, SwitchButton } from '@/components'
+import { Button, FormField, InfoBlock, SwitchButton } from '@/components'
 
 import { useProfile } from '@/hooks/useProfile'
 import { useUpdateProfile } from '@/hooks/useUpdateProfile'
@@ -71,7 +71,7 @@ export const Profile: React.FC = () => {
 
 	return (
 		<div className={styles.container}>
-			{isProfileLoading ? (
+			{isProfileLoading || (!isProfileLoading && !profile) ? (
 				<ProfileSkeleton />
 			) : (
 				<FormProvider {...methods}>
