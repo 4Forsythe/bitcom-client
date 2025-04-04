@@ -10,7 +10,7 @@ import { Navigation, Autoplay } from 'swiper/modules'
 import { NavButtons } from './NavButtons'
 import { useWindowSize } from '@/hooks/useWindowSize'
 
-import styles from './carousel.module.scss'
+import styles from './carousel-swiper.module.scss'
 
 import 'swiper/css'
 
