@@ -19,11 +19,8 @@ body {
 	@apply flex flex-col grow;
 }
 
-.swiper-navigation-prev {
-	@apply text-xl;
-}
-
 .swiper-wrapper {
+	padding: 0 4px;
 	-webkit-transition-timing-function: linear !important;
 	-o-transition-timing-function: linear !important;
 	transition-timing-function: linear !important;
