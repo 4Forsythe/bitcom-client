@@ -6,11 +6,13 @@ import { Source_Sans_3 } from 'next/font/google'
 
 import { Providers } from './providers'
 import { ModalProvider } from '@/contexts/ModalContext'
-import { Header, Footer, CookieBanner, YandexMetrika } from '@/components'
+import { AllowCookies, Header, YandexMetrika } from '@/components'
+const Footer = dynamic(() => import('@/components').then((mod) => mod.Footer))
+
 import { SITE_NAME, SITE_DESCRIPTION } from '@/constants'
 
 import '@/styles/main.scss'
-import { AllowCookies } from '@/components/AllowCookies'
+import dynamic from 'next/dynamic'
 
 const YM_ID = Number(process.env.NEXT_PUBLIC_YM_ID)
 
@@ -18,7 +20,8 @@ const sourceSans = Source_Sans_3({
 	subsets: ['latin', 'cyrillic'],
 	weight: ['300', '400', '500', '600', '700', '800', '900'],
 	style: ['normal', 'italic'],
-	variable: '--font-source-sans'
+	variable: '--font-source-sans',
+	display: 'swap'
 })
 
 export const metadata: Metadata = {
@@ -80,7 +83,7 @@ export default function AppLayout({
 
 				<Providers>
 					<ModalProvider>
-						<CookieBanner />
+						{/* <CookieBanner /> */}
 						<AllowCookies />
 						<Header />
 						<div className='container'>{children}</div>

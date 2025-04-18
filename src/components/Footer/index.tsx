@@ -11,9 +11,12 @@ export const Footer: React.FC = () => {
 	return (
 		<footer className={styles.container}>
 			<div className={styles.inner}>
-				<nav className={styles.navbar}>
-					<div className={styles.menu}>
-						<h6 className={styles.title}>Информация</h6>
+				<div className={styles.navbar}>
+					<nav
+						className={styles.menu}
+						aria-label='Навигация: общая информация'
+					>
+						<h3 className={styles.title}>Общая информация</h3>
 						<ul className={styles.list}>
 							{INFOS.map((item) => (
 								<li key={item.href}>
@@ -44,9 +47,12 @@ export const Footer: React.FC = () => {
 								))}
 							</li>
 						</ul>
-					</div>
-					<div className={styles.menu}>
-						<h6 className={styles.title}>Услуги</h6>
+					</nav>
+					<nav
+						className={styles.menu}
+						aria-label='Навигация: услуги'
+					>
+						<h3 className={styles.title}>Услуги</h3>
 						<ul className={styles.list}>
 							{SERVICES.map((item) => (
 								<li key={item.href}>
@@ -59,9 +65,9 @@ export const Footer: React.FC = () => {
 								</li>
 							))}
 						</ul>
-					</div>
-					<div className={styles.menu}>
-						<h6 className={styles.title}>Контакты</h6>
+					</nav>
+					<address className={styles.menu}>
+						<h3 className={styles.title}>Контакты</h3>
 						<ul className={styles.list}>
 							{CONTACTS.map((item) => (
 								<li key={item.href}>
@@ -74,8 +80,8 @@ export const Footer: React.FC = () => {
 								</li>
 							))}
 						</ul>
-					</div>
-				</nav>
+					</address>
+				</div>
 				<div className={styles.copyright}>
 					<span className={styles.text}>
 						{new Date().getFullYear()} © БИТКОМ — Все права защищены, ОГРН

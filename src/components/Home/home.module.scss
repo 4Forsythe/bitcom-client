@@ -3,6 +3,36 @@
 	.banners {
 		@apply mb-8;
 	}
+	.actualInfo {
+		@apply mb-8 flex flex-col;
+		.actualTitle {
+			@apply mb-2.5 pl-1.5 row-span-1 col-span-full text-3xl font-bold uppercase;
+		}
+		.actualContent {
+			@apply gap-2 grid grid-flow-row auto-cols-max grid-cols-[repeat(auto-fit,minmax(200px,1fr))] items-center;
+			.contacts {
+				@apply gap-2.5 flex flex-col;
+				.contactsSocials {
+					@apply gap-1 flex flex-wrap items-center;
+					.item {
+						@apply px-2 py-1.5 rounded-lg bg-zinc-200 hover:bg-zinc-300 transition-colors duration-200;
+						.icon {
+							@apply w-auto h-5 object-cover;
+						}
+					}
+				}
+				.contactsMarketplaces {
+					@apply gap-1 flex flex-wrap items-center;
+					.item {
+						@apply p-1.5 rounded-lg grayscale bg-zinc-200 hover:bg-zinc-300 hover:grayscale-0 transition-colors duration-200;
+						.icon {
+							@apply w-auto h-[1.1rem] object-cover;
+						}
+					}
+				}
+			}
+		}
+	}
 	.features {
 		@apply my-8 gap-x-5 gap-y-3.5 grid grid-cols-4 flex-nowrap items-center *:w-full;
 	}

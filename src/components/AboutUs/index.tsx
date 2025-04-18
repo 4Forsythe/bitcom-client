@@ -4,9 +4,9 @@ import styles from './about-us.module.scss'
 
 export const AboutUs: React.FC = () => {
 	return (
-		<div className={styles.container}>
+		<section className={styles.container}>
 			<div className={styles.head}>
-				<h3 className={styles.title}>О нашей компании</h3>
+				<h2 className={styles.title}>О нашей компании</h2>
 			</div>
 			<p className={styles.paragraph}>
 				Компания «БИТКОМ» – специализируется на реализации восстановленного
@@ -30,6 +30,6 @@ export const AboutUs: React.FC = () => {
 				сборку, гарантийные обязательства за комплектующие несет продающий
 				магазин.
 			</p>
-		</div>
+		</section>
 	)
 }

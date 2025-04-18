@@ -3,10 +3,11 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { FEATURES } from './navbar.data'
+import { FEATURES, NavbarItemType } from './navbar.data'
 import { Carousel } from '@/components/Carousel'
 
 import styles from './navbar.module.scss'
+import Image from 'next/image'
 
 export const Navbar: React.FC = () => {
 	const [isMounted, setIsMounted] = React.useState(false)
@@ -22,18 +23,7 @@ export const Navbar: React.FC = () => {
 			<div className={styles.container}>
 				<nav className={styles.loadingItems}>
 					{FEATURES.slice(0, 6).map((item) => (
-						<div
-							key={item.title}
-							className={styles.item}
-						>
-							<Link
-								className={styles.link}
-								href={item.href}
-							>
-								<h2 className={styles.title}>{item.title}</h2>
-								<p className={styles.text}>{item.description}</p>
-							</Link>
-						</div>
+						<NavbarItem {...item} />
 					))}
 				</nav>
 			</div>
@@ -45,18 +35,7 @@ export const Navbar: React.FC = () => {
 			<nav className={styles.items}>
 				<Carousel
 					slides={FEATURES.map((item) => (
-						<div
-							key={item.title}
-							className={styles.item}
-						>
-							<Link
-								className={styles.link}
-								href={item.href}
-							>
-								<h2 className={styles.title}>{item.title}</h2>
-								<p className={styles.text}>{item.description}</p>
-							</Link>
-						</div>
+						<NavbarItem {...item} />
 					))}
 					slidesPerView={6}
 					spaceBetween={14}
@@ -83,6 +62,35 @@ export const Navbar: React.FC = () => {
 					}}
 				/>
 			</nav>
+		</div>
+	)
+}
+
+export const NavbarItem: React.FC<NavbarItemType> = ({
+	icon,
+	href,
+	title,
+	description
+}) => {
+	return (
+		<div
+			key={title}
+			className={styles.item}
+		>
+			<Link
+				className={styles.link}
+				href={href}
+			>
+				<h3 className={styles.title}>{title}</h3>
+				<p className={styles.text}>{description}</p>
+				<Image
+					className={styles.icon}
+					width={110}
+					height={110}
+					src={`/static/icons/${icon}`}
+					alt={title}
+				/>
+			</Link>
 		</div>
 	)
 }

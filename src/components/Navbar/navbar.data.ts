@@ -1,43 +1,47 @@
 import { ROUTE } from '@/config/routes.config'
 
-type FeaturesType = {
+export type NavbarItemType = {
+	icon: string
 	href: string
 	title: string
 	description: string
 }
 
-export const FEATURES: FeaturesType[] = [
+export const FEATURES: NavbarItemType[] = [
 	{
+		icon: 'catalog.webp',
 		href: ROUTE.CATALOG,
 		title: 'Каталог',
-		description:
-			'Компьютерная, офисная техника, медицинское и электронное оборудование'
+		description: 'Компьютерная, офисная техника, медицинское оборудование'
 	},
 	{
+		icon: 'blog.webp',
 		href: ROUTE.BLOG,
 		title: 'Блог',
-		description:
-			'Наш тематический уголок с интересными событиями в мире электронной техники'
+		description: 'Рассказыаем про электронщину и восстановление'
 	},
 	{
+		icon: 'service.webp',
 		href: ROUTE.SERVICE,
 		title: 'Сервисный центр',
-		description: 'Занимаемся ремонтом промышленной электроники и компьютерами'
+		description: 'Диагностика, ремонт и гарантия'
 	},
 	{
+		icon: 'assembly.webp',
 		href: ROUTE.ASSEMBLY,
 		title: 'Сборка компьютеров',
-		description:
-			'Как из абсолютно новых, так и из восстановленных Б/У комплектующих'
+		description: 'Индивидуальный подход, соберем под ваши требования'
 	},
 	{
+		icon: 'buying.webp',
 		href: ROUTE.BUYING,
 		title: 'Покупка электроники',
-		description: 'Отдадим реальные деньги за ненужные электронные комплектующие'
+		description: 'Отдадим реальные деньги за старую электронику'
 	},
 	{
+		icon: 'upgrading.webp',
 		href: ROUTE.UPGRADING,
 		title: 'Обновление парка ПК',
-		description: 'Полная или частичная замена парка организационной техники'
+		description: 'Апгрейдим компьютеры, принтеры, МФУ'
 	}
 ]

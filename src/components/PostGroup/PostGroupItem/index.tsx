@@ -16,7 +16,7 @@ export const PostGroupItem: React.FC<FrontmatterPostType> = ({
 	lastModified
 }) => {
 	return (
-		<article className={clsx(styles.container, 'animate-bounce')}>
+		<article className={styles.container}>
 			<Link
 				className={styles.cover}
 				href={`${ROUTE.BLOG}/${slug}`}

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import clsx from 'clsx'
-import { Loader2 } from 'lucide-react'
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
 
@@ -41,15 +40,13 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 
 	return (
 		<Link
-			className={clsx(styles.container, 'animate-bounce')}
+			className={styles.container}
 			href={`${ROUTE.PRODUCT}/${id}`}
 		>
 			<div className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}>
-				{isImageLoading && <Loader2 className={styles.loader} />}
 				<Image
 					className={clsx(styles.image, {
-						[styles.placeholder]:
-							isImageLoading || (!imageUrl && !category?.imageUrl),
+						[styles.placeholder]: !imageUrl && !category?.imageUrl,
 						[styles.categoryImage]:
 							(!imageUrl || hasImageError) && category?.imageUrl
 					})}
@@ -65,7 +62,6 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 					placeholder='blur'
 					blurDataURL={'/static/image-placeholder.png'}
 					alt={name}
-					priority
 					onLoad={() => setIsImageLoading(false)}
 					onError={handleImageError}
 				/>

@@ -20,7 +20,7 @@ export const PostGroup: React.FC<IPostGroupProps> = ({
 }) => {
 	return (
 		<section className={styles.container}>
-			<h1 className={styles.title}>{title}</h1>
+			<h2 className={styles.title}>{title}</h2>
 			<div className={styles.inner}>
 				{isLoading
 					? [...new Array(4)].map((_, index) => (

@@ -1,0 +1,9 @@
+.container {
+	@apply w-full h-full max-h-[180px] p-3.5 flex flex-col justify-center overflow-hidden;
+	.list {
+		@apply w-full pl-3.5 space-y-1.5 border-l border-zinc-300 flex flex-col;
+		&Item {
+			@apply max-w-full w-fit text-sm text-zinc-700 truncate hover:text-red-500 transition duration-200;
+		}
+	}
+}

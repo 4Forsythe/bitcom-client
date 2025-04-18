@@ -8,7 +8,7 @@ interface HomeWidgetProps {
 export const HomeWidget: React.FC<HomeWidgetProps> = ({ title, children }) => {
 	return (
 		<div className={styles.container}>
-			<h2 className={styles.title}>{title}</h2>
+			<h4 className={styles.title}>{title}</h4>
 			<div className={styles.inner}>{children}</div>
 		</div>
 	)

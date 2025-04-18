@@ -7,15 +7,18 @@
 		@apply h-[220px] gap-4 grid grid-cols-6 overflow-hidden;
 	}
 	.item {
-		@apply w-full h-[220px] flex-1 bg-zinc-50 rounded-lg shadow-xl shadow-neutral-200 hover:bg-zinc-100 hover:shadow-md
+		@apply w-full h-[220px] flex-1 bg-zinc-50 rounded-lg relative hover:shadow-neutral-200 hover:shadow-lg
 		transition-all duration-200;
 		.link {
-			@apply w-full h-full px-5 py-6 gap-2 flex flex-col outline-none;
+			@apply w-full h-full px-5 py-6 gap-1.5 flex flex-col outline-none relative hover:opacity-100;
 			.title {
 				@apply text-xl font-semibold;
 			}
 			.text {
-				@apply text-sm text-ellipsis overflow-hidden;
+				@apply text-[13.5px] text-ellipsis overflow-hidden;
+			}
+			.icon {
+				@apply bottom-0 right-0 opacity-75 absolute;
 			}
 		}
 	}

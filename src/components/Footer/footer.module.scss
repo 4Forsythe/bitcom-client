@@ -5,7 +5,7 @@
 		.navbar {
 			@apply gap-12 flex justify-between;
 			.menu {
-				@apply min-w-[250px];
+				@apply min-w-[250px] not-italic;
 				.title {
 					@apply mb-5 pb-5 text-lg font-bold border-b border-zinc-400/50;
 				}
