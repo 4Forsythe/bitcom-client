@@ -89,6 +89,7 @@ export const NavbarItem: React.FC<NavbarItemType> = ({
 					height={110}
 					src={`/static/icons/${icon}`}
 					alt={title}
+					priority
 				/>
 			</Link>
 		</div>

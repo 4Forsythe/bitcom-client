@@ -51,3 +51,14 @@ export type ProductParamsType = {
 	take?: number
 	skip?: number
 }
+
+export type CreateProductType = {
+	name: string
+	description?: string
+	price: number
+	count?: number
+	sku?: string[]
+	isArchived?: boolean
+	isPublished?: boolean
+	categoryId: string
+}

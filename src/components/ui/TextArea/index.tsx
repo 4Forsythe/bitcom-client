@@ -7,13 +7,14 @@ import { LoaderCircle } from 'lucide-react'
 
 import styles from './TextArea.module.scss'
 
-interface ITextArea extends React.InputHTMLAttributes<HTMLTextAreaElement> {
-	id: string
-	label: string
+export interface ITextArea
+	extends React.InputHTMLAttributes<HTMLTextAreaElement> {
+	label?: string
 	state?: 'success' | 'error'
 	variant?: 'contained' | 'outlined'
 	extra?: string
 	isLoading?: boolean
+	isError?: boolean
 	disabled?: boolean
 	placeholder?: string
 }
@@ -21,7 +22,6 @@ interface ITextArea extends React.InputHTMLAttributes<HTMLTextAreaElement> {
 export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 	(
 		{
-			id,
 			label,
 			state,
 			variant = 'contained',
@@ -42,13 +42,12 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 				})}
 			>
 				<label
-					htmlFor={id}
+					htmlFor={rest.id}
 					className={styles.label}
 				>
 					{label}
 				</label>
 				<textarea
-					id={id}
 					className={clsx(styles.area, extra, {
 						[styles.success]: state === 'success',
 						[styles.error]: state === 'error'

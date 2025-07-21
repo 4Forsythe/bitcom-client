@@ -38,9 +38,18 @@ export const Home: React.FC<Props> = async ({ devices, products, posts }) => {
 
 			<div className={styles.actualInfo}>
 				<div className={styles.actualContent}>
-					<ActualOffer items={devices.items} />
-					<ActualOffer items={devices.items} />
-					<ActualOffer items={devices.items} />
+					<ActualOffer
+						className={styles.actualOffer}
+						items={devices.items}
+					/>
+					<ActualOffer
+						className={styles.actualOffer}
+						items={devices.items}
+					/>
+					<ActualOffer
+						className={styles.actualOffer}
+						items={devices.items}
+					/>
 					<div className={styles.contacts}>
 						<HomeWidget title='Контакты'>
 							<div className={styles.contactsSocials}>

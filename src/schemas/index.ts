@@ -1,3 +1,4 @@
+export { createProductSchema } from './create-product.schema'
 export { loginSchema } from './login.schema'
 export { orderSchema } from './order.schema'
 export { passwordSchema } from './password.schema'

@@ -1,5 +1,5 @@
 .wrapper {
-	@apply bottom-0 w-full p-3.5 z-[1000] fixed;
+	@apply bottom-0 w-fit p-3.5 z-[1000] fixed;
 	.container {
 		@apply w-full max-w-[30rem] ml-auto gap-5 p-5 flex items-end bg-zinc-50 border-2 border-zinc-400/30 rounded-2xl shadow-xl shadow-zinc-500/30 relative;
 		.inner {

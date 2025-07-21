@@ -1,0 +1,9 @@
+.container {
+	@apply mx-12;
+	.breadcrumbs {
+		@apply gap-1.5 text-zinc-500 flex items-center;
+		.breadcrumbItem {
+			@apply text-[0.95rem];
+		}
+	}
+}

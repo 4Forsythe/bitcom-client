@@ -3,6 +3,7 @@ export * from './ui'
 
 export { AboutUs } from './AboutUs'
 export { ActualOffer } from './ActualOffer'
+export { AddProduct } from './AddProduct'
 export { ArticleList } from './ArticleList'
 export { AllowCookies } from './AllowCookies'
 export { BrandsGallery } from './BrandsGallery'
