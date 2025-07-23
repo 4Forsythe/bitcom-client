@@ -1,5 +1,5 @@
 .container {
-	@apply flex flex-col;
+	@apply h-auto flex flex-col;
 	.error {
 		@apply w-fit px-1.5 gap-1 inline-flex items-center text-[0.85rem] text-red-600;
 	}

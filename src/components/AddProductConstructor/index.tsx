@@ -2,16 +2,15 @@
 
 import React from 'react'
 
-import { Button, Heading } from '@/components'
+import { Button, Heading, AddProductForm } from '@/components'
 import { AddProductCategoryItem } from './add-product-category-item'
 
 import { getRootCategoryPath } from '@/utils/get-root-category-path'
+import { getFullCategoryPath } from '@/utils/get-full-category-path'
 
 import type { ProductCategoryType } from '@/types/product-category.types'
 
 import styles from './add-product.module.scss'
-import { AddProductForm } from '../forms/AddProductForm'
-import { getFullCategoryPath } from '@/utils/get-full-category-path'
 
 const categories: ProductCategoryType[] = [
 	{
@@ -68,7 +67,7 @@ const categories: ProductCategoryType[] = [
 	}
 ]
 
-export const AddProduct: React.FC = () => {
+export const AddProductConstructor: React.FC = () => {
 	const [targetCategory, setTargetCategory] =
 		React.useState<ProductCategoryType>()
 	const [isShowForm, setIsShowForm] = React.useState(false)

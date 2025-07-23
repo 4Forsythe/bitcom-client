@@ -1,0 +1,30 @@
+.container {
+	@apply w-[150px] h-[115px] space-y-1.5 flex flex-col items-center justify-center text-zinc-500 bg-zinc-200 border-2 border-transparent rounded-xl relative
+	hover:text-zinc-700 hover:bg-zinc-300 transition duration-200;
+	&.dragging {
+		@apply w-full bg-zinc-200/70 border-zinc-500 border-dashed rounded-none animate-pulse;
+		.label {
+			.icon {
+				@apply w-7 h-7;
+			}
+		}
+	}
+	&.loading {
+		@apply text-opacity-50 animate-pulse;
+	}
+	&.disabled {
+		@apply bg-zinc-50 shadow-none;
+	}
+	.label {
+		@apply w-full h-full px-5 py-8 gap-1.5 flex flex-1 items-center justify-center cursor-pointer;
+		.icon {
+			@apply w-8 h-8 text-zinc-500;
+		}
+	}
+	.input {
+		@apply hidden;
+	}
+	.loader {
+		@apply w-10 h-10 text-zinc-700 animate-spin absolute;
+	}
+}

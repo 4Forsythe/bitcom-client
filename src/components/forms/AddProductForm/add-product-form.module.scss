@@ -1,9 +1,51 @@
 .container {
-	@apply mx-12;
+	@apply mx-12 flex flex-1 flex-col;
 	.breadcrumbs {
-		@apply gap-1.5 text-zinc-500 flex items-center;
+		@apply gap-1.5 text-zinc-600 flex items-center;
 		.breadcrumbItem {
-			@apply text-[0.95rem];
+			@apply text-[0.95rem] hover:text-zinc-500 transition duration-200;
+		}
+	}
+	.inner {
+		@apply my-14 max-w-[636px];
+		.form {
+			@apply gap-5 flex flex-1 flex-col;
+			.field {
+				@apply gap-2.5 flex flex-col;
+				.fieldHeading {
+					@apply flex flex-col;
+					.fieldTitle {
+						@apply text-base font-semibold;
+					}
+					.fieldCaption {
+						@apply text-sm;
+					}
+				}
+				.imageList {
+					@apply gap-2 flex flex-wrap;
+					.imageContainer {
+						@apply flex flex-col;
+						.imagePreview {
+							@apply w-[150px] h-[115px] flex flex-col border-2 border-transparent items-center justify-center rounded-xl relative overflow-hidden;
+							&.primary {
+								@apply border-2 border-red-500;
+							}
+							.imageSource {
+								@apply w-full h-full object-cover;
+							}
+							.imageDeleteButton {
+								@apply top-1 right-1 p-1 bg-zinc-200 rounded-full shadow-md absolute;
+								.icon {
+									@apply w-4 h-4;
+								}
+							}
+						}
+						.imageCaption {
+							@apply text-sm text-zinc-500/80;
+						}
+					}
+				}
+			}
 		}
 	}
 }
