@@ -20,7 +20,7 @@ import styles from './wishlist.module.scss'
 
 export const Wishlist: React.FC = () => {
 	const { user } = useUserStore()
-	const { items, createdAt } = useWishlistStore()
+	const { items, archived, createdAt } = useWishlistStore()
 	const { isWishlistLoading } = useWishlist()
 
 	return (
@@ -32,23 +32,43 @@ export const Wishlist: React.FC = () => {
 					</InfoBlock>
 				</div>
 			)}
-			<div className={styles.list}>
-				{isWishlistLoading
-					? [...new Array(4)].map((_, index) => (
-							<WishlistItemSkeleton key={index} />
-						))
-					: items.map((item) => (
-							<WishlistItem
-								key={item.id}
-								{...item}
-							/>
-						))}
-			</div>
+
 			{!isWishlistLoading && !(items.length > 0) && (
 				<EmptyBlock
 					title='Похоже, ваш список желаемого пуст'
 					description='Добавляйте сюда понравившиеся товары, а мы сделаем все возможное, чтобы вы смогли их потом найти!'
 				/>
+			)}
+
+			{isWishlistLoading ? (
+				<div className={styles.list}>
+					{[...new Array(4)].map((_, index) => (
+						<WishlistItemSkeleton key={index} />
+					))}
+				</div>
+			) : (
+				items.length > 0 && (
+					<div className={styles.list}>
+						{items.map((item) => (
+							<WishlistItem
+								key={item.id}
+								{...item}
+							/>
+						))}
+					</div>
+				)
+			)}
+
+			{!isWishlistLoading && archived?.length > 0 && (
+				<div className={styles.list}>
+					<h5 className={styles.listTitle}>В архиве</h5>
+					{archived.map((item) => (
+						<WishlistItem
+							key={item.id}
+							{...item}
+						/>
+					))}
+				</div>
 			)}
 		</div>
 	)

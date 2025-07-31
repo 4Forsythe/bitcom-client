@@ -44,7 +44,7 @@ export const Cart: React.FC = () => {
 	} = useCreateOrder()
 
 	const { user } = useUserStore()
-	const { items, createdAt } = useCartStore()
+	const { items, archived, createdAt } = useCartStore()
 
 	const isTooManyOrders =
 		axios.isAxiosError(createOrderError) &&
@@ -97,40 +97,57 @@ export const Cart: React.FC = () => {
 				onSubmit={methods.handleSubmit(onSubmit)}
 			>
 				<div className={styles.list}>
-					<div className={styles.items}>
-						{createdAt && items.length > 0 && !user && (
-							<InfoBlock>
-								{`Обратите внимание! Ваша корзина будет очищена через ${calcNounDeclension(calcDaysDifference(createdAt, 14), 'день', 'дня', 'дней')}. Войдите в систему, чтобы снять ограничения.`}
-							</InfoBlock>
-						)}
-						{isTooManyOrders && (
-							<InfoBlock variant='dangerous'>
-								<p>
-									Приносим свои извинения, но мы не можем отслеживать более 10
-									активных заказов за раз.
-									<br />
-									Попробуйте повторить попытку <u>через 24 часа</u> после
-									получения или отмены заказа по номеру телефона.
-								</p>
-							</InfoBlock>
-						)}
-						{isCartLoading &&
-							[...new Array(3)].map((_, index) => (
-								<CartItemSkeleton key={index} />
-							))}
-						{items?.length > 0 &&
-							items.map((item) => (
-								<CartItem
-									key={item.id}
-									{...item}
-								/>
-							))}
-					</div>
+					{createdAt && items.length > 0 && !user && (
+						<InfoBlock>
+							{`Обратите внимание! Ваша корзина будет очищена через ${calcNounDeclension(calcDaysDifference(createdAt, 14), 'день', 'дня', 'дней')}. Войдите в систему, чтобы снять ограничения.`}
+						</InfoBlock>
+					)}
+					{isTooManyOrders && (
+						<InfoBlock variant='dangerous'>
+							<p>
+								Приносим свои извинения, но мы не можем отслеживать более 10
+								активных заказов за раз.
+								<br />
+								Попробуйте повторить попытку <u>через 24 часа</u> после
+								получения или отмены заказа по номеру телефона.
+							</p>
+						</InfoBlock>
+					)}
+
 					{!isCartLoading && (!items || items.length === 0) && (
 						<EmptyBlock
 							title='У вас пустая корзина'
 							description='Вы можете найти нужный товар в каталоге или через поиск сверху.'
 						/>
+					)}
+
+					{isCartLoading && (
+						<div className={styles.items}>
+							{[...new Array(3)].map((_, index) => (
+								<CartItemSkeleton key={index} />
+							))}
+						</div>
+					)}
+					{!isCartLoading && items?.length > 0 && (
+						<div className={styles.items}>
+							{items.map((item) => (
+								<CartItem
+									key={item.id}
+									{...item}
+								/>
+							))}
+						</div>
+					)}
+					{!isCartLoading && archived?.length > 0 && (
+						<div className={styles.items}>
+							<h5 className={styles.listTitle}>В архиве</h5>
+							{archived.map((item) => (
+								<CartItem
+									key={item.id}
+									{...item}
+								/>
+							))}
+						</div>
 					)}
 					{!isCartLoading && items?.length > 0 && <OrderForm />}
 				</div>

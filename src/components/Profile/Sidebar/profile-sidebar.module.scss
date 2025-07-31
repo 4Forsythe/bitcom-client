@@ -1,5 +1,5 @@
 .container {
-	@apply w-[280px] h-fit top-[120px] py-3 bg-zinc-50 rounded-lg shadow sticky;
+	@apply w-[280px] h-fit py-3 bg-zinc-50 rounded-lg shadow;
 	.menu {
 		@apply my-2.5 flex flex-col;
 		& > *:not(:last-child) {

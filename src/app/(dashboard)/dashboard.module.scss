@@ -1,7 +1,7 @@
 .container {
 	@apply h-fit my-2 px-2.5 gap-5 flex;
 	.aside {
-		@apply w-fit h-full flex flex-col;
+		@apply w-fit h-full top-[120px] flex flex-col sticky;
 	}
 	.inner {
 		@apply min-h-[400px] h-fit px-7 py-6 flex flex-1 flex-col bg-zinc-50 shadow rounded-lg;
@@ -12,7 +12,7 @@
 	.container {
 		@apply gap-3.5 flex-col;
 		.aside {
-			@apply w-full h-fit;
+			@apply w-full h-fit static;
 		}
 	}
 }

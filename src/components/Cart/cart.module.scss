@@ -1,9 +1,12 @@
 .container {
 	@apply px-3.5 gap-5 flex justify-between;
 	.list {
-		@apply mb-7 flex flex-1 flex-col;
+		@apply mb-7 gap-5 flex flex-1 flex-col;
 		.items {
 			@apply gap-4 flex flex-col;
+			.listTitle {
+				@apply px-2.5 text-xl font-semibold;
+			}
 		}
 	}
 	.sidebar {
@@ -12,8 +15,11 @@
 			@apply mb-5 px-4 pt-4 pb-5 gap-5 flex flex-col bg-zinc-50 rounded-lg shadow-sm;
 			.summary {
 				@apply flex flex-col;
+				&.discount {
+					@apply text-green-600/80;
+				}
 				.total {
-					@apply mb-1.5 text-lg font-semibold text-zinc-400;
+					@apply mb-1.5 text-base font-semibold text-zinc-500/80;
 				}
 				.amount {
 					@apply gap-1.5 flex items-end justify-between;

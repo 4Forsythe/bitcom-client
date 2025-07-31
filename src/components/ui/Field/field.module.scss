@@ -8,7 +8,10 @@
 		@apply bg-zinc-50 border border-zinc-200 rounded-xl;
 	}
 	&.disabled {
-		@apply bg-zinc-50 shadow-none rounded-xl;
+		@apply opacity-50 bg-zinc-50 shadow-none rounded-xl;
+		.input {
+			@apply cursor-not-allowed;
+		}
 	}
 	&.loaded {
 		@apply opacity-80 animate-pulse rounded-xl;

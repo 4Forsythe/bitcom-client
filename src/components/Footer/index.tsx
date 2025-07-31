@@ -6,6 +6,7 @@ import { MARKETPLACES } from '@/constants/marketplaces.constants'
 import { INFOS, SERVICES, CONTACTS } from './menu.data'
 
 import styles from './footer.module.scss'
+import { SOCIALS } from '@/constants'
 
 export const Footer: React.FC = () => {
 	return (
@@ -28,8 +29,10 @@ export const Footer: React.FC = () => {
 									</Link>
 								</li>
 							))}
-							<li className={styles.marketplaces}>
-								{MARKETPLACES.map((item) => (
+						</ul>
+						<ul className={styles.marketplaces}>
+							{MARKETPLACES.map((item) => (
+								<li key={item.href}>
 									<Link
 										key={item.id}
 										className={styles.market}
@@ -44,8 +47,8 @@ export const Footer: React.FC = () => {
 											priority
 										/>
 									</Link>
-								))}
-							</li>
+								</li>
+							))}
 						</ul>
 					</nav>
 					<nav
@@ -78,6 +81,25 @@ export const Footer: React.FC = () => {
 										{item.label}
 									</Link>
 								</li>
+							))}
+						</ul>
+						<ul className={styles.socials}>
+							{SOCIALS.map((item) => (
+								<Link
+									className={styles.socialItem}
+									key={item.href}
+									href={item.href}
+									target='_blank'
+								>
+									<Image
+										className={styles.icon}
+										width={64}
+										height={64}
+										src={item.imageUrl}
+										alt={item.tag}
+										priority
+									/>
+								</Link>
 							))}
 						</ul>
 					</address>

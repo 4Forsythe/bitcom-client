@@ -56,6 +56,6 @@ export const CONTACTS: FooterMenuType[] = [
 	},
 	{
 		href: 'https://yandex.ru/maps/-/CDbr724l',
-		label: `${ADDRESS} Самарская обл., 445047 (вход со стороны магазина «БИТКОМ»)`
+		label: `${ADDRESS}, Самарская обл., 445047 (вход со стороны магазина «БИТКОМ»)`
 	}
 ]

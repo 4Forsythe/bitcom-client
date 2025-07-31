@@ -1,0 +1,15 @@
+.container {
+	@apply gap-3.5 grid grid-cols-[1.25fr,auto] items-center;
+	.list {
+		@apply px-1.5 gap-1.5 gap-y-2.5 flex flex-wrap content-center;
+		.item {
+			@apply px-3.5 py-1.5 font-medium bg-zinc-200 rounded-3xl;
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		@apply flex flex-col items-start;
+	}
+}

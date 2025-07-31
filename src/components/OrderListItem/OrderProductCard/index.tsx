@@ -4,6 +4,7 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
+import { ProductImage } from '@/components/ProductImage'
 
 import type { OrderItemType } from '@/types/order.types'
 
@@ -14,30 +15,29 @@ export const OrderProductCard: React.FC<OrderItemType> = ({
 	productId,
 	count
 }) => {
+	const imageSrc =
+		product.images.length > 0
+			? `${SERVER_BASE_URL}/${product.images[0].url}`
+			: product.category.imageUrl
+				? `/static/${product.category.imageUrl}`
+				: undefined
+
 	return (
 		<Link
 			className={styles.container}
-			href={`${ROUTE.PRODUCT}/${productId}`}
+			href={`${ROUTE.PRODUCT}/${product.slug}`}
 		>
 			<div className={styles.cover}>
 				<div className={styles.preview}>
-					<Image
-						className={clsx(styles.image, {
-							[styles.placeholder]: !product.imageUrl
-						})}
-						width={100}
-						height={100}
-						src={
-							product.imageUrl
-								? `${SERVER_BASE_URL}/${product.imageUrl}`
-								: product.category?.imageUrl
-									? `/static/${product.category.imageUrl}`
-									: '/static/image-placeholder.png'
+					<ProductImage
+						src={imageSrc}
+						isPlaceholder={
+							!product.images.length && !!product.category.imageUrl
 						}
-						blurDataURL='/static/image-placeholder.png'
-						placeholder='blur'
+						width={250}
+						height={250}
+						size='small'
 						alt={product.name}
-						priority
 					/>
 					<span className={styles.count}>{count} шт</span>
 				</div>

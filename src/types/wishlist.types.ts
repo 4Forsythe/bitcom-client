@@ -12,6 +12,7 @@ export type WishlistItemFormType = {
 export type WishlistType = {
 	id: string
 	items: WishlistItemType[]
+	archived: WishlistItemType[]
 	token: string
 	userId: string
 	createdAt: string

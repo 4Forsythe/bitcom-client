@@ -16,22 +16,29 @@ export type ProductCharacteristicParamsType = {
 	skip?: number
 }
 
+export type ProductImageType = {
+	id: string
+	url: string
+	productId: string
+	sortOrder: number
+}
+
 export type ProductType = {
 	id: string
-
+	slug: string
 	name: string
+	images: ProductImageType[] | []
 	description?: string
 	price: string
-	count: number
-	barcode: string[]
-	imageUrl?: string
-	model?: string
-
-	category?: ProductCategoryType
-	device?: ProductCharacteristicType
-	brand?: ProductCharacteristicType
-
+	discountPrice?: string
+	count?: number
+	sku: string[]
+	isArchived: boolean
+	isPublished: boolean
+	category: ProductCategoryType
 	createdAt: string
+	updatedAt: string
+	archivedAt: string
 }
 
 export type ProductsType = {
@@ -43,22 +50,45 @@ export type ProductParamsType = {
 	id?: string
 	name?: string
 	categoryId?: string
-	deviceId?: string
-	brandId?: string
-	modelId?: string
 	sortBy?: string
 	orderBy?: string
 	take?: number
 	skip?: number
 }
 
+export type ProductFormType = {
+	name: string
+	description?: string
+	price: string
+	count?: string
+	discountPrice?: string
+	sku?: string
+	isArchived?: boolean
+	isPublished?: boolean
+	categoryId: string
+}
+
 export type CreateProductType = {
 	name: string
 	description?: string
 	price: number
+	discountPrice?: number
 	count?: number
 	sku?: string[]
 	isArchived?: boolean
 	isPublished?: boolean
 	categoryId: string
+}
+
+export type UpdateProductType = Partial<CreateProductType>
+
+export type UploadImagesPayloadType = {
+	images: {
+		file: File
+		order: number
+	}[]
+	preserved: {
+		id: string
+		sortOrder: number
+	}[]
 }

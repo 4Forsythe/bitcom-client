@@ -1,0 +1,33 @@
+.container {
+	@apply p-8 gap-5 flex flex-col items-center overflow-hidden;
+	.main {
+		@apply w-[600px] h-[400px] flex items-center justify-center relative overflow-hidden;
+		.navButton {
+			@apply w-12 h-full z-30 flex items-center justify-center bg-zinc-300/30 absolute hover:bg-zinc-300/60 transition duration-200;
+			.icon {
+				@apply text-zinc-500/70 hover:text-zinc-500 transition duration-200;
+			}
+		}
+		.left {
+			@apply top-0 left-0;
+		}
+		.right {
+			@apply top-0 right-0;
+		}
+	}
+	.list {
+		@apply gap-1.5 px-5 flex flex-wrap items-center justify-center;
+		.listItem {
+			@apply w-[100px] max-h-[64px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
+			&.target {
+				@apply border-zinc-300;
+			}
+		}
+	}
+}
+
+@media (max-width: 650px) {
+	.container {
+		@apply p-4;
+	}
+}

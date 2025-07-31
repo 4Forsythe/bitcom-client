@@ -89,7 +89,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 		}
 
 		if (target > 0 && data?.items[target]) {
-			router.push(`${ROUTE.PRODUCT}/${data.items[target].id}`)
+			router.push(`${ROUTE.PRODUCT}/${data.items[target].slug}`)
 			inputRef.current?.blur()
 		}
 
@@ -183,7 +183,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 											[styles.target]: index + 1 === target
 										})}
 										onClick={() => {
-											router.push(`${ROUTE.PRODUCT}/${item.id}`, {
+											router.push(`${ROUTE.PRODUCT}/${item.slug}`, {
 												scroll: true
 											})
 											setIsFocused(false)

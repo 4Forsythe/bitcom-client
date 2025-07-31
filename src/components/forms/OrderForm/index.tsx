@@ -31,10 +31,9 @@ export const OrderForm = () => {
 	const { user } = useUserStore()
 	const { items } = useCartStore()
 
-	const availableProducts = items.reduce(
-		(count, item) => count + item.product.count,
-		0
-	)
+	const availableProducts = items.some((item) => item.product.count === null)
+		? 'Есть в наличии'
+		: `На складе ${items.reduce((count, item) => count + Number(item.product.count), 0)} шт.`
 
 	return (
 		<div className={styles.container}>

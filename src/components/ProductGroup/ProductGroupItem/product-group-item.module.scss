@@ -2,18 +2,15 @@
 	@apply w-full h-full flex flex-col bg-zinc-50 shadow-sm overflow-hidden hover:shadow-md
   transition-shadow duration-300;
 	.cover {
-		@apply w-full h-[140px] flex items-center justify-center overflow-hidden hover:*:scale-110 relative;
-		&.loaded {
-			@apply w-full blur-sm relative;
+		@apply w-full h-[140px] flex items-center justify-center overflow-hidden relative;
+		.overlay {
+			@apply inset-0 z-[30] bg-zinc-50/70 flex items-center justify-center absolute;
+			.overlayTitle {
+				@apply text-zinc-700/70 text-xl font-bold uppercase;
+			}
 		}
-		.image {
-			@apply w-auto h-full object-cover transition-transform duration-300;
-			&.categoryImage {
-				@apply w-auto h-full object-cover grayscale opacity-50 contrast-200;
-			}
-			&.placeholder {
-				@apply w-full h-full object-cover grayscale opacity-50 contrast-200;
-			}
+		.discount {
+			@apply top-2.5 right-2.5 px-1.5 z-10 text-sm font-medium text-zinc-50 bg-red-500 rounded-md absolute;
 		}
 	}
 	.information {
@@ -24,11 +21,17 @@
 		}
 		.details {
 			@apply gap-y-2.5 inline-flex flex-wrap items-center justify-between leading-4;
-			.text {
-				@apply px-2 py-0.5 text-sm font-medium text-zinc-50 bg-red-400 rounded-3xl;
-			}
-			.price {
-				@apply text-lg font-bold text-zinc-500;
+			.breadcrumb {
+				@apply w-fit mt-2 px-1.5 text-sm bg-zinc-200 flex items-center rounded-md;
+				&.positive {
+					@apply text-green-600 bg-green-200/50;
+				}
+				&.negative {
+					@apply text-red-600 bg-red-200/50;
+				}
+				&.warning {
+					@apply text-orange-500 bg-orange-100/50;
+				}
 			}
 		}
 	}

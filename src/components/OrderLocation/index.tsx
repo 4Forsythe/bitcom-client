@@ -9,7 +9,7 @@ import { YMaps, Map, Placemark } from 'react-yandex-maps'
 import styles from './order-location.module.scss'
 
 interface Props {
-	availableProducts?: number
+	availableProducts?: string
 }
 
 export const OrderLocation: React.FC<Props> = ({ availableProducts }) => {
@@ -21,11 +21,7 @@ export const OrderLocation: React.FC<Props> = ({ availableProducts }) => {
 						<h5>Тольятти, бульвар Кулибина 6А</h5>
 						<span>вход со стороны магазина «БитКом»</span>
 						<span className={styles.worktime}>пн-пт с 9:30 до 18:00</span>
-						<span className={styles.availables}>
-							{availableProducts
-								? `В наличии ${availableProducts} шт.`
-								: 'Нет в наличии'}
-						</span>
+						<span className={styles.availables}>{availableProducts}</span>
 					</div>
 					<YMaps>
 						<Map

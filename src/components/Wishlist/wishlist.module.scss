@@ -1,10 +1,13 @@
 .container {
-	@apply h-full flex flex-col;
+	@apply h-full gap-5 flex flex-col;
 	.heading {
 		@apply mb-1.5 px-4;
 	}
 	.list {
 		@apply px-4 gap-3.5 flex flex-col;
+		.listTitle {
+			@apply px-2.5 text-2xl font-semibold;
+		}
 	}
 }
 

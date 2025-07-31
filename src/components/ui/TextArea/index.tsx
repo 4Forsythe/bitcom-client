@@ -11,6 +11,7 @@ export interface ITextArea
 	extends React.InputHTMLAttributes<HTMLTextAreaElement> {
 	label?: string
 	hint?: string
+	formValue?: string
 	variant?: 'contained' | 'outlined'
 	isLoading?: boolean
 	isError?: boolean
@@ -25,6 +26,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 			hint,
 			variant = 'contained',
 			value,
+			formValue,
 			onInput,
 			placeholder,
 			isLoading,
@@ -35,9 +37,6 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 		ref
 	) => {
 		const textareaRef = React.useRef<HTMLTextAreaElement>(null)
-
-		console.log('maxlen', rest.maxLength)
-		console.log('val', value)
 
 		React.useImperativeHandle(
 			ref,
@@ -95,10 +94,10 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 						{...rest}
 					/>
 
-					{rest.maxLength && typeof value === 'string' && (
-						<span>
-							{value.length} / {rest.maxLength}
-						</span>
+					{rest.maxLength && formValue && (
+						<p className={styles.symbolCounter}>
+							{formValue.length} / {rest.maxLength}
+						</p>
 					)}
 
 					{isLoading && <LoaderCircle className={styles.loader} />}

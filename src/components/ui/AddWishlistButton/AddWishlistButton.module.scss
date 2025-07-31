@@ -2,7 +2,7 @@
 	@apply p-3 border flex items-center justify-center rounded-lg relative
   transition-colors duration-200;
 	&:disabled {
-		@apply opacity-80 pointer-events-none;
+		@apply opacity-50 pointer-events-none;
 	}
 	&.contained {
 		@apply text-red-500 bg-red-100 border-red-200 hover:bg-red-200;

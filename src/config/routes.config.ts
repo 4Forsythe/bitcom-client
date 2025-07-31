@@ -5,16 +5,17 @@ class ROUTES {
 
 	SEARCH = `${this.BASE_URL}search`
 	CATALOG = `${this.BASE_URL}catalog`
-	DEVICES = `${this.BASE_URL}devices`
 	PRICES = `${this.BASE_URL}prices`
 	TABLES = `${this.BASE_URL}tables`
 
 	CART = `${this.BASE_URL}cart`
 	WISHLIST = `${this.BASE_URL}wish-list`
 	PRODUCT = `${this.BASE_URL}product`
+	ADD_PRODUCT = `${this.BASE_URL}product/add-item`
 	THANKS = `${this.CART}/thanks`
 
 	PROFILE = `${this.BASE_URL}my`
+	ARCHIVE = `${this.BASE_URL}my/archive`
 	ORDERLIST = `${this.BASE_URL}my/order-list`
 	UPLOAD_DOCX = `${this.BASE_URL}my/upload-docx`
 

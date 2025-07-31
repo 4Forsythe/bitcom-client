@@ -1,0 +1,40 @@
+.container {
+	&.small {
+		@apply gap-1.5 flex flex-wrap flex-row-reverse items-center;
+		.discount {
+			@apply px-1.5 py-0 text-base font-semibold;
+		}
+		.price {
+			.percent {
+				@apply hidden;
+			}
+			.text {
+				@apply text-lg font-semibold;
+				&.discounted {
+					@apply text-base font-normal line-through;
+				}
+				&.nullable {
+					@apply text-base;
+				}
+			}
+		}
+	}
+	.discount {
+		@apply w-fit px-3 py-1.5 text-3xl font-bold text-zinc-50 bg-red-500 rounded-lg;
+	}
+	.price {
+		@apply gap-1.5 flex items-start justify-end;
+		.percent {
+			@apply text-red-500 text-lg font-semibold;
+		}
+		.text {
+			@apply text-3xl font-bold;
+			&.discounted {
+				@apply text-zinc-500/70 text-xl font-normal line-through;
+			}
+			&.nullable {
+				@apply text-2xl;
+			}
+		}
+	}
+}

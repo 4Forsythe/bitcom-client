@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 
 import clsx from 'clsx'
-import { File, LogOut } from 'lucide-react'
+import { Archive, File, LogOut, PackagePlus } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui'
@@ -61,7 +61,7 @@ export const ProfileSidebar: React.FC = () => {
 		return (
 			<div className={styles.container}>
 				<div className={styles.menu}>
-					{[...new Array(4)].map((_, index) => (
+					{[...new Array(3)].map((_, index) => (
 						<ProfileSidebarSkeleton key={index} />
 					))}
 				</div>
@@ -90,17 +90,42 @@ export const ProfileSidebar: React.FC = () => {
 				))}
 
 				{user?.role && (
-					<li className={styles.item}>
-						<Link
-							href={ROUTE.UPLOAD_DOCX}
-							className={clsx(styles.tab, {
-								[styles.target]: pathname === ROUTE.UPLOAD_DOCX
-							})}
-						>
-							<File className={styles.icon} />
-							Загрузить статью
-						</Link>
-					</li>
+					<React.Fragment>
+						<li className={styles.item}>
+							<Link
+								href={ROUTE.ARCHIVE}
+								className={clsx(styles.tab, {
+									[styles.target]: pathname === ROUTE.ARCHIVE
+								})}
+							>
+								<Archive className={styles.icon} />
+								Архив и черновики
+							</Link>
+						</li>
+						<li className={styles.item}>
+							<Link
+								target='_blank'
+								href={ROUTE.ADD_PRODUCT}
+								className={clsx(styles.tab, {
+									[styles.target]: pathname === ROUTE.ADD_PRODUCT
+								})}
+							>
+								<PackagePlus className={styles.icon} />
+								Добавить товар
+							</Link>
+						</li>
+						<li className={styles.item}>
+							<Link
+								href={ROUTE.UPLOAD_DOCX}
+								className={clsx(styles.tab, {
+									[styles.target]: pathname === ROUTE.UPLOAD_DOCX
+								})}
+							>
+								<File className={styles.icon} />
+								Загрузить статью
+							</Link>
+						</li>
+					</React.Fragment>
 				)}
 			</ul>
 

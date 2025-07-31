@@ -9,10 +9,13 @@
 				@apply w-auto h-4 text-red-700;
 			}
 		}
-		.prices {
-			@apply ml-auto px-2.5 gap-1 flex items-center text-zinc-500 text-sm font-medium hover:text-zinc-700 hover:*:text-zinc-700 transition duration-300;
-			.icon {
-				@apply w-auto h-3.5 text-zinc-500;
+		.additional {
+			@apply ml-auto gap-2.5 flex items-center justify-center;
+			.prices {
+				@apply px-2.5 gap-1 flex items-center text-zinc-500 text-sm font-medium hover:text-zinc-700 hover:*:text-zinc-700 transition duration-300;
+				.icon {
+					@apply w-auto h-3.5 text-zinc-500;
+				}
 			}
 		}
 	}

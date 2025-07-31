@@ -21,10 +21,13 @@
 	.items {
 		@apply hidden;
 		.item {
-			@apply px-4 py-2.5 text-sm border-l-[3px] border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-100 hover:bg-zinc-200/50
+			@apply px-4 py-2.5 gap-1 text-sm flex items-center border-l-[3px] border-b border-l-transparent border-b-zinc-200 last:border-b-0 bg-zinc-100 hover:bg-zinc-200/50
 			break-all transition-colors duration-200;
 			&.target {
 				@apply font-medium border-l-zinc-700 bg-zinc-200/50;
+			}
+			.icon {
+				@apply w-5 h-5 flex-shrink-0;
 			}
 		}
 		.nestedItem {

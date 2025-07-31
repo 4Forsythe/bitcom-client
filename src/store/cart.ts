@@ -4,6 +4,7 @@ import type { CartType, CartItemType } from '@/types/cart.types'
 
 interface ICartState {
 	items: CartItemType[]
+	archived: CartItemType[]
 	count: number
 	total: number
 	createdAt: string
@@ -13,6 +14,7 @@ interface ICartState {
 
 export const useCartStore = create<ICartState>((set) => ({
 	items: [],
+	archived: [],
 	count: 0,
 	total: 0,
 	createdAt: new Date().toISOString(),
@@ -20,6 +22,7 @@ export const useCartStore = create<ICartState>((set) => ({
 	setCart: (data) =>
 		set(() => ({
 			items: data.items,
+			archived: data.archived,
 			count: data.count,
 			total: data.total,
 			createdAt: data.createdAt,

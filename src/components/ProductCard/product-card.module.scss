@@ -1,12 +1,9 @@
 .container {
 	@apply max-w-[1096px] w-full h-[200px] gap-3 p-6 flex bg-zinc-50 border border-zinc-200 rounded-2xl shadow-sm;
 	.cover {
-		@apply w-[180px] h-[150px] flex items-center justify-center rounded-lg overflow-hidden;
-		.image {
-			@apply w-[80%] max-h-[80%] h-auto object-cover;
-		}
-		.placeholder {
-			@apply grayscale opacity-50 contrast-200;
+		@apply w-[180px] h-[150px] flex items-center justify-center rounded-lg overflow-hidden relative;
+		.discount {
+			@apply top-1 right-1 px-1.5 z-10 text-sm font-medium text-zinc-50 bg-red-500 rounded-md absolute;
 		}
 	}
 	.information {
@@ -27,14 +24,20 @@
 		}
 	}
 	.details {
-		@apply ml-auto gap-1.5 flex flex-col items-end;
+		@apply ml-auto gap-2.5 flex flex-col items-end;
 		.avails {
 			@apply gap-1.5 flex flex-col items-end;
-			.price {
-				@apply text-xl font-semibold;
-			}
-			.count {
-				@apply mb-1.5 text-sm text-zinc-400;
+			.breadcrumb {
+				@apply w-fit mt-2 px-1.5 text-sm bg-zinc-200 flex items-center rounded-md;
+				&.positive {
+					@apply text-green-600 bg-green-200/50;
+				}
+				&.negative {
+					@apply text-red-600 bg-red-200/50;
+				}
+				&.warning {
+					@apply text-orange-500 bg-orange-100/50;
+				}
 			}
 		}
 		.controls {

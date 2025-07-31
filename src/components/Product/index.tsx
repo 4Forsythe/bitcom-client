@@ -2,17 +2,22 @@
 
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import clsx from 'clsx'
-import { Loader2 } from 'lucide-react'
-import { ProductPreviewModal } from './ProductPreviewModal'
-import { AddWishlistButton, Badge, Button } from '@/components'
+import { Archive, Eye, EyeOff, PencilLine } from 'lucide-react'
+import { ProductImageGallery } from './ProductImageGallery'
+import {
+	AddWishlistButton,
+	Badge,
+	Button,
+	PriceBadge,
+	ProductManagerControls
+} from '@/components'
 
+import { useUserStore } from '@/store/user'
 import { useCartStore } from '@/store/cart'
 import { useWishlistStore } from '@/store/wishlist'
-import { useModal } from '@/hooks/useModal'
 import { useProfile } from '@/hooks/useProfile'
 import { useCart } from '@/hooks/useCart'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -20,59 +25,48 @@ import { useCreateCartItem } from '@/hooks/useCreateCartItem'
 import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 
 import { ROUTE } from '@/config/routes.config'
-import { SERVER_BASE_URL } from '@/constants'
 
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
 
-type IProduct = ProductType & {
-	imagePlaceholder: string
-}
-
-export const Product: React.FC<IProduct> = ({
+export const Product: React.FC<ProductType> = ({
 	id,
+	slug,
 	name,
 	description,
-	imageUrl,
-	imagePlaceholder,
-	barcode,
-	category,
-	device,
-	brand,
-	model,
+	images,
+	price,
+	discountPrice,
 	count,
-	price
+	sku,
+	isArchived,
+	isPublished,
+	category
 }) => {
 	const router = useRouter()
-	const [hasImageError, setHasImageError] = React.useState(false)
-	const [isImageLoading, setIsImageLoading] = React.useState(true)
-
-	const [imageSrc, setImageSrc] = React.useState<string>(
-		imageUrl
-			? `${SERVER_BASE_URL}/${imageUrl}`
-			: '/static/image-placeholder.png'
-	)
-	const [imagePath, setImagePath] = React.useState<string | undefined>()
 	const [hasDescriptionHidden, setHasDescriptionHidden] = React.useState(false)
 	const [isDescriptionExpanded, setIsDescriptionExpanded] =
 		React.useState(false)
 
-	const { onOpen } = useModal()
 	const { isCartLoading } = useCart()
 	const { isWishlistLoading } = useWishlist()
 	const { isProfileLoading } = useProfile()
 
 	const { createCartItem, isCreateCartItemPending } = useCreateCartItem()
 
-	const { items: cart } = useCartStore()
-	const { items: wishlist } = useWishlistStore()
+	const { user } = useUserStore()
+	const { items: cart, archived: archivedCart } = useCartStore()
+	const { items: wishlist, archived: archivedWishlist } = useWishlistStore()
 
-	const isLoading =
-		isCartLoading || isWishlistLoading || isProfileLoading || isImageLoading
+	const isLoading = isCartLoading || isWishlistLoading || isProfileLoading
 
-	const isInCart = Boolean(cart.find((item) => item.product.id === id))
-	const isInWishlist = Boolean(wishlist.find((item) => item.product.id === id))
+	const isInCart = Boolean(
+		cart.concat(archivedCart).find((item) => item.product.id === id)
+	)
+	const isInWishlist = Boolean(
+		wishlist.concat(archivedWishlist).find((item) => item.product.id === id)
+	)
 
 	const descriptionRef = React.useRef<HTMLParagraphElement>(null)
 	const descriptionHtml = description
@@ -90,37 +84,11 @@ export const Product: React.FC<IProduct> = ({
 		createWishlistItem({ productId: id })
 	}
 
-	const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
-		setIsImageLoading(false)
-		setImagePath(event.currentTarget.src)
-	}
-
-	const handleImageError = () => {
-		setHasImageError(true)
-		setImageSrc(
-			category?.imageUrl
-				? `/static/${category.imageUrl}`
-				: '/static/image-placeholder.png'
-		)
-	}
-
-	const onShowPreview = () => {
-		if (imageUrl && !hasImageError) {
-			onOpen(
-				<ProductPreviewModal
-					imageUrl={`${SERVER_BASE_URL}/${imageUrl}`}
-					alt={name}
-				/>
-			)
-		}
-	}
-
 	const onToggleDescriptionExpander = () => {
 		setIsDescriptionExpanded((prev) => {
 			if (prev && descriptionRef.current) {
 				window.scrollTo({ top: 0, behavior: 'smooth' })
 			}
-
 			return !prev
 		})
 	}
@@ -139,43 +107,24 @@ export const Product: React.FC<IProduct> = ({
 	return (
 		<>
 			<div className={styles.container}>
-				<div
-					className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}
-					style={{ cursor: imageUrl && !hasImageError ? 'pointer' : 'default' }}
-				>
-					{isImageLoading && (
-						<div className={styles.loader}>
-							<Loader2 className={styles.icon} />
+				<div className={styles.gallery}>
+					<ProductImageGallery
+						images={images}
+						category={category}
+						alt={name}
+					/>
+					{isArchived && (
+						<div className={styles.overlay}>
+							<h5 className={styles.overlayTitle}>Нет в наличии</h5>
 						</div>
 					)}
-					<div onClick={onShowPreview}>
-						<Image
-							className={clsx(styles.image, {
-								[styles.placeholder]: isLoading || hasImageError || !imageUrl
-							})}
-							width={400}
-							height={250}
-							src={
-								imageUrl
-									? imageSrc
-									: category?.imageUrl
-										? `/static/${category.imageUrl}`
-										: '/static/image-placeholder.png'
-							}
-							placeholder='blur'
-							blurDataURL={imagePlaceholder}
-							alt={name}
-							priority
-							onLoad={handleImageLoad}
-							onError={handleImageError}
-						/>
-					</div>
 				</div>
 				<div className={styles.information}>
 					<div className={styles.overview}>
 						<div className={styles.head}>
-							<h1 className={styles.title}>{name}</h1>
-							<p className={styles.article}>{barcode[0]}</p>
+							<h1 className={styles.title}>
+								{isPublished ? name : `${name} (черновик)`}
+							</h1>
 						</div>
 					</div>
 					<div className={styles.options}>
@@ -184,14 +133,34 @@ export const Product: React.FC<IProduct> = ({
 								<Link href={`${ROUTE.CATALOG}/${category.id}`}>
 									<Badge
 										className={styles.category}
-										variant='contained'
+										variant='outlined'
 									>
 										{category?.name}
 									</Badge>
 								</Link>
 							)}
-							<span className={styles.breadcrumb}>В наличии {count} шт.</span>
+							{!isArchived && (
+								<span
+									className={clsx(styles.breadcrumb, {
+										[styles.positive]: count !== 0,
+										[styles.negative]: count === 0,
+										[styles.warning]: count && count > 0 && count < 5
+									})}
+								>
+									{count || count === 0
+										? `На складе ${count} шт.`
+										: 'Есть в наличии'}
+								</span>
+							)}
 						</div>
+						{user?.role && (
+							<ProductManagerControls
+								productId={id}
+								isPublished={isPublished}
+								isArchived={isArchived}
+								refreshPage
+							/>
+						)}
 						<div className={styles.description}>
 							<p
 								ref={descriptionRef}
@@ -224,6 +193,7 @@ export const Product: React.FC<IProduct> = ({
 									<Button
 										variant={isInCart ? 'outlined' : 'contained'}
 										isLoading={isCartLoading || isCreateCartItemPending}
+										disabled={!isPublished}
 										onClick={onAddCartItem}
 									>
 										{isInCart ? 'В корзине' : 'В корзину'}
@@ -231,13 +201,15 @@ export const Product: React.FC<IProduct> = ({
 									<AddWishlistButton
 										variant={isInWishlist ? 'contained' : 'outlined'}
 										isLoading={isWishlistLoading || isCreateWishlistItemPending}
+										disabled={!isPublished}
 										onClick={onAddWishlistItem}
 									/>
 								</div>
 							)}
-							<span className={styles.price}>
-								{+price > 0 ? `${price} ₽` : 'Цена по запросу'}
-							</span>
+							<PriceBadge
+								price={price}
+								discountPrice={discountPrice}
+							/>
 						</div>
 					</div>
 					<div className={styles.details}>
@@ -245,21 +217,9 @@ export const Product: React.FC<IProduct> = ({
 						<ul className={styles.characteristics}>
 							<li className={styles.characteristic}>
 								<div className={styles.characteristicType}>
-									<span>Тип</span>
+									<span>Категория</span>
 								</div>
-								<span>{device?.name || '—'}</span>
-							</li>
-							<li className={styles.characteristic}>
-								<div className={styles.characteristicType}>
-									<span>Модель</span>
-								</div>
-								<span>{model || '—'}</span>
-							</li>
-							<li className={styles.characteristic}>
-								<div className={styles.characteristicType}>
-									<span>Бренд производителя</span>
-								</div>
-								<span>{brand?.name || '—'}</span>
+								<span>{category.name || 'не указана'}</span>
 							</li>
 							<li className={styles.characteristic}>
 								<div className={styles.characteristicType}>

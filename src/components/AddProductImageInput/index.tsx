@@ -19,69 +19,96 @@ export interface IFileUploader
 export const AddProductImageInput = React.forwardRef<
 	HTMLInputElement,
 	IFileUploader
->(({ isLoading, className, onChange, onDrop, ...rest }, ref) => {
-	const [isDragging, setIsDragging] = React.useState(false)
+>(
+	(
+		{
+			accept = '.jpg,.jpeg,.png,.webp',
+			isLoading,
+			className,
+			onChange,
+			onDrop,
+			...rest
+		},
+		ref
+	) => {
+		const dragCounter = React.useRef(0)
+		const [isDragging, setIsDragging] = React.useState(false)
 
-	const { ref: inputRef, open, getFiles } = useFileInput()
+		const { ref: inputRef, open } = useFileInput()
 
-	console.log(getFiles())
+		React.useImperativeHandle(ref, () => inputRef.current as HTMLInputElement)
 
-	React.useImperativeHandle(ref, () => inputRef.current as HTMLInputElement)
+		const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+			event.preventDefault()
+			event.stopPropagation()
 
-	const handleDragLeave = (event: React.DragEvent) => {
-		event.preventDefault()
-		setIsDragging(false)
-	}
+			dragCounter.current += 1
 
-	const handleDragEnter = (event: React.DragEvent) => {
-		event.preventDefault()
-		event.stopPropagation()
-
-		if (event.type === 'dragenter' || event.type === 'dragover') {
-			setIsDragging(true)
+			if (event.type === 'dragenter' || event.type === 'dragover') {
+				setIsDragging(true)
+			}
 		}
-	}
 
-	return (
-		<div
-			className={clsx(styles.container, className, {
-				[styles.dragging]: isDragging,
-				[styles.loading]: isLoading,
-				[styles.disabled]: rest.disabled
-			})}
-			onDragEnter={handleDragEnter}
-			onDragLeave={handleDragLeave}
-			onDrop={(event) => {
-				onDrop(event)
+		const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+			event.preventDefault()
+			event.stopPropagation()
+
+			dragCounter.current -= 1
+
+			if (dragCounter.current === 0) {
 				setIsDragging(false)
-			}}
-			onDragOver={(event) => event.preventDefault()}
-		>
-			<label
-				htmlFor={rest.id}
-				className={styles.label}
-				onClick={open}
+			}
+		}
+
+		const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+			event.preventDefault()
+			event.stopPropagation()
+
+			dragCounter.current = 0
+
+			setIsDragging(false)
+			onDrop(event)
+		}
+
+		return (
+			<div
+				className={clsx(styles.container, className, {
+					[styles.dragging]: isDragging,
+					[styles.loading]: isLoading,
+					[styles.disabled]: rest.disabled
+				})}
+				onDragEnter={handleDragEnter}
+				onDragLeave={handleDragLeave}
+				onDrop={handleDrop}
+				onDragOver={(event) => event.preventDefault()}
 			>
-				{isDragging ? (
-					<Image className={styles.icon} />
-				) : (
-					<Camera className={styles.icon} />
-				)}
-				{isDragging && 'Перетащите файлы сюда'}
-			</label>
+				<label
+					htmlFor={rest.id}
+					className={styles.label}
+					onClick={open}
+				>
+					{isDragging ? (
+						<Image className={styles.icon} />
+					) : (
+						<Camera className={styles.icon} />
+					)}
+					{isDragging && 'Перетащите файлы сюда'}
+				</label>
 
-			<input
-				ref={inputRef}
-				className={styles.input}
-				type='file'
-				disabled={isLoading}
-				onChange={onChange}
-				{...rest}
-			/>
+				<input
+					ref={inputRef}
+					className={styles.input}
+					type='file'
+					disabled={isLoading}
+					onChange={onChange}
+					accept={accept}
+					{...rest}
+				/>
 
-			{isLoading && <LoaderCircle className={styles.loader} />}
-		</div>
-	)
-})
+				{isLoading && <LoaderCircle className={styles.loader} />}
+			</div>
+		)
+	}
+)
 
 AddProductImageInput.displayName = 'AddProductImageInput'

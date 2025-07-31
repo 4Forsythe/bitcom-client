@@ -11,68 +11,75 @@ import { SERVER_BASE_URL } from '@/constants'
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product-group-item.module.scss'
+import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { ProductImage } from '@/components/ProductImage'
+import { PriceBadge } from '@/components/ui'
 
 export const ProductGroupItem: React.FC<ProductType> = ({
 	id,
+	slug,
 	name,
-	count,
+	images,
 	price,
-	imageUrl,
-	category
+	discountPrice,
+	count,
+	category,
+	isArchived
 }) => {
-	const [hasImageError, setHasImageError] = React.useState(false)
-	const [isImageLoading, setIsImageLoading] = React.useState(true)
-
-	const [imageSrc, setImageSrc] = React.useState<string>(
-		imageUrl
-			? `${SERVER_BASE_URL}/${imageUrl}`
-			: '/static/image-placeholder.png'
-	)
-
-	const handleImageError = () => {
-		setHasImageError(true)
-		setImageSrc(
-			category?.imageUrl
+	const imageSrc =
+		images.length > 0
+			? `${SERVER_BASE_URL}/${images[0].url}`
+			: category.imageUrl
 				? `/static/${category.imageUrl}`
-				: '/static/image-placeholder.png'
-		)
-	}
+				: undefined
 
 	return (
 		<Link
 			className={styles.container}
-			href={`${ROUTE.PRODUCT}/${id}`}
+			href={`${ROUTE.PRODUCT}/${slug}`}
 		>
-			<div className={clsx(styles.cover, { [styles.loaded]: isImageLoading })}>
-				<Image
-					className={clsx(styles.image, {
-						[styles.placeholder]: !imageUrl && !category?.imageUrl,
-						[styles.categoryImage]:
-							(!imageUrl || hasImageError) && category?.imageUrl
-					})}
-					width={350}
-					height={150}
-					src={
-						imageUrl
-							? imageSrc
-							: category?.imageUrl
-								? `/static/${category.imageUrl}`
-								: '/static/image-placeholder.png'
-					}
-					placeholder='blur'
-					blurDataURL={'/static/image-placeholder.png'}
+			<div className={styles.cover}>
+				{isArchived && (
+					<div className={styles.overlay}>
+						<h5 className={styles.overlayTitle}>Нет в наличии</h5>
+					</div>
+				)}
+				{discountPrice && Number(discountPrice) < Number(price) && (
+					<div className={styles.discount}>
+						-{calcDiscountPercent(Number(price), Number(discountPrice))}%
+					</div>
+				)}
+				<ProductImage
+					src={imageSrc}
+					isPlaceholder={!images.length && !!category.imageUrl}
+					width={450}
+					height={450}
 					alt={name}
-					onLoad={() => setIsImageLoading(false)}
-					onError={handleImageError}
+					size='medium'
+					priority
 				/>
 			</div>
 			<div className={styles.information}>
 				<h1 className={styles.name}>{name}</h1>
 				<div className={styles.details}>
-					<span className={styles.text}>В наличии {count} шт.</span>
-					<span className={styles.price}>
-						{+price > 0 ? `${price} ₽` : 'Цена по запросу'}
-					</span>
+					{!isArchived && (
+						<span
+							className={clsx(styles.breadcrumb, {
+								[styles.positive]: count !== 0,
+								[styles.negative]: count === 0,
+								[styles.warning]: count && count > 0 && count < 5
+							})}
+						>
+							{count || count === 0
+								? `На складе ${count} шт.`
+								: 'Есть в наличии'}
+						</span>
+					)}
+					<PriceBadge
+						size='small'
+						price={price}
+						discountPrice={discountPrice}
+					/>
 				</div>
 			</div>
 		</Link>

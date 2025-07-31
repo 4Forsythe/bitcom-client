@@ -5,28 +5,15 @@ import { getSearchParams } from '@/utils/get-search-params'
 
 import { productService } from '@/services/product.service'
 import { ROUTE } from '@/config/routes.config'
-import { deviceService } from '@/services/device.service'
 
 const getProducts = cache(
 	async (searchParams: { [key: string]: string | undefined }) => {
-		const {
-			query,
-			category,
-			device,
-			brand,
-			model,
-			sortBy,
-			orderBy,
-			page,
-			limit
-		} = getSearchParams(searchParams)
+		const { query, category, sortBy, orderBy, page, limit } =
+			getSearchParams(searchParams)
 
 		return productService.getAll({
 			name: query,
 			categoryId: category,
-			deviceId: device,
-			brandId: brand,
-			modelId: model,
 			sortBy: sortBy,
 			orderBy: orderBy,
 			take: limit,
@@ -38,11 +25,7 @@ const getProducts = cache(
 export const generateMetadata = async ({ searchParams }: SearchPageProps) => {
 	const data = await getProducts(searchParams)
 
-	const {
-		query,
-		device: deviceId,
-		brand: brandId
-	} = getSearchParams(searchParams)
+	const { query } = getSearchParams(searchParams)
 
 	if (!data) {
 		return {
@@ -52,11 +35,9 @@ export const generateMetadata = async ({ searchParams }: SearchPageProps) => {
 
 	const items = data.items.map((item) => item.name).join(', ')
 
-	const device = deviceId ? await deviceService.getOne(deviceId) : null
-
 	return {
-		title: `${device || query ? `Поиск — ${device?.name || query}` : 'Каталог — поиск'}`,
-		description: `${device?.name || query || 'Поиск'} — купить Б/У по самым выгодным ценам в городе Тольятти. ${items}. Всего ${data.count} шт. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
+		title: `${query ? `Поиск — ${query}` : 'Каталог — поиск'}`,
+		description: `${query || 'Поиск'} — купить Б/У по самым выгодным ценам в городе Тольятти. ${items}. Всего ${data.count} шт. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
 	}
 }
 
@@ -69,21 +50,15 @@ interface SearchPageProps {
 export default async function SearchPage({ searchParams }: SearchPageProps) {
 	const params = getSearchParams(searchParams)
 
-	const device = params.device
-		? await deviceService.getOne(params.device)
-		: undefined
-
 	const products = await getProducts(searchParams)
 
 	return (
 		<>
 			<Breadcrumb
-				value={params.query || device?.name || 'Поиск'}
+				value={params.query || 'Поиск'}
 				items={[
 					{ href: ROUTE.HOME, value: 'Главная' },
-					...(params.query || device
-						? [{ href: ROUTE.CATALOG, value: 'Каталог' }]
-						: [])
+					...(params.query ? [{ href: ROUTE.CATALOG, value: 'Каталог' }] : [])
 				]}
 			/>
 			<ProductList {...products} />

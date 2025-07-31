@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import clsx from 'clsx'
-import { ChevronRight } from 'lucide-react'
 import { formatCase } from '@/utils/format-case'
 
 import type { FilterItemType } from '@/components/Filters/filters.data'
@@ -28,16 +27,33 @@ export const FiltersRecursiveItem: React.FC<Props> = ({
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 
-	const checkTargetItem = (id: string) => {
+	const getTargetIdFromURL = (
+		path: string,
+		searchParams: URLSearchParams,
+		pathname: string
+	) => {
 		if (path.includes('?')) {
 			const key = path.split('?')[1].split('=')[0]
 			const value = searchParams.get(key)
-
-			return value === id
+			return value ?? ''
 		}
 
-		return decodeURIComponent(pathname).includes(path + id)
+		const prefix = decodeURIComponent(pathname).replace(path, '')
+		return prefix.split('/')[0] || ''
 	}
+
+	const isInPathToTarget = (
+		item: FilterItemType,
+		targetId: string
+	): boolean => {
+		if (item.id === targetId) return true
+		if (!item.children) return false
+
+		return item.children.some((child) => isInPathToTarget(child, targetId))
+	}
+
+	const targetId = getTargetIdFromURL(path, searchParams, pathname)
+	const isInPath = isInPathToTarget(item, targetId)
 
 	return (
 		<React.Fragment>
@@ -45,17 +61,17 @@ export const FiltersRecursiveItem: React.FC<Props> = ({
 				className={clsx({
 					[styles.item]: !nesting,
 					[styles.nestedItem]: nesting,
-					[styles.target]: checkTargetItem(item.id)
+					[styles.target]: isInPath
 				})}
 				style={{ paddingLeft: `${nesting ? nesting * 16 : 16}px` }}
 				href={path + item.id}
 				onClick={onClick}
 			>
-				{nesting > 0 && <ChevronRight className={styles.icon} />}
-				{formatCase(item.name)}
+				{item.name}
 			</Link>
 
-			{item.children &&
+			{isInPath &&
+				item.children &&
 				item.children.length > 0 &&
 				item.children.map((child) => (
 					<FiltersRecursiveItem

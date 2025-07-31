@@ -1,28 +1,20 @@
 .container {
-	@apply w-full px-6 py-7 gap-4 grid grid-cols-[1fr,auto] bg-zinc-50 rounded-lg;
-	&.negative {
-		@apply opacity-80 hover:opacity-100 transition-opacity duration-300;
-		.information {
-			.avails {
-				@apply opacity-80;
-			}
+	@apply w-full px-6 py-7 gap-4 grid grid-cols-[1fr,auto] bg-zinc-50 rounded-lg relative;
+	.overlay {
+		@apply inset-0 z-[30] bg-zinc-100/30 flex items-center justify-center pointer-events-none absolute;
+		.overlayTitle {
+			@apply text-zinc-700/70 text-xl font-semibold uppercase;
 		}
 	}
 	.inner {
-		@apply gap-4 flex items-center;
+		@apply gap-4 flex items-start;
 		.cover {
-			@apply gap-1.5 inline-flex flex-col;
+			@apply w-fit gap-1.5 inline-flex flex-col relative;
 			.link {
-				@apply w-[100px] block;
-				.image {
-					@apply w-full max-h-full h-auto object-cover;
-				}
-				.placeholder {
-					@apply grayscale opacity-50 contrast-200;
-				}
+				@apply w-fit flex items-center justify-center;
 			}
-			.barcode {
-				@apply text-center text-zinc-400/70 text-sm;
+			.discount {
+				@apply top-1 right-1 px-1.5 z-10 text-sm font-medium text-zinc-50 bg-red-500 rounded-md absolute;
 			}
 		}
 		.information {
@@ -38,10 +30,22 @@
 				.control {
 					@apply w-[40px] h-full flex items-center justify-center text-zinc-400 bg-zinc-100 rounded-md hover:bg-zinc-200 active:bg-zinc-200/30
 					transition-colors duration-200;
+					&:disabled {
+						@apply opacity-50 pointer-events-none;
+					}
 				}
 			}
-			.avails {
-				@apply mt-2 text-sm;
+			.breadcrumb {
+				@apply w-fit mt-2 px-1.5 text-sm bg-zinc-200 flex items-center rounded-md;
+				&.positive {
+					@apply text-green-600 bg-green-200/50;
+				}
+				&.negative {
+					@apply text-red-600 bg-red-200/50;
+				}
+				&.warning {
+					@apply text-orange-500 bg-orange-100/50;
+				}
 			}
 		}
 	}
@@ -63,11 +67,11 @@
 	}
 }
 
-@media (max-width: 460px) {
+@media (max-width: 490px) {
 	.container {
-		@apply p-3.5 flex flex-col;
+		@apply p-4 flex flex-col;
 		.meta {
-			@apply flex flex-row items-center justify-between;
+			@apply flex flex-row-reverse items-center justify-between;
 		}
 	}
 }

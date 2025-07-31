@@ -8,13 +8,6 @@ export const getSearchParams = (searchParams?: SearchParamsType) => {
 		searchParams && searchParams['category']
 			? searchParams['category']
 			: undefined
-	const device =
-		searchParams && searchParams['device'] ? searchParams['device'] : undefined
-
-	const brand =
-		searchParams && searchParams['brand'] ? searchParams['brand'] : undefined
-	const model =
-		searchParams && searchParams['model'] ? searchParams['model'] : undefined
 
 	const sortBy =
 		searchParams && searchParams['sortBy']
@@ -37,9 +30,6 @@ export const getSearchParams = (searchParams?: SearchParamsType) => {
 	return {
 		query,
 		category,
-		device,
-		brand,
-		model,
 		sortBy,
 		orderBy,
 		page,

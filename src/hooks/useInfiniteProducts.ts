@@ -17,17 +17,7 @@ export function useInfiniteProducts({
 	params,
 	enabled = true
 }: IUseInfiniteProducts) {
-	const {
-		query,
-		category,
-		device,
-		brand,
-		model,
-		sortBy,
-		orderBy,
-		page,
-		limit
-	} = params
+	const { query, category, sortBy, orderBy, page, limit } = params
 
 	const skip = page * limit
 
@@ -45,9 +35,6 @@ export function useInfiniteProducts({
 			productService.getAll({
 				name: query,
 				categoryId: category,
-				deviceId: device,
-				brandId: brand,
-				modelId: model,
 				sortBy: sortBy,
 				orderBy: orderBy,
 				take: 15,

@@ -17,7 +17,11 @@ export async function middleware(request: NextRequest) {
 	}
 
 	const isProtectedRoute = ['/my'].some((path) => url.includes(path))
-	const isPrivateRoute = ['/my/upload-docx'].some((path) => url.includes(path))
+	const isPrivateRoute = [
+		'/my/upload-docx',
+		'/my/archive',
+		'/product/add-item'
+	].some((path) => url.includes(path))
 
 	if (isProtectedRoute && !refreshToken) {
 		return NextResponse.redirect(new URL('/', url))

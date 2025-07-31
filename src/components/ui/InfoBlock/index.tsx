@@ -8,15 +8,17 @@ import styles from './InfoBlock.module.scss'
 interface InfoBlockProps {
 	children: string | React.ReactNode
 	variant?: 'contained' | 'outlined' | 'dangerous' | 'knowledge'
+	className?: string
 }
 
 export const InfoBlock = ({
 	children,
-	variant = 'contained'
+	variant = 'contained',
+	className
 }: InfoBlockProps) => {
 	return (
 		<div
-			className={clsx(styles.container, {
+			className={clsx(styles.container, className, {
 				[styles.contained]: variant === 'contained',
 				[styles.outlined]: variant === 'outlined',
 				[styles.dangerous]: variant === 'dangerous',

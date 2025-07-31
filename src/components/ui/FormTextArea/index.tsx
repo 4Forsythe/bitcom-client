@@ -15,16 +15,19 @@ interface IFormTextArea extends ITextArea {
 
 export const FormTextArea: React.FC<IFormTextArea> = ({ name, ...rest }) => {
 	const {
+		watch,
 		register,
 		formState: { errors }
 	} = useFormContext()
 
+	const value = watch(name)
 	const error = get(errors, name)
 
 	return (
 		<div className={styles.container}>
 			<TextArea
 				id={name}
+				formValue={value}
 				isError={error}
 				{...register(name)}
 				{...rest}

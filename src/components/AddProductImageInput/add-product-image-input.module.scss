@@ -1,9 +1,9 @@
 .container {
-	@apply w-[150px] h-[115px] space-y-1.5 flex flex-col items-center justify-center text-zinc-500 bg-zinc-200 border-2 border-transparent rounded-xl relative
-	hover:text-zinc-700 hover:bg-zinc-300 transition duration-200;
+	@apply w-full h-[115px] space-y-1.5 flex flex-col border-2 border-transparent relative transition duration-200;
 	&.dragging {
-		@apply w-full bg-zinc-200/70 border-zinc-500 border-dashed rounded-none animate-pulse;
+		@apply w-full items-center justify-center bg-zinc-200/70 border-zinc-500 border-dashed rounded-none animate-pulse;
 		.label {
+			@apply w-full bg-transparent hover:bg-transparent;
 			.icon {
 				@apply w-7 h-7;
 			}
@@ -16,7 +16,8 @@
 		@apply bg-zinc-50 shadow-none;
 	}
 	.label {
-		@apply w-full h-full px-5 py-8 gap-1.5 flex flex-1 items-center justify-center cursor-pointer;
+		@apply w-[150px] px-5 py-8 gap-1.5 flex flex-1 items-center justify-center text-zinc-500 bg-zinc-200 rounded-xl
+	hover:text-zinc-700 hover:bg-zinc-300 cursor-pointer;
 		.icon {
 			@apply w-8 h-8 text-zinc-500;
 		}

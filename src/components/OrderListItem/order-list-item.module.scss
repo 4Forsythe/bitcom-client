@@ -33,7 +33,7 @@
 			}
 		}
 		.items {
-			@apply p-4 gap-2.5 flex flex-col bg-neutral-200/60 rounded-2xl;
+			@apply p-4 gap-2.5 flex flex-col bg-neutral-100 rounded-2xl;
 			.count {
 				@apply px-1.5 text-sm text-zinc-400;
 			}

@@ -1,0 +1,36 @@
+.container {
+	@apply w-fit my-2.5 gap-1.5 flex flex-col;
+	.heading {
+		@apply font-semibold;
+	}
+	.thumbnail {
+		@apply w-fit gap-3.5 p-3.5 flex items-start bg-green-50 rounded-xl hover:bg-green-100/50 transition duration-200;
+		.cover {
+			@apply w-[60px] h-[60px] flex items-center justify-center rounded-lg overflow-hidden;
+		}
+		.thumbnailInfo {
+			@apply gap-0.5 flex flex-col;
+			.text {
+				@apply font-semibold;
+			}
+			.thumbnailDetails {
+				@apply gap-1.5 flex items-center;
+				.price {
+					@apply text-xl font-bold;
+				}
+				.availables {
+					@apply w-fit my-1 px-2.5 py-1 text-xs text-zinc-500 bg-zinc-200/50 rounded-3xl;
+					&.positive {
+						@apply text-green-600 bg-green-200/50;
+					}
+					&.negative {
+						@apply text-red-600 bg-red-200/50;
+					}
+					&.warning {
+						@apply text-orange-500 bg-orange-100/50;
+					}
+				}
+			}
+		}
+	}
+}

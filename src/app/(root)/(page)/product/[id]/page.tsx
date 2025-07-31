@@ -1,11 +1,9 @@
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 
-import { getImage } from '@/utils/get-image'
 import { findLatestCategory } from '@/utils/find-latest-category'
 import { Breadcrumb, Product, SimilarList } from '@/components'
 
-import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
 import { productService } from '@/services/product.service'
 
@@ -29,7 +27,7 @@ export const generateMetadata = async ({ params }: ProductPageProps) => {
 
 	return {
 		title: `Купить ${product.name} в Тольятти Б/У с гарантией`,
-		description: `${product.name} — купить Б/У с гарантией по самым выгодным ценам в Тольятти, Самаре, Сызрани. В наличии ${product.count} шт. Наш каталог обновляется регулярно, и вы всегда сможете найти самые актуальные предложения и новинки. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
+		description: `${product.name} — купить Б/У с гарантией ${product.discountPrice || product.price ? `от ${product.discountPrice || product.price} рублей` : 'по выгодным ценам'} в Тольятти, Самаре, Сызрани. В наличии ${product.count} шт. Наш каталог обновляется регулярно, и вы всегда сможете найти самые актуальные предложения и новинки. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
 	}
 }
 
@@ -47,22 +45,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
 	if (!product) notFound()
 
-	let imagePlaceholder = '/static/image-placeholder.png'
-
-	if (product.imageUrl) {
-		const response = await getImage(`${SERVER_BASE_URL}/${product.imageUrl}`)
-
-		if (response) {
-			imagePlaceholder = response.base64
-		} else if (product.category?.imageUrl) {
-			imagePlaceholder = `/static/${product.category.imageUrl}`
-		}
-	}
-
-	const latestCategory = product.category
-		? findLatestCategory(product.category)
-		: undefined
-
+	const latestCategory = findLatestCategory(product.category)
 	const productWithLatestCategory = { ...product, category: latestCategory }
 
 	return (
@@ -72,14 +55,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
 				items={[
 					{ href: ROUTE.HOME, value: 'Главная' },
 					{ href: ROUTE.CATALOG, value: 'Каталог' },
-					...(product.category && product.category?.id !== latestCategory?.id
-						? [
-								{
-									href: `${ROUTE.CATALOG}/${product.category?.id}`,
-									value: product.category.name
-								}
-							]
-						: []),
+					{
+						href: `${ROUTE.CATALOG}/${product.category?.id}`,
+						value: product.category.name
+					},
 					...(product.category
 						? product.category.children.map((child) => ({
 								href: `${ROUTE.CATALOG}/${child.id}`,
@@ -88,10 +67,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 						: [])
 				]}
 			/>
-			<Product
-				{...productWithLatestCategory}
-				imagePlaceholder={imagePlaceholder}
-			/>
+			<Product {...productWithLatestCategory} />
 			{similar.items.length > 0 && (
 				<SimilarList
 					categoryId={latestCategory?.id}

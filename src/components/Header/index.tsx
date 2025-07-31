@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -5,13 +7,16 @@ import Image from 'next/image'
 import { MapPin, Sheet } from 'lucide-react'
 import { ADDRESS, PHONE } from '@/constants/contacts.constants'
 
-import { HeaderMenu, SearchBar, SearchBarSkeleton } from '@/components'
+import { useProfile } from '@/hooks/useProfile'
+import { Button, HeaderMenu, SearchBar, SearchBarSkeleton } from '@/components'
 
 import { ROUTE } from '@/config/routes.config'
 
 import styles from './header.module.scss'
 
 export const Header: React.FC = () => {
+	const { profile } = useProfile()
+
 	return (
 		<>
 			<div className={styles.roof}>
@@ -32,13 +37,23 @@ export const Header: React.FC = () => {
 						{PHONE}
 					</Link>
 
-					<Link
-						className={styles.prices}
-						href={ROUTE.PRICES}
-					>
-						<Sheet className={styles.icon} />
-						Прайс-листы
-					</Link>
+					<div className={styles.additional}>
+						{profile?.role && (
+							<Button
+								className='animate-opacity'
+								size='sm'
+							>
+								Добавить товар
+							</Button>
+						)}
+						<Link
+							className={styles.prices}
+							href={ROUTE.PRICES}
+						>
+							<Sheet className={styles.icon} />
+							Прайс-листы
+						</Link>
+					</div>
 				</div>
 			</div>
 			<header className={styles.container}>

@@ -10,6 +10,7 @@ import { findLatestCategory } from '@/utils/find-latest-category'
 import { ROUTE } from '@/config/routes.config'
 import { productService } from '@/services/product.service'
 import { productCategoryService } from '@/services/product-category.service'
+import { ProductCategoryType } from '@/types/product-category.types'
 
 const getCategory = cache(async (id: string) => {
 	try {
@@ -22,15 +23,12 @@ const getCategory = cache(async (id: string) => {
 
 const getProducts = cache(
 	async (id: string, searchParams?: { [key: string]: string | undefined }) => {
-		const { query, device, brand, model, sortBy, orderBy, page, limit } =
+		const { query, sortBy, orderBy, page, limit } =
 			getSearchParams(searchParams)
 
 		return productService.getAll({
 			name: query,
 			categoryId: id,
-			deviceId: device,
-			brandId: brand,
-			modelId: model,
 			sortBy: sortBy,
 			orderBy: orderBy,
 			take: limit,
@@ -69,6 +67,31 @@ interface ProductsPageProps {
 	searchParams?: { [key: string]: string | undefined }
 }
 
+function getPathToLatest(
+	category: ProductCategoryType,
+	latestCategory: ProductCategoryType,
+	path: ProductCategoryType[] = []
+): ProductCategoryType[] | null {
+	const copy = [...path, category]
+
+	if (category.id === latestCategory.id) {
+		return copy
+	}
+
+	if (!category.children || category.children.length === 0) {
+		return null
+	}
+
+	for (const child of category.children) {
+		const result = getPathToLatest(child, latestCategory, copy)
+		if (result) {
+			return result
+		}
+	}
+
+	return null
+}
+
 export default async function ProductsPage({
 	params,
 	searchParams
@@ -82,6 +105,7 @@ export default async function ProductsPage({
 
 	const products = await getProducts(id, searchParams)
 	const latestCategory = findLatestCategory(category)
+	const categoryPath = getPathToLatest(category, latestCategory) || [category]
 
 	return (
 		<>
@@ -90,17 +114,9 @@ export default async function ProductsPage({
 				items={[
 					{ href: ROUTE.HOME, value: 'Главная' },
 					{ href: ROUTE.CATALOG, value: 'Каталог' },
-					...(category.id !== latestCategory.id
-						? [
-								{
-									href: `${ROUTE.CATALOG}/${category.id}`,
-									value: category.name
-								}
-							]
-						: []),
-					...category.children.slice(0, -1).map((child) => ({
-						href: `${ROUTE.CATALOG}/${child.id}`,
-						value: child.name
+					...categoryPath.slice(0, -1).map((category) => ({
+						href: `${ROUTE.CATALOG}/${category.id}`,
+						value: category.name
 					}))
 				]}
 			/>

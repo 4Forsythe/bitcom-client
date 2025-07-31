@@ -15,6 +15,7 @@ export type CartItemFormType = {
 export type CartType = {
 	id: string
 	items: CartItemType[]
+	archived: CartItemType[]
 	count: number
 	total: number
 	token: string

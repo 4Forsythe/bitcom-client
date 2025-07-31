@@ -1,13 +1,12 @@
 'use client'
 
 import React from 'react'
-
 import Link from 'next/link'
-import Image from 'next/image'
-
 import clsx from 'clsx'
 import { Minus, Plus, Heart, Trash } from 'lucide-react'
 
+import { PriceBadge } from '../ui'
+import { ProductImage } from '../ProductImage'
 import { useWishlistStore } from '@/store/wishlist'
 import { useWishlist } from '@/hooks/useWishlist'
 import { useUpdateCartItem } from '@/hooks/useUpdateCartItem'
@@ -16,13 +15,22 @@ import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
+import { calcDiscountPercent } from '@/utils/calc-discount-price'
+
 import type { CartItemType } from '@/types/cart.types'
 
 import styles from './cart-item.module.scss'
 
 export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 	const { isWishlistLoading } = useWishlist()
-	const { items: wishlist } = useWishlistStore()
+	const { items: wishlist, archived: archivedWishlist } = useWishlistStore()
+
+	const imageSrc =
+		product.images.length > 0
+			? `${SERVER_BASE_URL}/${product.images[0].url}`
+			: product.category.imageUrl
+				? `/static/${product.category.imageUrl}`
+				: undefined
 
 	const { updateCartItem, isUpdateCartItemPending } = useUpdateCartItem()
 	const { deleteCartItem, isDeleteCartItemPending } = useDeleteCartItem()
@@ -34,14 +42,16 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 		isDeleteCartItemPending ||
 		isCreateWishlistItemPending
 
-	const isInWishlist = wishlist.some((item) => item.product.id === product.id)
+	const isInWishlist = wishlist
+		.concat(archivedWishlist)
+		.some((item) => item.product.id === product.id)
 
 	const onAddWishlistItem = () => {
 		createWishlistItem({ productId: product.id })
 	}
 
 	const increment = () => {
-		if (product.count > count) {
+		if (product.count !== 0 || product.count > count) {
 			updateCartItem({
 				id,
 				data: { productId: product.id }
@@ -59,69 +69,91 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 	}
 
 	return (
-		<div
-			className={clsx(styles.container, 'animate-opacity', {
-				[styles.negative]: !product.count
-			})}
-		>
+		<div className={clsx(styles.container, 'animate-opacity')}>
+			{product.isArchived && (
+				<div className={styles.overlay}>
+					<h5 className={styles.overlayTitle}>Нет в наличии</h5>
+				</div>
+			)}
 			<div className={styles.inner}>
 				<div className={styles.cover}>
+					{product.discountPrice &&
+						Number(product.discountPrice) < Number(product.price) && (
+							<div className={styles.discount}>
+								-
+								{calcDiscountPercent(
+									Number(product.price),
+									Number(product.discountPrice)
+								)}
+								%
+							</div>
+						)}
 					<Link
 						className={styles.link}
-						href={`${ROUTE.PRODUCT}/${product.id}`}
+						href={`${ROUTE.PRODUCT}/${product.slug}`}
 					>
-						<Image
-							className={clsx(styles.image, {
-								[styles.placeholder]: !product.imageUrl
-							})}
-							width={100}
-							height={100}
-							src={
-								product.imageUrl
-									? `${SERVER_BASE_URL}/${product.imageUrl}`
-									: product.category?.imageUrl
-										? `/static/${product.category.imageUrl}`
-										: '/static/image-placeholder.png'
+						<ProductImage
+							src={imageSrc}
+							isPlaceholder={
+								!product.images.length && !!product.category.imageUrl
 							}
-							placeholder='blur'
-							blurDataURL='/static/image-placeholder.png'
+							width={250}
+							height={250}
+							size='small'
 							alt={product.name}
 							priority
 						/>
 					</Link>
-					<span className={styles.barcode}>{product.barcode[0]}</span>
 				</div>
 				<div className={styles.information}>
 					<Link
 						className={styles.title}
-						href={`${ROUTE.PRODUCT}/${product.id}`}
+						href={`${ROUTE.PRODUCT}/${product.slug}`}
 					>
 						{product.name}
 					</Link>
-					<div className={styles.counter}>
-						<button
-							className={styles.control}
-							type='button'
-							disabled={isLoading}
-							onClick={decrement}
-						>
-							<Minus size={18} />
-						</button>
-						<span className={styles.count}>{count}</span>
-						<button
-							className={styles.control}
-							type='button'
-							disabled={isLoading}
-							onClick={increment}
-						>
-							<Plus size={18} />
-						</button>
-					</div>
-					<span className={styles.avails}>
-						{product.count
-							? `В наличии: ${product.count} шт.`
-							: 'Нет в наличии'}
-					</span>
+					{!product.isArchived && (
+						<React.Fragment>
+							<div className={styles.counter}>
+								<button
+									className={styles.control}
+									type='button'
+									disabled={isLoading}
+									onClick={decrement}
+								>
+									<Minus size={18} />
+								</button>
+								<span className={styles.count}>{count}</span>
+								<button
+									className={styles.control}
+									type='button'
+									disabled={
+										isLoading ||
+										!!(
+											(product.count !== null && product.count === 0) ||
+											(typeof product.count === 'number' &&
+												product.count <= count)
+										)
+									}
+									onClick={increment}
+								>
+									<Plus size={18} />
+								</button>
+							</div>
+							<span
+								className={clsx(styles.breadcrumb, {
+									[styles.positive]: product.count !== 0,
+									[styles.negative]: product.count === 0,
+									[styles.warning]:
+										product.count && product.count > 0 && product.count < 5
+								})}
+							>
+								{product.count || product.count === 0
+									? `На складе ${product.count} шт.`
+									: 'Есть в наличии'}
+							</span>
+						</React.Fragment>
+					)}
 				</div>
 			</div>
 			<div className={styles.meta}>
@@ -143,9 +175,11 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 						<Trash size={18} />
 					</button>
 				</div>
-				<span className={styles.price}>
-					{+product.price > 0 ? `${product.price} ₽` : 'Цена по запросу'}
-				</span>
+				<PriceBadge
+					size='small'
+					price={product.price}
+					discountPrice={product.discountPrice}
+				/>
 			</div>
 		</div>
 	)
