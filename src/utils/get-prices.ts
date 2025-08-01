@@ -1,16 +1,16 @@
-const BASE_URL = process.env.BASE_URL
+import fs from 'fs'
+import path from 'path'
+
+const fileDir = path.join(process.cwd(), 'public/assets', 'prices')
 
 export async function getPrices() {
-	const response = await fetch(BASE_URL + '/api/price-list', {
-		next: { revalidate: 3600 }
-	})
+	const isDirExist = fs.existsSync(fileDir)
 
-	if (!response.ok) {
-		console.error('Не удалось получить прайс-листы', response.statusText)
+	if (!isDirExist) {
 		return []
 	}
 
-	const data: string[] = await response.json()
+	const files = fs.readdirSync(fileDir)
 
-	return data
+	return files
 }
