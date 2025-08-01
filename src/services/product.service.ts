@@ -61,6 +61,11 @@ class ProductService {
 		return response.data
 	}
 
+	async getDiscount(params?: ProductParamsType): Promise<ProductsType> {
+		const response = await api.get(`${this.endpoint}/discount`, { params })
+		return response.data
+	}
+
 	async getSimilar(
 		id: string,
 		params?: { take: number }

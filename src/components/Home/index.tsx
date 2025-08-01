@@ -21,10 +21,15 @@ import styles from './home.module.scss'
 
 interface Props {
 	products: ProductsType
+	discountProducts: ProductsType
 	posts: FrontmatterPostType[]
 }
 
-export const Home: React.FC<Props> = async ({ products, posts }) => {
+export const Home: React.FC<Props> = async ({
+	products,
+	discountProducts,
+	posts
+}) => {
 	return (
 		<div className={styles.container}>
 			<Navbar />
@@ -34,10 +39,18 @@ export const Home: React.FC<Props> = async ({ products, posts }) => {
 			</div>
 
 			{products.items.length >= 4 ? (
-				<ProductGroup
-					title='Новинки'
-					items={products.items}
-				/>
+				<React.Fragment>
+					{discountProducts.items.length > 0 && (
+						<ProductGroup
+							title='Со скидкой'
+							items={discountProducts.items}
+						/>
+					)}
+					<ProductGroup
+						title='Новинки'
+						items={products.items}
+					/>
+				</React.Fragment>
 			) : (
 				<div className={styles.showcaseInfo}>
 					<span className={styles.showcaseInfoTitle}>

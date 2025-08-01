@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { AddProductConstructor } from '@/components'
 import { productService } from '@/services/product.service'
 
+import type { ProductType } from '@/types/product.types'
+
 const getProduct = cache(async (id: string) => {
 	return productService.getOne(id)
 })
@@ -17,10 +19,17 @@ export default async function AddProductPage({
 }: AddProductPageProps) {
 	const { productId } = searchParams
 
-	if (productId) {
-		const product = await getProduct(productId)
-		return <AddProductConstructor product={product} />
+	if (!productId) {
+		return <AddProductConstructor />
 	}
 
-	return <AddProductConstructor />
+	let product: ProductType
+
+	try {
+		product = await getProduct(productId)
+	} catch (error) {
+		notFound()
+	}
+
+	return <AddProductConstructor product={product} />
 }

@@ -50,6 +50,7 @@ export type ProductParamsType = {
 	id?: string
 	name?: string
 	categoryId?: string
+	onlyOriginalPrice?: boolean
 	sortBy?: string
 	orderBy?: string
 	take?: number
