@@ -1,7 +1,7 @@
 .container {
 	@apply mb-5 grid grid-cols-[1.1fr,0.9fr] bg-zinc-50 shadow-sm;
 	.gallery {
-		@apply relative;
+		@apply h-fit relative;
 		.overlay {
 			@apply inset-0 z-[30] bg-zinc-50/70 flex items-center justify-center absolute;
 			.overlayTitle {
@@ -10,7 +10,7 @@
 		}
 	}
 	.information {
-		@apply p-8 gap-2.5 flex flex-col relative;
+		@apply py-8 pr-8 gap-2.5 flex flex-col relative;
 		.overview {
 			@apply gap-2.5 inline-flex flex-col;
 			.head {
@@ -61,6 +61,9 @@
 		}
 		.details {
 			@apply py-4 flex flex-col;
+			.guarantee {
+				@apply mb-5 text-base font-semibold;
+			}
 			.title {
 				@apply mb-3 text-lg font-bold;
 			}

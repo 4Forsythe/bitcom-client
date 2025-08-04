@@ -1,11 +1,16 @@
 .container {
 	@apply p-8 gap-5 flex flex-col items-center overflow-hidden;
 	.main {
-		@apply w-[600px] h-[400px] flex items-center justify-center relative overflow-hidden;
+		@apply w-[608px] h-[456px] bg-zinc-200/80 flex items-center justify-center rounded-lg relative overflow-hidden;
+		&:hover {
+			.navButton {
+				@apply opacity-100;
+			}
+		}
 		.navButton {
-			@apply w-12 h-full z-30 flex items-center justify-center bg-zinc-300/30 absolute hover:bg-zinc-300/60 transition duration-200;
+			@apply w-10 h-full z-30 opacity-0 flex items-center justify-center bg-zinc-700/10 absolute hover:bg-zinc-700/30 transition duration-200;
 			.icon {
-				@apply text-zinc-500/70 hover:text-zinc-500 transition duration-200;
+				@apply text-zinc-50/70 hover:text-zinc-50 transition duration-200;
 			}
 		}
 		.left {
@@ -18,9 +23,9 @@
 	.list {
 		@apply gap-1.5 px-5 flex flex-wrap items-center justify-center;
 		.listItem {
-			@apply w-[100px] max-h-[64px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
+			@apply w-[75px] h-[55px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
 			&.target {
-				@apply border-zinc-300;
+				@apply border-red-500;
 			}
 		}
 	}

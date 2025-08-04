@@ -1,14 +1,12 @@
-import { cache } from 'react'
-import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 
+import { NO_INDEX } from '@/constants'
 import { AddProductConstructor } from '@/components'
-import { productService } from '@/services/product.service'
 
-import type { ProductType } from '@/types/product.types'
-
-const getProduct = cache(async (id: string) => {
-	return productService.getOne(id)
-})
+export const metadata: Metadata = {
+	title: 'Добавить новый товар',
+	...NO_INDEX
+}
 
 interface AddProductPageProps {
 	searchParams: { [key: string]: string | undefined }
@@ -19,17 +17,5 @@ export default async function AddProductPage({
 }: AddProductPageProps) {
 	const { productId } = searchParams
 
-	if (!productId) {
-		return <AddProductConstructor />
-	}
-
-	let product: ProductType
-
-	try {
-		product = await getProduct(productId)
-	} catch (error) {
-		notFound()
-	}
-
-	return <AddProductConstructor product={product} />
+	return <AddProductConstructor productId={productId} />
 }

@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import clsx from 'clsx'
+import { X } from 'lucide-react'
 
 import {
 	BackToTop,
@@ -11,21 +13,32 @@ import {
 	SmallSearchBar
 } from '@/components'
 
-import { useProducts } from '@/hooks/useProducts'
+import { useArchive } from '@/hooks/useArchive'
+import { useProductCategories } from '@/hooks/useProductCategories'
 
 import styles from './archive-list.module.scss'
 
 export const ArchiveList: React.FC = () => {
 	const isFetched = React.useRef(false)
+	const [targetCategory, setTargetCategory] = React.useState<string | null>(
+		null
+	)
+
+	const { productCategories, isProductCategoriesLoading } =
+		useProductCategories()
 
 	const { products, isProductsLoading, isProductsSuccess, refetch } =
-		useProducts()
+		useArchive()
 
 	React.useEffect(() => {
 		if (products && isProductsSuccess && !isFetched.current) {
 			isFetched.current = true
 		}
-	}, [products])
+
+		if (products && isProductsSuccess && isFetched.current) {
+			refetch({ categoryId: targetCategory || '' })
+		}
+	}, [products, productCategories, targetCategory])
 
 	return (
 		<div className={styles.container}>
@@ -34,8 +47,43 @@ export const ArchiveList: React.FC = () => {
 					<SmallSearchBar
 						className={styles.searchbar}
 						placeholder='Поиск позиции...'
-						onFetch={refetch}
+						onFetch={(query) => refetch({ search: query })}
 					/>
+					{isProductCategoriesLoading ? (
+						<div className='w-full h-[40px] flex bg-gray-200 rounded-3xl animate-pulse' />
+					) : (
+						productCategories &&
+						productCategories.items.length > 0 && (
+							<ul className={styles.categories}>
+								{productCategories.items.map((category) => (
+									<li
+										key={category.id}
+										className={clsx(styles.categoryItem, {
+											[styles.active]: targetCategory === category.id
+										})}
+									>
+										<button
+											className={styles.categoryButton}
+											onClick={() => setTargetCategory(category.id)}
+										>
+											{category.name}
+										</button>
+										{targetCategory === category.id && (
+											<button
+												className={clsx(styles.categoryIcon, 'animate-opacity')}
+												onClick={() => setTargetCategory(null)}
+											>
+												<X
+													className={styles.icon}
+													size={16}
+												/>
+											</button>
+										)}
+									</li>
+								))}
+							</ul>
+						)
+					)}
 				</div>
 			)}
 

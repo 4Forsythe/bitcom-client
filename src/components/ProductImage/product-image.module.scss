@@ -1,10 +1,10 @@
 .container {
-	@apply w-full h-full flex items-center justify-center rounded-lg relative overflow-hidden;
+	@apply w-full h-full bg-zinc-100 flex items-center justify-center rounded-lg relative overflow-hidden;
 	&.clickable {
 		@apply cursor-pointer;
 	}
 	&.large {
-		@apply w-full h-[400px] aspect-[4/3];
+		@apply w-full h-[456px] aspect-[4/3];
 		.placeholder {
 			.icon {
 				@apply w-20 h-20;
@@ -12,13 +12,16 @@
 		}
 	}
 	&.medium {
-		@apply aspect-square;
+		@apply max-w-[320px] w-full h-[140px] aspect-[4/3];
+		.image {
+			@apply object-cover;
+		}
 	}
 	&.small {
-		@apply w-[150px] h-[150px];
+		@apply w-[150px] h-[150px] aspect-square;
 	}
 	&.thumbnail {
-		@apply w-auto h-[60px] aspect-[4/3];
+		@apply w-[75px] h-[55px];
 		.placeholder {
 			.icon {
 				@apply w-7 h-7;

@@ -13,6 +13,7 @@ export const createProductSchema = z
 		discountPrice: z.string().optional(),
 		count: z.string().optional(),
 		sku: z.string().optional(),
+		guarantee: z.string().optional(),
 		isArchived: z.boolean().optional(),
 		isPublished: z.boolean().optional(),
 		categoryId: z.string({ message: 'Не найдена категория для товара' })

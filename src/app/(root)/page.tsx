@@ -8,13 +8,13 @@ export const revalidate = 1800
 export default async function RootPage() {
 	const posts = await getBlogMetadata({ take: 8 })
 	const products = await productService.getAll({
-		take: 16,
+		take: 20,
 		onlyOriginalPrice: true,
 		sortBy: 'createdAt',
 		orderBy: 'desc'
 	})
 	const discountProducts = await productService.getDiscount({
-		take: 8,
+		take: 10,
 		sortBy: 'createdAt',
 		orderBy: 'desc'
 	})

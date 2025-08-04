@@ -60,7 +60,7 @@ export const SimilarList: React.FC<ISimilarList> = ({
 							768: {
 								slidesPerView: 3
 							},
-							320: {
+							480: {
 								slidesPerView: 2
 							},
 							0: {

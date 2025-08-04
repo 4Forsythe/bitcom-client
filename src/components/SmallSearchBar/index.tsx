@@ -28,7 +28,7 @@ export const SmallSearchBar: React.FC<Props> = ({
 		setValue('')
 		onFetch('')
 		inputRef.current?.focus()
-	}, [])
+	}, [onFetch])
 
 	React.useEffect(() => {
 		if (query) {

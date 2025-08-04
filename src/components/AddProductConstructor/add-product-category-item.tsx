@@ -10,6 +10,7 @@ interface Props {
 	item: ProductCategoryType
 	nesting: number
 	isSelected?: boolean
+	onSelect: (item: ProductCategoryType, nesting: number) => void
 	onDropdown: (item: ProductCategoryType, nesting: number) => void
 }
 
@@ -17,6 +18,7 @@ export const AddProductCategoryItem: React.FC<Props> = ({
 	item,
 	nesting,
 	isSelected,
+	onSelect,
 	onDropdown
 }) => {
 	return (
@@ -28,11 +30,18 @@ export const AddProductCategoryItem: React.FC<Props> = ({
 		>
 			<button
 				className={styles.categoryButton}
-				onClick={() => onDropdown(item, nesting)}
+				onClick={() => onSelect(item, nesting)}
 			>
 				{item.name}
-				{item.children.length > 0 && <ChevronRight size={20} />}
 			</button>
+			{item.children.length > 0 && (
+				<button
+					className={styles.categoryDropdown}
+					onClick={() => onDropdown(item, nesting)}
+				>
+					<ChevronRight size={20} />
+				</button>
+			)}
 		</li>
 	)
 }

@@ -58,8 +58,8 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 					<ProductImage
 						src={imageSrc}
 						isPlaceholder={!images.length && !!category.imageUrl}
-						width={320}
-						height={320}
+						width={300}
+						height={300}
 						size='small'
 						alt={name}
 						priority

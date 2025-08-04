@@ -29,6 +29,7 @@ import { ROUTE } from '@/config/routes.config'
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
+import { calcNounDeclension } from '@/utils/calc-noun-declension'
 
 export const Product: React.FC<ProductType> = ({
 	id,
@@ -40,6 +41,7 @@ export const Product: React.FC<ProductType> = ({
 	discountPrice,
 	count,
 	sku,
+	guarantee,
 	isArchived,
 	isPublished,
 	category
@@ -177,8 +179,8 @@ export const Product: React.FC<ProductType> = ({
 									onClick={onToggleDescriptionExpander}
 								>
 									{hasDescriptionHidden && !isDescriptionExpanded
-										? 'Подробнее'
-										: 'Скрыть'}
+										? 'Раскрыть описание'
+										: 'Свернуть описание'}
 								</button>
 							)}
 						</div>
@@ -213,7 +215,12 @@ export const Product: React.FC<ProductType> = ({
 						</div>
 					</div>
 					<div className={styles.details}>
-						<p className={styles.title}>Характеристики товара</p>
+						<p className={styles.guarantee}>
+							{guarantee
+								? `На данный товар действует гарантия — ${calcNounDeclension(guarantee, 'месяц', 'месяца', 'месяцев')}`
+								: 'На данный товар НЕ действует гарантия'}
+						</p>
+						{/* <p className={styles.title}>Характеристики товара</p>
 						<ul className={styles.characteristics}>
 							<li className={styles.characteristic}>
 								<div className={styles.characteristicType}>
@@ -221,13 +228,7 @@ export const Product: React.FC<ProductType> = ({
 								</div>
 								<span>{category.name || 'не указана'}</span>
 							</li>
-							<li className={styles.characteristic}>
-								<div className={styles.characteristicType}>
-									<span>Гарантия продавца</span>
-								</div>
-								<span>3 мес.</span>
-							</li>
-						</ul>
+						</ul> */}
 					</div>
 				</div>
 			</div>

@@ -33,6 +33,7 @@ export type ProductType = {
 	discountPrice?: string
 	count?: number
 	sku: string[]
+	guarantee?: number
 	isArchived: boolean
 	isPublished: boolean
 	category: ProductCategoryType
@@ -64,6 +65,7 @@ export type ProductFormType = {
 	count?: string
 	discountPrice?: string
 	sku?: string
+	guarantee?: string
 	isArchived?: boolean
 	isPublished?: boolean
 	categoryId: string
@@ -76,6 +78,7 @@ export type CreateProductType = {
 	discountPrice?: number
 	count?: number
 	sku?: string[]
+	guarantee?: number
 	isArchived?: boolean
 	isPublished?: boolean
 	categoryId: string

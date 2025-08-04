@@ -1,14 +1,26 @@
 .container {
-	@apply w-[900px] h-full px-12 py-5 relative;
+	@apply w-[960px] h-full relative;
 	.frame {
-		@apply w-full h-[500px] relative;
+		@apply w-full h-[720px] bg-zinc-200/80 rounded-lg overflow-hidden relative;
+		.navButton {
+			@apply w-12 h-full z-30 flex items-center justify-center text-zinc-50/80 bg-transparent absolute hover:text-zinc-50 hover:bg-zinc-700/30 transition duration-200;
+			.icon {
+				@apply transition duration-200;
+			}
+		}
+		.left {
+			@apply top-0 left-0;
+		}
+		.right {
+			@apply top-0 right-0;
+		}
 		.image {
 			@apply w-full h-full object-contain;
 		}
 		.zoom {
-			@apply w-[300px] h-[250px] z-[500] object-cover shadow-xl rounded-3xl overflow-hidden pointer-events-none absolute;
+			@apply w-[300px] h-[250px] z-[500] object-cover overflow-hidden pointer-events-none absolute;
 			.zoomImage {
-				@apply scale-[300%] transition duration-150;
+				@apply scale-[400%] transition duration-150;
 			}
 		}
 		.error {
@@ -18,25 +30,30 @@
 			}
 		}
 	}
-	.navButton {
-		@apply w-12 h-full z-30 flex items-center justify-center bg-zinc-300/30 absolute hover:bg-zinc-300/60 transition duration-200;
-		.icon {
-			@apply text-zinc-500/70 hover:text-zinc-500 transition duration-200;
+	.tabs {
+		@apply mt-5 gap-1.5 flex flex-wrap items-center justify-center;
+		.tab {
+			@apply w-[75px] max-h-[55px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
+			&.target {
+				@apply border-red-500;
+			}
 		}
 	}
-	.left {
-		@apply top-0 left-0;
+}
+
+@media (max-width: 1100px) {
+	.container {
+		@apply w-[800px];
+		.frame {
+			@apply h-[600px];
+		}
 	}
-	.right {
-		@apply top-0 right-0;
-	}
-	.tabs {
-		@apply mt-8 gap-1.5 flex flex-wrap items-center justify-center;
-		.tab {
-			@apply w-[100px] max-h-[64px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
-			&.target {
-				@apply border-zinc-300;
-			}
+}
+@media (max-width: 940px) {
+	.container {
+		@apply w-[640px];
+		.frame {
+			@apply h-[480px];
 		}
 	}
 }

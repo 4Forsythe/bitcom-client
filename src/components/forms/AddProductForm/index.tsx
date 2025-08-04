@@ -20,10 +20,12 @@ import {
 	ProductEditingAlert,
 	SwitchButton
 } from '@/components'
+import { ImagePreview } from './image-preview'
 import { useUploadImages } from '@/hooks/useUploadImages'
 import { useCreateProduct } from '@/hooks/useCreateProduct'
 import { useUpdateProduct } from '@/hooks/useUpdateProduct'
 import { isImageFileAllowed } from '@/utils/is-image-file-allowed'
+import { downscaleImage } from '@/utils/downscale-Image'
 
 import type { ProductCategoryType } from '@/types/product-category.types'
 import type {
@@ -60,14 +62,14 @@ export const AddProductForm: React.FC<Props> = ({
 		mode: 'onChange',
 		resolver: zodResolver(createProductSchema),
 		defaultValues: {
-			name: product?.name || '',
-			description: product?.description || '',
-			price: product?.price || undefined,
-			discountPrice: product?.discountPrice || undefined,
-			count:
-				typeof product?.count === 'number' ? String(product.count) : undefined,
-			sku: product ? product.sku.join(', ') : '',
-			isArchived: product?.isArchived || false,
+			name: '',
+			description: '',
+			price: undefined,
+			discountPrice: undefined,
+			count: undefined,
+			sku: '',
+			guarantee: undefined,
+			isArchived: false,
 			categoryId: category.id
 		}
 	})
@@ -78,11 +80,7 @@ export const AddProductForm: React.FC<Props> = ({
 		'save' | 'publish'
 	>('save')
 	const [images, setImages] = React.useState<ImageFileType[]>([])
-	const [primaryImage, setPrimaryImage] = React.useState<string | undefined>(
-		product && product.images.length > 0
-			? product.images.find((image) => Math.min(image.sortOrder))?.url
-			: undefined
-	)
+	const [primaryImage, setPrimaryImage] = React.useState<string | undefined>()
 
 	const { createProductAsync, isCreateProductPending, isCreateProductError } =
 		useCreateProduct()
@@ -93,11 +91,33 @@ export const AddProductForm: React.FC<Props> = ({
 
 	React.useEffect(() => {
 		if (product) {
+			methods.reset({
+				name: product.name || '',
+				description: product.description || '',
+				price: product.price || undefined,
+				discountPrice: product.discountPrice || undefined,
+				count:
+					typeof product.count === 'number' ? String(product.count) : undefined,
+				sku: product.sku.join(', '),
+				guarantee:
+					typeof product.guarantee === 'number'
+						? String(product.guarantee)
+						: undefined,
+				isArchived: product.isArchived || false,
+				categoryId: category.id
+			})
+
 			setImages(
 				product.images.map((image) => ({
 					id: image.id,
 					url: `${SERVER_BASE_URL}/${image.url}`
 				}))
+			)
+
+			setPrimaryImage(
+				product && product.images.length > 0
+					? product.images.find((image) => Math.min(image.sortOrder))?.url
+					: undefined
 			)
 		}
 	}, [product])
@@ -113,6 +133,12 @@ export const AddProductForm: React.FC<Props> = ({
 		if (!isValid) {
 			setPrimaryImage(images[0].url)
 		}
+
+		return () => {
+			images.forEach((image) => {
+				if (image.file && !image.id) URL.revokeObjectURL(image.url)
+			})
+		}
 	}, [images, primaryImage])
 
 	React.useEffect(() => {
@@ -121,14 +147,20 @@ export const AddProductForm: React.FC<Props> = ({
 		}
 	}, [isCreateProductError, isUpdateProductError, isUploadImagesError])
 
-	const processFiles = (files: FileList) => {
+	const processFiles = async (files: FileList) => {
 		const fileArray = Array.from(files)
 		const filtered = fileArray.filter((file) => isImageFileAllowed(file))
 
-		const data: ImageFileType[] = filtered.map((file) => ({
-			file: file,
-			url: URL.createObjectURL(file)
-		}))
+		const data: ImageFileType[] = await Promise.all(
+			filtered.map(async (file) => {
+				const compressed = await downscaleImage(file)
+
+				return {
+					file: file,
+					url: URL.createObjectURL(compressed)
+				}
+			})
+		)
 
 		setImages((prev) => [...prev, ...data].slice(0, MAX_IMAGES_LIMIT))
 	}
@@ -147,7 +179,12 @@ export const AddProductForm: React.FC<Props> = ({
 	}
 
 	const onDeleteImage = (index: number) => {
-		setImages((prev) => prev.filter((_, i) => i !== index))
+		setImages((prev) => {
+			const image = prev[index]
+			if (image.file && !image.id) URL.revokeObjectURL(image.url)
+
+			return prev.filter((_, i) => i !== index)
+		})
 	}
 
 	const onChangePrimaryImage = (images: ImageFileType[]) => {
@@ -168,6 +205,7 @@ export const AddProductForm: React.FC<Props> = ({
 			sku: data.sku
 				? data.sku.split(',').map((char) => char.trim())
 				: undefined,
+			guarantee: data.guarantee ? +data.guarantee : undefined,
 			isArchived: data.isArchived,
 			isPublished: submitActionType === 'publish',
 			categoryId: data.categoryId
@@ -262,71 +300,11 @@ export const AddProductForm: React.FC<Props> = ({
 							isUpdateProductError ||
 							isUploadImagesError) && (
 							<InfoBlock variant='dangerous'>
-								К сожалению, возникла непредвиденная ошибка при отправке формы
+								К сожалению, возникла ошибка на стороне сервера
 							</InfoBlock>
 						)}
 						<div className={styles.block}>
 							<h4 className={styles.title}>Основные параметры</h4>
-							<div className={styles.field}>
-								<div className={styles.fieldHeading}>
-									<h5 className={styles.fieldTitle}>Фотографии</h5>
-									<p className={styles.fieldCaption}>
-										{images.length > 0
-											? `${images.length} из ${MAX_IMAGES_LIMIT}`
-											: 'До 5 файлов'}
-									</p>
-								</div>
-								<div className={styles.imageList}>
-									{images.length < 5 && (
-										<AddProductImageInput
-											onChange={handleFileChange}
-											onDrop={handleFileDrop}
-											multiple
-										/>
-									)}
-									{images.map((image, index) => (
-										<div
-											className={styles.imageContainer}
-											key={image.url}
-										>
-											<div
-												className={clsx(styles.imagePreview, {
-													[styles.primary]:
-														primaryImage === image.url ||
-														(product?.images &&
-															image.id &&
-															primaryImage === product.images[index].url)
-												})}
-											>
-												<Image
-													className={styles.imageSource}
-													src={image.url}
-													width={150}
-													height={115}
-													alt={`Фотография ${index}`}
-													onClick={() => setPrimaryImage(image.url)}
-												/>
-												<button
-													className={styles.imageDeleteButton}
-													type='button'
-													onClick={() => onDeleteImage(index)}
-												>
-													<X className={styles.icon} />
-												</button>
-											</div>
-											{primaryImage === image.url && (
-												<span className={styles.imageCaption}>
-													главное фото
-												</span>
-											)}
-										</div>
-									))}
-								</div>
-								<span className={styles.fieldDescription}>
-									Поддерживаемый формат: JPG, JPEG, PNG и WEBP
-								</span>
-							</div>
-
 							<div className={styles.field}>
 								<div className={styles.fieldHeading}>
 									<h5 className={styles.fieldTitle}>Название</h5>
@@ -390,13 +368,73 @@ export const AddProductForm: React.FC<Props> = ({
 									disabled={isArchived}
 								/>
 							</div>
+
+							<div className={styles.field}>
+								<div className={styles.fieldHeading}>
+									<h5 className={styles.fieldTitle}>Фотографии</h5>
+									<p className={styles.fieldCaption}>
+										{images.length > 0
+											? `${images.length} из ${MAX_IMAGES_LIMIT}`
+											: 'До 5 файлов'}
+									</p>
+								</div>
+								<div className={styles.imageList}>
+									{images.map((image, index) => (
+										<div
+											className={styles.imageContainer}
+											key={image.url}
+										>
+											<ImagePreview
+												url={image.url}
+												isPrimary={Boolean(
+													primaryImage === image.url ||
+														(product?.images &&
+															image.id &&
+															primaryImage === product.images[index].url)
+												)}
+												onClick={() => setPrimaryImage(image.url)}
+												onDelete={() => onDeleteImage(index)}
+											/>
+											{primaryImage === image.url && (
+												<span className={styles.imageCaption}>
+													главное фото
+												</span>
+											)}
+										</div>
+									))}
+									{images.length < 5 && (
+										<AddProductImageInput
+											onChange={handleFileChange}
+											onDrop={handleFileDrop}
+											multiple
+										/>
+									)}
+								</div>
+								<span className={styles.fieldDescription}>
+									Поддерживаемый формат: JPG, JPEG, PNG и WEBP
+								</span>
+							</div>
 						</div>
 
 						<div className={styles.block}>
 							<h4 className={styles.title}>Дополнительно</h4>
 							<div className={styles.field}>
 								<div className={styles.fieldHeading}>
-									<h5 className={styles.fieldTitle}>Штрихкоды</h5>
+									<h5 className={styles.fieldTitle}>Гарантия</h5>
+								</div>
+								{}
+								<FormField
+									name='guarantee'
+									variant='outlined'
+									type='number'
+									placeholder='мес'
+									hint='Можно не указывать'
+								/>
+							</div>
+
+							<div className={styles.field}>
+								<div className={styles.fieldHeading}>
+									<h5 className={styles.fieldTitle}>Указать штрихкоды</h5>
 									<p className={styles.fieldCaption}>
 										Вы можете указать действующие уникальные штрихкоды товара
 										через запятую — это поможет вам в поиске и подготовке заказа
@@ -410,21 +448,20 @@ export const AddProductForm: React.FC<Props> = ({
 									hint='Можно не указывать'
 								/>
 							</div>
-							{product?.isPublished && (
-								<div className={styles.field}>
-									<div className={styles.fieldHeading}>
-										<h5 className={styles.fieldTitle}>Архивация</h5>
-									</div>
-									<SwitchButton
-										name='isArchived'
-										label='Обнулить остатки и поместить в архив'
-									/>
-									<span className={styles.fieldDescription}>
-										После архивации товар все еще может отображаться некоторым
-										пользователям
-									</span>
+
+							<div className={styles.field}>
+								<div className={styles.fieldHeading}>
+									<h5 className={styles.fieldTitle}>Архивация</h5>
 								</div>
-							)}
+								<SwitchButton
+									name='isArchived'
+									label='Обнулить остатки и поместить в архив'
+								/>
+								<span className={styles.fieldDescription}>
+									После архивации товар все еще может отображаться некоторым
+									пользователям
+								</span>
+							</div>
 						</div>
 
 						<div className={styles.buttons}>

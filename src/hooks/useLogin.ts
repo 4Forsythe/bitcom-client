@@ -2,9 +2,10 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { LoginFormType } from '@/types/auth.types'
-import { authService } from '@/services/auth.service'
 import { useUserStore } from '@/store/user'
+import { authService } from '@/services/auth.service'
+
+import type { LoginFormType } from '@/types/auth.types'
 
 export function useLogin() {
 	const queryClient = useQueryClient()

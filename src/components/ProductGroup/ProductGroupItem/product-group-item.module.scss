@@ -22,7 +22,7 @@
 		.details {
 			@apply gap-y-2.5 inline-flex flex-wrap items-center justify-between leading-4;
 			.breadcrumb {
-				@apply w-fit mt-2 px-1.5 text-sm bg-zinc-200 flex items-center rounded-md;
+				@apply w-fit px-1.5 text-sm bg-zinc-200 flex items-center rounded-md;
 				&.positive {
 					@apply text-green-600 bg-green-200/50;
 				}

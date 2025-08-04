@@ -93,8 +93,8 @@ export const ProductPreviewModal: React.FC<Props> = ({
 			<div
 				className={styles.frame}
 				style={{ cursor: isZoom ? 'crosshair' : 'default' }}
-				onMouseMove={handleMouseMove}
-				onMouseLeave={handleMouseLeave}
+				// onMouseMove={handleMouseMove}
+				// onMouseLeave={handleMouseLeave}
 			>
 				{images.length > 0 && !hasError ? (
 					<Image
@@ -125,8 +125,8 @@ export const ProductPreviewModal: React.FC<Props> = ({
 					>
 						<Image
 							className={styles.zoomImage}
-							width={1400}
-							height={1000}
+							width={1200}
+							height={900}
 							style={{
 								transformOrigin: `${zoomStyle.left} ${zoomStyle.top}`
 							}}
@@ -135,30 +135,30 @@ export const ProductPreviewModal: React.FC<Props> = ({
 						/>
 					</div>
 				)}
-			</div>
 
-			{images.length > 1 && (
-				<React.Fragment>
-					<button
-						className={clsx(styles.navButton, styles.left)}
-						onClick={onSlidePrev}
-					>
-						<ChevronLeft
-							className={styles.icon}
-							size={32}
-						/>
-					</button>
-					<button
-						className={clsx(styles.navButton, styles.right)}
-						onClick={onSlideNext}
-					>
-						<ChevronRight
-							className={styles.icon}
-							size={32}
-						/>
-					</button>
-				</React.Fragment>
-			)}
+				{images.length > 1 && (
+					<React.Fragment>
+						<button
+							className={clsx(styles.navButton, styles.left)}
+							onClick={onSlidePrev}
+						>
+							<ChevronLeft
+								className={styles.icon}
+								size={32}
+							/>
+						</button>
+						<button
+							className={clsx(styles.navButton, styles.right)}
+							onClick={onSlideNext}
+						>
+							<ChevronRight
+								className={styles.icon}
+								size={32}
+							/>
+						</button>
+					</React.Fragment>
+				)}
+			</div>
 
 			{images.length > 1 && (
 				<div className={styles.tabs}>

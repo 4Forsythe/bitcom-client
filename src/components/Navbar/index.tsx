@@ -23,7 +23,10 @@ export const Navbar: React.FC = () => {
 			<div className={styles.container}>
 				<nav className={styles.loadingItems}>
 					{FEATURES.slice(0, 6).map((item) => (
-						<NavbarItem {...item} />
+						<NavbarItem
+							key={item.href}
+							{...item}
+						/>
 					))}
 				</nav>
 			</div>
@@ -35,7 +38,10 @@ export const Navbar: React.FC = () => {
 			<nav className={styles.items}>
 				<Carousel
 					slides={FEATURES.map((item) => (
-						<NavbarItem {...item} />
+						<NavbarItem
+							key={item.href}
+							{...item}
+						/>
 					))}
 					slidesPerView={6}
 					spaceBetween={14}

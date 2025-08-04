@@ -23,7 +23,10 @@ export const ProductCategories: React.FC = () => {
 				productCategories.items.length > 0 && (
 					<ul className={styles.list}>
 						{productCategories.items.map((item) => (
-							<li className={styles.item}>
+							<li
+								key={item.id}
+								className={styles.item}
+							>
 								<Link href={`${ROUTE.CATALOG}/${item.id}`}>{item.name}</Link>
 							</li>
 						))}

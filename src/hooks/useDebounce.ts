@@ -19,9 +19,7 @@ export const useDebounce = ({ value, delay }: UseDebounceProps) => {
 	)
 
 	React.useEffect(() => {
-		if (value.trim()) {
-			onDebounce(value)
-		}
+		onDebounce(value)
 	}, [value])
 
 	return { query }

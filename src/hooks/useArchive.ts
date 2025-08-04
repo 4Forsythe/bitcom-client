@@ -7,20 +7,29 @@ import { useQuery } from '@tanstack/react-query'
 
 import { productService } from '@/services/product.service'
 
-export function useProducts() {
+interface ProductsFilters {
+	search?: string
+	categoryId?: string
+}
+
+export function useArchive() {
 	const searchParams = useSearchParams()
 
-	const [search, setSearch] = React.useState('')
+	const [filters, setFilters] = React.useState<ProductsFilters>({
+		search: '',
+		categoryId: ''
+	})
 	const [page, setPage] = React.useState(Number(searchParams.get('page')) || 1)
 	const [limit, setLimit] = React.useState(
 		Number(searchParams.get('limit')) || 15
 	)
 
 	const { data, isLoading, isSuccess, isError } = useQuery({
-		queryKey: ['products', page, limit, search],
+		queryKey: ['products', page, limit, filters],
 		queryFn: () =>
 			productService.getArchive({
-				name: search.trim(),
+				name: filters.search?.trim(),
+				categoryId: filters.categoryId,
 				take: limit,
 				skip: (page - 1) * limit
 			})
@@ -36,8 +45,8 @@ export function useProducts() {
 		isProductsLoading: isLoading,
 		isProductsSuccess: isSuccess,
 		isProductsError: isError,
-		refetch: (query: string) => {
-			setSearch(query)
+		refetch: (options: ProductsFilters) => {
+			setFilters((prev) => ({ ...prev, ...options }))
 		}
 	}
 }

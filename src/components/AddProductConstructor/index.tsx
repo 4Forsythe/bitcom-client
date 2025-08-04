@@ -11,6 +11,7 @@ import {
 import { AddProductCategoryItem } from './add-product-category-item'
 import { useProductCategories } from '@/hooks/useProductCategories'
 
+import { findLatestCategory } from '@/utils/find-latest-category'
 import { getRootCategoryPath } from '@/utils/get-root-category-path'
 import { getFullCategoryPath } from '@/utils/get-full-category-path'
 
@@ -18,13 +19,24 @@ import type { ProductType } from '@/types/product.types'
 import type { ProductCategoryType } from '@/types/product-category.types'
 
 import styles from './add-product.module.scss'
-import { findLatestCategory } from '@/utils/find-latest-category'
+import { useQuery } from '@tanstack/react-query'
+import { productService } from '@/services/product.service'
 
 interface Props {
-	product?: ProductType
+	productId?: string
 }
 
-export const AddProductConstructor: React.FC<Props> = ({ product }) => {
+export const AddProductConstructor: React.FC<Props> = ({ productId }) => {
+	const {
+		data: product,
+		isLoading: isProductLoading,
+		isSuccess: isProductSuccess
+	} = useQuery({
+		queryKey: [productId],
+		queryFn: () => productService.getOne(productId as string),
+		enabled: !!productId
+	})
+
 	const latestCategory = React.useMemo(() => {
 		if (!product?.category) return undefined
 		return findLatestCategory(product.category)
@@ -46,6 +58,14 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 	} = useProductCategories()
 
 	const onSelectCategory = (category: ProductCategoryType, nesting: number) => {
+		onDropdownCategory(category, nesting)
+		setIsShowForm(true)
+	}
+
+	const onDropdownCategory = (
+		category: ProductCategoryType,
+		nesting: number
+	) => {
 		if (!productCategories) return
 
 		setTargetCategory(category)
@@ -64,6 +84,12 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 		setNestedItems((prev) => prev.slice(0, nesting))
 		setCategoryTree(getRootCategoryPath(productCategories.items, category))
 	}
+
+	React.useEffect(() => {
+		if (product) {
+			setIsShowForm(true)
+		}
+	}, [product, isProductSuccess])
 
 	React.useEffect(() => {
 		if (
@@ -89,7 +115,7 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 
 			setTargetCategory(fullPath[fullPath.length - 1])
 		}
-	}, [product, productCategories, isProductCategoriesSuccess])
+	}, [product, isProductSuccess, productCategories, isProductCategoriesSuccess])
 
 	return (
 		<div className={styles.container}>
@@ -98,7 +124,11 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 					title={product ? 'Черновик' : 'Добавить новый товар'}
 					control
 				/>
-				{productCategories && targetCategory && isShowForm ? (
+				{!isProductLoading &&
+				!isProductCategoriesLoading &&
+				productCategories &&
+				targetCategory &&
+				isShowForm ? (
 					<AddProductForm
 						product={product}
 						category={targetCategory}
@@ -111,17 +141,19 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 				) : (
 					<div className={styles.block}>
 						{product && <ProductEditingAlert product={product} />}
-						<p className={styles.caption}>
-							{product
-								? 'Вы можете изменить категорию товара или оставить как есть'
-								: 'Выберите подходящую категорию'}
-						</p>
+						{!isProductLoading && !isProductCategoriesLoading && (
+							<p className={styles.caption}>
+								{product
+									? 'Вы можете изменить категорию товара или оставить как есть'
+									: 'Выберите подходящую категорию'}
+							</p>
+						)}
 						<div className={styles.list}>
-							{isProductCategoriesLoading ? (
+							{isProductLoading || isProductCategoriesLoading ? (
 								<React.Fragment>
 									{[...new Array(3)].map((_, index) => (
 										<div
-											className='w-full h-[100px] bg-gray-200 rounded-md animate-pulse'
+											className='w-full h-[300px] bg-gray-200 rounded-md animate-pulse'
 											key={index}
 										/>
 									))}
@@ -135,7 +167,8 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 												item={item}
 												nesting={0}
 												isSelected={categoryTree.includes(item.id)}
-												onDropdown={onSelectCategory}
+												onSelect={onSelectCategory}
+												onDropdown={onDropdownCategory}
 											/>
 										))}
 								</ul>
@@ -155,7 +188,8 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 														item={item}
 														nesting={index + 1}
 														isSelected={categoryTree.includes(item.id)}
-														onDropdown={onSelectCategory}
+														onSelect={onSelectCategory}
+														onDropdown={onDropdownCategory}
 													/>
 												))}
 											</ul>
@@ -163,7 +197,7 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 								)}
 						</div>
 
-						{isProductCategoriesSuccess && targetCategory && (
+						{/* {isProductCategoriesSuccess && targetCategory && (
 							<div className={styles.confirm}>
 								<p className={styles.confirmText}>
 									{product
@@ -188,7 +222,7 @@ export const AddProductConstructor: React.FC<Props> = ({ product }) => {
 										: 'Да, продолжить'}
 								</Button>
 							</div>
-						)}
+						)} */}
 					</div>
 				)}
 			</div>

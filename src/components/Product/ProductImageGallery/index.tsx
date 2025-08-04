@@ -65,8 +65,8 @@ export const ProductImageGallery: React.FC<Props> = ({
 				<ProductImage
 					src={imageSrc}
 					isPlaceholder={!images.length && !!category.imageUrl}
-					width={400}
-					height={250}
+					width={608}
+					height={456}
 					size='large'
 					priority
 					alt={alt}
@@ -102,14 +102,14 @@ export const ProductImageGallery: React.FC<Props> = ({
 							key={image.id}
 							src={
 								image
-									? `${SERVER_BASE_URL}/${images[targetImage].url}`
+									? `${SERVER_BASE_URL}/${image.url}`
 									: category.imageUrl
 										? `/static/${category.imageUrl}`
 										: undefined
 							}
 							isPlaceholder={!image && !!category.imageUrl}
-							width={100}
-							height={60}
+							width={75}
+							height={55}
 							size='thumbnail'
 							alt={`${alt} ${index + 1}`}
 							className={clsx(styles.listItem, {

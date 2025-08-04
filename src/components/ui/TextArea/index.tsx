@@ -95,7 +95,11 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 					/>
 
 					{rest.maxLength && formValue && (
-						<p className={styles.symbolCounter}>
+						<p
+							className={clsx(styles.symbolCounter, {
+								[styles.negative]: formValue.length >= rest.maxLength
+							})}
+						>
 							{formValue.length} / {rest.maxLength}
 						</p>
 					)}
