@@ -28,7 +28,6 @@ import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product-card.module.scss'
-import { findLatestCategory } from '@/utils/find-latest-category'
 
 type IProductCard = ProductType & {
 	variant?: ViewType

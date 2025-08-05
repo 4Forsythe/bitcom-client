@@ -20,6 +20,7 @@ import { calcDiscountPercent } from '@/utils/calc-discount-price'
 import type { CartItemType } from '@/types/cart.types'
 
 import styles from './cart-item.module.scss'
+import { calcNounDeclension } from '@/utils/calc-noun-declension'
 
 export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 	const { isWishlistLoading } = useWishlist()
@@ -140,18 +141,25 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 									<Plus size={18} />
 								</button>
 							</div>
-							<span
-								className={clsx(styles.breadcrumb, {
-									[styles.positive]: product.count !== 0,
-									[styles.negative]: product.count === 0,
-									[styles.warning]:
-										product.count && product.count > 0 && product.count < 5
-								})}
-							>
-								{product.count || product.count === 0
-									? `На складе ${product.count} шт.`
-									: 'Есть в наличии'}
-							</span>
+							<div className={styles.details}>
+								<span
+									className={clsx(styles.breadcrumb, {
+										[styles.positive]: product.count !== 0,
+										[styles.negative]: product.count === 0,
+										[styles.warning]:
+											product.count && product.count > 0 && product.count < 5
+									})}
+								>
+									{product.count || product.count === 0
+										? `На складе ${product.count} шт.`
+										: 'Есть в наличии'}
+								</span>
+								<p className={styles.guarantee}>
+									{product.guarantee
+										? `Гарантия ${calcNounDeclension(product.guarantee, 'месяц', 'месяца', 'месяцев')}`
+										: 'Без гарантии'}
+								</p>
+							</div>
 						</React.Fragment>
 					)}
 				</div>

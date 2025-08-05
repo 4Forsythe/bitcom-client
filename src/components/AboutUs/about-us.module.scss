@@ -1,13 +1,13 @@
 .container {
-	@apply my-8 px-8 py-5 flex flex-col;
+	@apply my-8 py-5 flex flex-col;
 	.head {
 		@apply mb-5 gap-2.5 flex items-center;
 		.title {
-			@apply text-4xl font-semibold;
+			@apply text-3xl font-semibold;
 		}
 	}
 	.paragraph {
-		@apply mb-3.5 pr-28 text-[1.075rem] font-medium;
+		@apply mb-3.5 pr-28 text-[1rem] font-medium;
 	}
 }
 

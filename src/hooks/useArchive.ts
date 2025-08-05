@@ -32,7 +32,8 @@ export function useArchive() {
 				categoryId: filters.categoryId,
 				take: limit,
 				skip: (page - 1) * limit
-			})
+			}),
+		placeholderData: (prev) => prev
 	})
 
 	React.useEffect(() => {

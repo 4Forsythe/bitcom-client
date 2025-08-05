@@ -1,5 +1,5 @@
 .container {
-	@apply w-fit h-fit max-h-[100px] px-7 py-4 gap-2.5 bg-gradient-to-r from-sky-500/90 to-sky-400/70 flex items-center rounded-xl shadow-sm;
+	@apply w-fit h-fit max-h-[100px] px-7 py-3 gap-2.5 bg-gradient-to-r from-sky-500/90 to-sky-400/70 flex items-center rounded-xl shadow-sm;
 	.content {
 		@apply p-2.5 text-zinc-50 flex flex-col;
 		.heading {

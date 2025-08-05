@@ -17,7 +17,7 @@
 		.information {
 			@apply gap-1.5 flex flex-1 flex-col grow;
 			.title {
-				@apply px-1.5 shrink text-lg font-medium hover:text-red-500 overflow-hidden
+				@apply px-1.5 shrink text-lg font-medium line-clamp-2 hover:text-red-500 overflow-hidden
 				transition-colors duration-200;
 			}
 			.article {
@@ -28,7 +28,7 @@
 				transition-colors duration-200;
 			}
 			.description {
-				@apply my-1.5 px-1.5 text-sm text-gray-400 line-clamp-6;
+				@apply my-1.5 px-1.5 text-sm text-gray-400 line-clamp-5;
 			}
 		}
 	}

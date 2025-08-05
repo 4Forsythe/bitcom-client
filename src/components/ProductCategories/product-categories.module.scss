@@ -1,9 +1,9 @@
 .container {
 	@apply gap-3.5 grid grid-cols-[1.25fr,auto] items-center;
 	.list {
-		@apply px-1.5 gap-1.5 gap-y-2.5 flex flex-wrap content-center;
+		@apply px-1.5 gap-2.5 gap-y-3 flex flex-wrap content-center;
 		.item {
-			@apply px-3.5 py-1.5 font-medium bg-zinc-200 rounded-3xl;
+			@apply px-3.5 py-1 bg-zinc-200 rounded-md hover:bg-zinc-300/80 transition duration-200;
 		}
 	}
 }

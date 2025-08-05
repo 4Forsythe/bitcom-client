@@ -12,10 +12,7 @@
 		}
 	}
 	&.medium {
-		@apply max-w-[320px] w-full h-[140px] aspect-[4/3];
-		.image {
-			@apply object-cover;
-		}
+		@apply max-w-[320px] w-full h-[320px] aspect-square;
 	}
 	&.small {
 		@apply w-[150px] h-[150px] aspect-square;
