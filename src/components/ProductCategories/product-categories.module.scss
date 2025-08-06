@@ -1,5 +1,5 @@
 .container {
-	@apply gap-3.5 grid grid-cols-[1.25fr,auto] items-center;
+	@apply gap-3.5 flex items-center;
 	.list {
 		@apply px-1.5 gap-2.5 gap-y-3 flex flex-wrap content-center;
 		.item {

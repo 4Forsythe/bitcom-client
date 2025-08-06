@@ -1,14 +1,5 @@
 .container {
 	@apply mx-12 flex flex-1 flex-col;
-	.breadcrumbs {
-		@apply gap-1.5 text-zinc-600 flex items-center;
-		.breadcrumbItem {
-			@apply text-[0.95rem] hover:text-zinc-500 transition duration-200;
-		}
-	}
-	.alert {
-		@apply mt-6 -mb-4;
-	}
 	.inner {
 		@apply my-14 max-w-[636px];
 		.form {
@@ -59,7 +50,7 @@
 				}
 			}
 			.buttons {
-				@apply gap-2 flex items-center;
+				@apply h-fit bottom-0 py-3.5 gap-2 backdrop-blur-sm flex items-center sticky;
 			}
 		}
 	}

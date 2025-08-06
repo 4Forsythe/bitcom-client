@@ -3,12 +3,11 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { TelegramBanner } from '../TelegramBanner'
+import { ROUTE } from '@/config/routes.config'
+import { ProductCategoriesSkeleton } from './skeleton'
 import { useProductCategories } from '@/hooks/useProductCategories'
 
 import styles from './product-categories.module.scss'
-import { ROUTE } from '@/config/routes.config'
-import { ProductCategoriesSkeleton } from './skeleton'
 
 export const ProductCategories: React.FC = () => {
 	const { productCategories, isProductCategoriesLoading } =
@@ -33,7 +32,6 @@ export const ProductCategories: React.FC = () => {
 					</ul>
 				)
 			)}
-			<TelegramBanner />
 		</div>
 	)
 }

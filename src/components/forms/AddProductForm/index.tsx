@@ -1,10 +1,8 @@
 'use client'
 
 import React from 'react'
-import clsx from 'clsx'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { ChevronRight, X } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { ChevronRight } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -45,19 +43,14 @@ type ImageFileType = {
 interface Props {
 	product?: ProductType
 	category: ProductCategoryType
-	categoryPath: ProductCategoryType[]
-	onBackToCategory: (category: ProductCategoryType, nesting: number) => void
 }
 
 const MAX_IMAGES_LIMIT = 5
 
-export const AddProductForm: React.FC<Props> = ({
-	product,
-	category,
-	categoryPath,
-	onBackToCategory
-}) => {
+export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 	const router = useRouter()
+	const searchParams = useSearchParams()
+
 	const methods = useForm<ProductFormType>({
 		mode: 'onChange',
 		resolver: zodResolver(createProductSchema),
@@ -90,37 +83,39 @@ export const AddProductForm: React.FC<Props> = ({
 		useUploadImages()
 
 	React.useEffect(() => {
-		if (product) {
-			methods.reset({
-				name: product.name || '',
-				description: product.description || '',
-				price: product.price || undefined,
-				discountPrice: product.discountPrice || undefined,
-				count:
-					typeof product.count === 'number' ? String(product.count) : undefined,
-				sku: product.sku.join(', '),
-				guarantee:
-					typeof product.guarantee === 'number'
-						? String(product.guarantee)
-						: undefined,
-				isArchived: product.isArchived || false,
-				categoryId: category.id
-			})
+		methods.reset({
+			name: product?.name || '',
+			description: product?.description || '',
+			price: product?.price || undefined,
+			discountPrice: product?.discountPrice || undefined,
+			count:
+				typeof product?.count === 'number' ? String(product.count) : undefined,
+			sku: product?.sku.join(', '),
+			guarantee:
+				typeof product?.guarantee === 'number'
+					? String(product?.guarantee)
+					: undefined,
+			isArchived: product?.isArchived || false,
+			categoryId: category.id
+		})
 
-			setImages(
-				product.images.map((image) => ({
-					id: image.id,
-					url: `${SERVER_BASE_URL}/${image.url}`
-				}))
-			)
+		setImages(
+			product
+				? product.images.map((image) => ({
+						id: image.id,
+						url: `${SERVER_BASE_URL}/${image.url}`
+					}))
+				: []
+		)
 
-			setPrimaryImage(
-				product && product.images.length > 0
+		setPrimaryImage(
+			product
+				? product.images.length > 0
 					? product.images.find((image) => Math.min(image.sortOrder))?.url
 					: undefined
-			)
-		}
-	}, [product])
+				: undefined
+		)
+	}, [router, searchParams, product])
 
 	React.useEffect(() => {
 		if (!images.length) {
@@ -271,25 +266,6 @@ export const AddProductForm: React.FC<Props> = ({
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.breadcrumbs}>
-				{categoryPath.map((item, index) => (
-					<React.Fragment key={item.id}>
-						{item.parentId && <ChevronRight size={16} />}
-						<button
-							className={styles.breadcrumbItem}
-							key={item.id}
-							onClick={() => onBackToCategory(item, index + 1)}
-						>
-							{item.name}
-						</button>
-					</React.Fragment>
-				))}
-			</div>
-			{product && (
-				<div className={styles.alert}>
-					<ProductEditingAlert product={product} />
-				</div>
-			)}
 			<div className={styles.inner}>
 				<FormProvider {...methods}>
 					<form

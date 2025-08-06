@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
 	Button,
@@ -9,31 +11,32 @@ import {
 	ProductEditingAlert
 } from '@/components'
 import { AddProductCategoryItem } from './add-product-category-item'
-import { useProductCategories } from '@/hooks/useProductCategories'
 
+import { productService } from '@/services/product.service'
+import { useProductCategories } from '@/hooks/useProductCategories'
 import { findLatestCategory } from '@/utils/find-latest-category'
 import { getRootCategoryPath } from '@/utils/get-root-category-path'
 import { getFullCategoryPath } from '@/utils/get-full-category-path'
 
-import type { ProductType } from '@/types/product.types'
 import type { ProductCategoryType } from '@/types/product-category.types'
 
 import styles from './add-product.module.scss'
-import { useQuery } from '@tanstack/react-query'
-import { productService } from '@/services/product.service'
+import { ChevronRight } from 'lucide-react'
+import clsx from 'clsx'
 
-interface Props {
-	productId?: string
-}
+export const AddProductConstructor: React.FC = () => {
+	const queryClient = useQueryClient()
+	const searchParams = useSearchParams()
 
-export const AddProductConstructor: React.FC<Props> = ({ productId }) => {
+	const productId = searchParams.get('productId')
+
 	const {
 		data: product,
 		isLoading: isProductLoading,
 		isSuccess: isProductSuccess
 	} = useQuery({
 		queryKey: [productId],
-		queryFn: () => productService.getOne(productId as string),
+		queryFn: () => productService.getOne(productId!),
 		enabled: !!productId
 	})
 
@@ -86,10 +89,14 @@ export const AddProductConstructor: React.FC<Props> = ({ productId }) => {
 	}
 
 	React.useEffect(() => {
+		queryClient.removeQueries({ queryKey: [productId] })
+	}, [productId])
+
+	React.useEffect(() => {
 		if (product) {
 			setIsShowForm(true)
 		}
-	}, [product, isProductSuccess])
+	}, [productId, product, isProductSuccess])
 
 	React.useEffect(() => {
 		if (
@@ -125,6 +132,35 @@ export const AddProductConstructor: React.FC<Props> = ({ productId }) => {
 					control
 				/>
 				{!isProductLoading &&
+					!isProductCategoriesLoading &&
+					productCategories &&
+					targetCategory &&
+					isShowForm && (
+						<div className={styles.breadcrumbs}>
+							{getFullCategoryPath(productCategories.items, targetCategory).map(
+								(item, index) => (
+									<React.Fragment key={item.id}>
+										{item.parentId && <ChevronRight size={16} />}
+										<button
+											className={styles.breadcrumbItem}
+											key={item.id}
+											onClick={() => handleBackToCategory(item, index + 1)}
+										>
+											{item.name}
+										</button>
+									</React.Fragment>
+								)
+							)}
+						</div>
+					)}
+				{product && (
+					<div className={styles.block}>
+						<div className={styles.subheading}>
+							<ProductEditingAlert product={product} />
+						</div>
+					</div>
+				)}
+				{!isProductLoading &&
 				!isProductCategoriesLoading &&
 				productCategories &&
 				targetCategory &&
@@ -132,15 +168,9 @@ export const AddProductConstructor: React.FC<Props> = ({ productId }) => {
 					<AddProductForm
 						product={product}
 						category={targetCategory}
-						categoryPath={getFullCategoryPath(
-							productCategories.items,
-							targetCategory
-						)}
-						onBackToCategory={handleBackToCategory}
 					/>
 				) : (
-					<div className={styles.block}>
-						{product && <ProductEditingAlert product={product} />}
+					<div className={clsx(styles.block, { [styles.spacing]: product })}>
 						{!isProductLoading && !isProductCategoriesLoading && (
 							<p className={styles.caption}>
 								{product

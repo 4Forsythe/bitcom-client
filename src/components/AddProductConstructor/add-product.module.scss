@@ -1,9 +1,21 @@
 .container {
 	@apply w-full max-w-[1068px] mx-auto flex flex-1 flex-col;
+	.breadcrumbs {
+		@apply mx-12 gap-1.5 text-zinc-600 flex items-center;
+		.breadcrumbItem {
+			@apply text-[0.95rem] hover:text-zinc-500 transition duration-200;
+		}
+	}
 	.inner {
 		@apply mx-3 flex flex-1 flex-col;
 		.block {
 			@apply mx-12 py-4 gap-4 flex flex-1 flex-col;
+			&.spacing {
+				@apply mt-5;
+			}
+			.subheading {
+				@apply max-w-[636px] w-full mt-3.5 -mb-5;
+			}
 			.caption {
 				@apply text-sm text-zinc-500;
 			}

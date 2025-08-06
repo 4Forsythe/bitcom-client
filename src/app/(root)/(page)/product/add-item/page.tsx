@@ -8,14 +8,6 @@ export const metadata: Metadata = {
 	...NO_INDEX
 }
 
-interface AddProductPageProps {
-	searchParams: { [key: string]: string | undefined }
-}
-
-export default async function AddProductPage({
-	searchParams
-}: AddProductPageProps) {
-	const { productId } = searchParams
-
-	return <AddProductConstructor productId={productId} />
+export default async function AddProductPage() {
+	return <AddProductConstructor />
 }

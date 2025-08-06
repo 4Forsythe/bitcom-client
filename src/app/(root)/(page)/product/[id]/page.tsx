@@ -26,7 +26,7 @@ export const generateMetadata = async ({ params }: ProductPageProps) => {
 	if (!product) return {}
 
 	return {
-		title: `Купить ${product.name} в Тольятти Б/У с гарантией`,
+		title: `Купить ${product.name} в Тольятти Б/У${product.guarantee ? ' с гарантией' : ''}`,
 		description: `${product.name} — купить Б/У с гарантией ${product.discountPrice || product.price ? `от ${product.discountPrice || product.price} рублей` : 'по выгодным ценам'} в Тольятти, Самаре, Сызрани. В наличии ${product.count} шт. Наш каталог обновляется регулярно, и вы всегда сможете найти самые актуальные предложения и новинки. Доставка по всей Самарской области, включая города Самара, Тольятти, Сызрань.`
 	}
 }

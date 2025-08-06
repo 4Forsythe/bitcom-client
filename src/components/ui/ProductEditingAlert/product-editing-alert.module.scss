@@ -1,17 +1,17 @@
 .container {
 	@apply w-fit my-2.5 gap-1.5 flex flex-col;
 	.heading {
-		@apply font-semibold;
+		@apply w-fit px-3 font-semibold text-zinc-50 bg-red-500/80 rounded-3xl;
 	}
 	.thumbnail {
-		@apply w-fit gap-3.5 p-3.5 flex items-start bg-green-50 rounded-xl hover:bg-green-100/50 transition duration-200;
+		@apply w-fit gap-3.5 p-3.5 flex items-start bg-neutral-200/70 shadow-sm rounded-xl hover:bg-neutral-200 transition duration-200;
 		.cover {
 			@apply w-[60px] h-[60px] flex items-center justify-center rounded-lg overflow-hidden;
 		}
 		.thumbnailInfo {
 			@apply gap-0.5 flex flex-col;
 			.text {
-				@apply font-semibold;
+				@apply font-semibold line-clamp-3;
 			}
 			.thumbnailDetails {
 				@apply gap-1.5 flex items-center;
