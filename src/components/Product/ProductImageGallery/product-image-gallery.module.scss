@@ -1,7 +1,7 @@
 .container {
 	@apply p-8 gap-5 flex flex-col items-center overflow-hidden;
 	.main {
-		@apply w-[608px] h-[456px] bg-zinc-200/80 flex items-center justify-center rounded-lg relative overflow-hidden;
+		@apply w-[608px] h-[456px] bg-white flex items-center justify-center rounded-lg relative overflow-hidden;
 		&:hover {
 			.navButton {
 				@apply opacity-100;

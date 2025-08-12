@@ -13,3 +13,10 @@
 		@apply flex flex-col items-start;
 	}
 }
+@media (max-width: 490px) {
+	.container {
+		.list {
+			@apply justify-center;
+		}
+	}
+}

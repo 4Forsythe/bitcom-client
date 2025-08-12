@@ -1,5 +1,5 @@
 .container {
-	@apply w-full h-full bg-zinc-100 flex items-center justify-center rounded-lg relative overflow-hidden;
+	@apply w-full h-full bg-white flex items-center justify-center rounded-lg relative overflow-hidden;
 	&.clickable {
 		@apply cursor-pointer;
 	}

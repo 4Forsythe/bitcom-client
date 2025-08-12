@@ -6,6 +6,18 @@
 	.block {
 		@apply mt-5 mb-10;
 	}
+	.promo {
+		@apply px-8 gap-10 flex items-center;
+		.promoInner {
+			@apply gap-10 flex items-center;
+			.promoContent {
+				@apply h-fit pl-8 border-l-2 border-zinc-500;
+				.promoText {
+					@apply text-lg font-medium;
+				}
+			}
+		}
+	}
 	.features {
 		@apply my-8 gap-x-5 gap-y-3.5 grid grid-cols-4 flex-nowrap items-center *:w-full;
 	}
@@ -21,6 +33,22 @@
 	.container {
 		.features {
 			@apply grid-cols-3;
+		}
+	}
+}
+@media (max-width: 920px) {
+	.container {
+		.promo {
+			@apply flex-col;
+			.promoInner {
+				@apply flex-col;
+				.promoContent {
+					@apply pl-0 border-none;
+					.promoText {
+						@apply text-center;
+					}
+				}
+			}
 		}
 	}
 }

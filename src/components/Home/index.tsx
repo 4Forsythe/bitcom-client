@@ -1,7 +1,14 @@
 import React from 'react'
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-import { Navbar, HomeWidget, Badge, ProductCategories } from '@/components'
+import {
+	Navbar,
+	HomeWidget,
+	Badge,
+	ProductCategories,
+	TelegramBanner
+} from '@/components'
 
 const AboutUs = dynamic(() => import('@/components').then((mod) => mod.AboutUs))
 const BrandsGallery = dynamic(() =>
@@ -35,22 +42,43 @@ export const Home: React.FC<Props> = async ({
 			<Navbar />
 
 			<div className={styles.block}>
+				<div className={styles.promo}>
+					<div className={styles.promoInner}>
+						<Image
+							src='/static/LOGO.png'
+							width={78}
+							height={78}
+							alt='Компания БитКом'
+						/>
+						<div className={styles.promoContent}>
+							<p className={styles.promoText}>
+								Обратите внимание! Весь наш каталог — это
+								<br />
+								тщательно проверенная Б/У техника: от принтеров, мониторов
+								<br />и ноутбуков до медицинского, серверного и сетевого
+								оборудования
+							</p>
+						</div>
+					</div>
+					<TelegramBanner />
+				</div>
+			</div>
+
+			<div className={styles.block}>
 				<ProductCategories />
 			</div>
 
+			{discountProducts.items.length > 4 && (
+				<ProductGroup
+					title='🔥 По скидке'
+					items={discountProducts.items}
+				/>
+			)}
 			{products.items.length >= 4 ? (
-				<React.Fragment>
-					{discountProducts.items.length > 0 && (
-						<ProductGroup
-							title='Со скидкой'
-							items={discountProducts.items}
-						/>
-					)}
-					<ProductGroup
-						title='Новинки'
-						items={products.items}
-					/>
-				</React.Fragment>
+				<ProductGroup
+					title='Новинки'
+					items={products.items}
+				/>
 			) : (
 				<div className={styles.showcaseInfo}>
 					<span className={styles.showcaseInfoTitle}>

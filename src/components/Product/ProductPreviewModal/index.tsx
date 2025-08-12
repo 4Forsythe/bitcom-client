@@ -103,8 +103,8 @@ export const ProductPreviewModal: React.FC<Props> = ({
 						width={700}
 						height={500}
 						src={image && `${SERVER_BASE_URL}/${image.url}`}
-						priority
 						alt={alt}
+						priority
 						onError={() => handleErrorImage(targetImage)}
 					/>
 				) : (
@@ -132,6 +132,7 @@ export const ProductPreviewModal: React.FC<Props> = ({
 							}}
 							src={image && `${SERVER_BASE_URL}/${image.url}`}
 							alt='Увеличенное изображение'
+							priority
 						/>
 					</div>
 				)}
