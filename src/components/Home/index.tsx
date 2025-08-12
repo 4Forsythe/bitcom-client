@@ -49,6 +49,7 @@ export const Home: React.FC<Props> = async ({
 							width={78}
 							height={78}
 							alt='Компания БитКом'
+							priority
 						/>
 						<div className={styles.promoContent}>
 							<p className={styles.promoText}>
@@ -74,12 +75,14 @@ export const Home: React.FC<Props> = async ({
 					items={discountProducts.items}
 				/>
 			)}
-			{products.items.length >= 5 ? (
+			{products.items.length >= 5 && (
 				<ProductGroup
 					title='Новинки'
 					items={products.items}
 				/>
-			) : (
+			)}
+
+			{discountProducts.items.length < 5 && products.items.length < 5 && (
 				<div className={styles.showcaseInfo}>
 					<span className={styles.showcaseInfoTitle}>
 						Приносим извинения, у нас проходит техническая инвентаризация...
