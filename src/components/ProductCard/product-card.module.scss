@@ -60,7 +60,7 @@
 .tile {
 	@apply h-[480px] p-0 gap-0 flex flex-col overflow-hidden;
 	.cover {
-		@apply w-full h-[200px] flex items-center justify-center rounded-none overflow-hidden;
+		@apply w-auto h-[200px] flex items-center justify-center rounded-none overflow-hidden;
 		.image {
 			@apply w-[80%] max-h-[80%] h-auto object-cover;
 		}

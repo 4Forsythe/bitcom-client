@@ -75,6 +75,8 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 	const [images, setImages] = React.useState<ImageFileType[]>([])
 	const [primaryImage, setPrimaryImage] = React.useState<string | undefined>()
 
+	const textareaRef = React.useRef<{ resize: () => void }>(null)
+
 	const { createProductAsync, isCreateProductPending, isCreateProductError } =
 		useCreateProduct()
 	const { updateProductAsync, isUpdateProductPending, isUpdateProductError } =
@@ -298,6 +300,7 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 									<h5 className={styles.fieldTitle}>Описание</h5>
 								</div>
 								<FormTextArea
+									ref={textareaRef}
 									name='description'
 									variant='outlined'
 									type='text'

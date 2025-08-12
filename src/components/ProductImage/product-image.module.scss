@@ -12,7 +12,7 @@
 		}
 	}
 	&.medium {
-		@apply max-w-[320px] w-full h-[320px] aspect-square;
+		@apply max-w-[300px] h-full aspect-square;
 	}
 	&.small {
 		@apply w-[150px] h-[150px] aspect-square;
@@ -38,7 +38,7 @@
 		}
 	}
 	.image {
-		@apply w-full h-full object-contain;
+		@apply w-auto h-full object-contain;
 		&.hidden {
 			@apply w-auto h-full object-cover grayscale opacity-0 contrast-200;
 		}

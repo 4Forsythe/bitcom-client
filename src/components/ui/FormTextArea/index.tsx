@@ -3,7 +3,7 @@
 import React from 'react'
 
 import { OctagonAlert } from 'lucide-react'
-import { useFormContext, get } from 'react-hook-form'
+import { useFormContext, get, Controller } from 'react-hook-form'
 
 import { TextArea, type ITextArea } from '@/components/ui/TextArea'
 
@@ -13,24 +13,32 @@ interface IFormTextArea extends ITextArea {
 	name: string
 }
 
-export const FormTextArea: React.FC<IFormTextArea> = ({ name, ...rest }) => {
+export const FormTextArea = React.forwardRef<
+	HTMLTextAreaElement | { resize: () => void },
+	IFormTextArea
+>(({ name, ...rest }, ref) => {
 	const {
 		watch,
 		register,
+		control,
 		formState: { errors }
 	} = useFormContext()
 
-	const value = watch(name)
 	const error = get(errors, name)
 
 	return (
 		<div className={styles.container}>
-			<TextArea
-				id={name}
-				formValue={value}
-				isError={error}
-				{...register(name)}
-				{...rest}
+			<Controller
+				name={name}
+				control={control}
+				render={({ field }) => (
+					<TextArea
+						{...field}
+						formValue={field.value}
+						isError={!!error}
+						{...rest}
+					/>
+				)}
 			/>
 
 			{error && (
@@ -40,4 +48,4 @@ export const FormTextArea: React.FC<IFormTextArea> = ({ name, ...rest }) => {
 			)}
 		</div>
 	)
-}
+})

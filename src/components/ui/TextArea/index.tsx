@@ -19,7 +19,10 @@ export interface ITextArea
 	placeholder?: string
 }
 
-export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
+export const TextArea = React.forwardRef<
+	HTMLTextAreaElement | { resize: () => void },
+	ITextArea
+>(
 	(
 		{
 			label,
@@ -38,11 +41,6 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 	) => {
 		const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
-		React.useImperativeHandle(
-			ref,
-			() => textareaRef.current as HTMLTextAreaElement
-		)
-
 		const resize = () => {
 			const current = textareaRef.current
 
@@ -51,6 +49,11 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, ITextArea>(
 				current.style.height = current.scrollHeight + 'px'
 			}
 		}
+
+		React.useImperativeHandle(ref, () => ({
+			resize,
+			...(textareaRef.current as HTMLTextAreaElement)
+		}))
 
 		React.useEffect(() => {
 			resize()
