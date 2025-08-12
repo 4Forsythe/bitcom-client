@@ -6,7 +6,7 @@
 	.thumbnail {
 		@apply w-fit gap-3.5 p-3.5 flex items-start bg-neutral-200/70 shadow-sm rounded-xl hover:bg-neutral-200 transition duration-200;
 		.cover {
-			@apply w-[60px] h-[60px] flex items-center justify-center rounded-lg overflow-hidden;
+			@apply w-[60px] h-[60px] flex items-center justify-center shrink-0 rounded-lg overflow-hidden;
 		}
 		.thumbnailInfo {
 			@apply gap-0.5 flex flex-col;
