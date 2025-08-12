@@ -1,3 +1,4 @@
+import React from 'react'
 import type { Metadata } from 'next'
 
 import { NO_INDEX } from '@/constants'
@@ -8,6 +9,10 @@ export const metadata: Metadata = {
 	...NO_INDEX
 }
 
-export default async function AddProductPage() {
-	return <AddProductConstructor />
+export default function AddProductPage() {
+	return (
+		<React.Suspense>
+			<AddProductConstructor />
+		</React.Suspense>
+	)
 }

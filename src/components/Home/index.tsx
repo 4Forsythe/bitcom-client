@@ -68,13 +68,13 @@ export const Home: React.FC<Props> = async ({
 				<ProductCategories />
 			</div>
 
-			{discountProducts.items.length > 4 && (
+			{discountProducts.items.length >= 5 && (
 				<ProductGroup
 					title='🔥 По скидке'
 					items={discountProducts.items}
 				/>
 			)}
-			{products.items.length >= 4 ? (
+			{products.items.length >= 5 ? (
 				<ProductGroup
 					title='Новинки'
 					items={products.items}

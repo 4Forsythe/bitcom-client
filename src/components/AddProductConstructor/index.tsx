@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import clsx from 'clsx'
+import { ChevronRight } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -21,8 +23,6 @@ import { getFullCategoryPath } from '@/utils/get-full-category-path'
 import type { ProductCategoryType } from '@/types/product-category.types'
 
 import styles from './add-product.module.scss'
-import { ChevronRight } from 'lucide-react'
-import clsx from 'clsx'
 
 export const AddProductConstructor: React.FC = () => {
 	const queryClient = useQueryClient()
