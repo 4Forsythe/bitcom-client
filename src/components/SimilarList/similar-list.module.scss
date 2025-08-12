@@ -10,7 +10,7 @@
 		}
 	}
 	.list {
-		@apply mb-7 overflow-hidden;
+		@apply mb-7 items-stretch overflow-hidden;
 	}
 	.button {
 		@apply h-16 gap-1 font-normal;

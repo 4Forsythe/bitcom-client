@@ -82,9 +82,9 @@ export const ProductCard: React.FC<IProductCard> = ({
 		return <ProductCardSkeleton />
 	}
 
-	const descriptionHtml = description
-		? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
-		: 'Описание отсуствует'
+	// const descriptionHtml = description
+	// 	? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
+	// 	: 'Описание отсуствует'
 
 	return (
 		<article
@@ -124,12 +124,12 @@ export const ProductCard: React.FC<IProductCard> = ({
 						{category.name}
 					</Link>
 				)}
-				<p
+				{/* <p
 					className={styles.description}
 					dangerouslySetInnerHTML={{
 						__html: descriptionHtml
 					}}
-				/>
+				/> */}
 			</div>
 			<div className={styles.details}>
 				<div className={styles.avails}>

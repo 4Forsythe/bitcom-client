@@ -9,7 +9,7 @@
 	.information {
 		@apply gap-1.5 flex flex-1 flex-col grow;
 		.title {
-			@apply px-1.5 shrink text-lg font-medium line-clamp-1 hover:text-red-500 overflow-hidden
+			@apply mb-1.5 px-1.5 shrink text-lg font-medium line-clamp-4 hover:text-red-500 overflow-hidden
       transition-colors duration-200;
 		}
 		.type {

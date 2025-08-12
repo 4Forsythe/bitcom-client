@@ -21,9 +21,14 @@ body {
 
 .swiper-wrapper {
 	padding: 0 4px;
+	align-items: stretch;
 	-webkit-transition-timing-function: linear !important;
 	-o-transition-timing-function: linear !important;
 	transition-timing-function: linear !important;
+}
+
+.swiper-slide {
+	height: auto !important;
 }
 
 * {

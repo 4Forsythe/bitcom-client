@@ -34,9 +34,9 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 				? `/static/${category.imageUrl}`
 				: undefined
 
-	const descriptionHtml = description
-		? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
-		: 'Описание отсуствует'
+	// const descriptionHtml = description
+	// 	? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
+	// 	: 'Описание отсуствует'
 
 	return (
 		<article className={clsx(styles.container, 'animate-opacity')}>
@@ -72,12 +72,20 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 					>
 						{isPublished ? name : `${name} (черновик)`}
 					</Link>
-					<p
+					{category && (
+						<Link
+							className={styles.type}
+							href={`${ROUTE.CATALOG}/${category.id}`}
+						>
+							{category.name}
+						</Link>
+					)}
+					{/* <p
 						className={styles.description}
 						dangerouslySetInnerHTML={{
 							__html: descriptionHtml
 						}}
-					/>
+					/> */}
 				</div>
 			</div>
 			<div className={styles.details}>

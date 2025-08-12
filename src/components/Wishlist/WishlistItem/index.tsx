@@ -62,9 +62,9 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: createCartItem({ productId: product.id })
 	}
 
-	const descriptionHtml = product.description
-		? product.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
-		: 'Описание отсуствует'
+	// const descriptionHtml = product.description
+	// 	? product.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
+	// 	: 'Описание отсуствует'
 
 	return (
 		<article className={clsx(styles.container, 'animate-opacity')}>
@@ -107,12 +107,20 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 					>
 						{product.name}
 					</Link>
-					<p
+					{product.category && (
+						<Link
+							className={styles.type}
+							href={`${ROUTE.CATALOG}/${product.category.id}`}
+						>
+							{product.category.name}
+						</Link>
+					)}
+					{/* <p
 						className={styles.description}
 						dangerouslySetInnerHTML={{
 							__html: descriptionHtml
 						}}
-					/>
+					/> */}
 				</div>
 			</div>
 			<div className={styles.details}>
