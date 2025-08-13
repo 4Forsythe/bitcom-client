@@ -18,11 +18,17 @@
 				}
 			}
 		}
+		.background {
+			@apply inset-0 overflow-hidden absolute pointer-events-none;
+			.backgroundIcon {
+				@apply w-[25rem] h-[25rem] top-0 right-5 text-zinc-100/40 absolute;
+			}
+		}
 	}
 	.information {
 		@apply px-8 py-6 bg-white;
 		.contact {
-			@apply mt-6 inline-flex flex-col;
+			@apply my-6 inline-flex flex-col;
 			.important {
 				@apply mb-1.5 px-2 flex items-baseline;
 				.phones {
@@ -39,6 +45,39 @@
 				@apply w-fit px-2.5 py-1 font-medium outline-none hover:text-zinc-50 hover:bg-zinc-700 rounded-md
 				transition-all duration-300;
 			}
+		}
+		.form {
+			@apply max-w-[720px] w-full my-5 gap-5 flex flex-col;
+			.formHeading {
+				@apply gap-1.5 flex flex-col;
+				.title {
+					@apply mb-2 text-3xl font-semibold;
+				}
+			}
+			.fields {
+				@apply w-full gap-3.5 flex flex-col;
+				.field {
+					@apply w-full gap-5 flex items-center;
+					.input {
+						@apply w-full;
+					}
+					.smallInput {
+						@apply w-1/2;
+					}
+				}
+			}
+			.submit {
+				@apply w-fit;
+			}
+			.policy {
+				@apply my-1 text-sm;
+				.link {
+					@apply text-red-500 underline;
+				}
+			}
+		}
+		.infoblock {
+			@apply w-fit;
 		}
 	}
 }

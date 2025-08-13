@@ -193,15 +193,15 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 	}
 
 	const onSubmit = async (data: ProductFormType) => {
+		console.log('discountPrice', data.discountPrice)
+
 		const dto: CreateProductType = {
 			name: data.name,
 			description: data.description,
 			price: +data.price,
-			discountPrice: data.discountPrice ? +data.discountPrice : undefined,
-			count: data.count ? +data.count : undefined,
-			sku: data.sku
-				? data.sku.split(',').map((char) => char.trim())
-				: undefined,
+			discountPrice: data.discountPrice ? +data.discountPrice : null,
+			count: data.count ? +data.count : null,
+			sku: data.sku ? data.sku.split(',').map((char) => char.trim()) : [],
 			guarantee: data.guarantee ? +data.guarantee : undefined,
 			isArchived: data.isArchived,
 			isPublished: submitActionType === 'publish',

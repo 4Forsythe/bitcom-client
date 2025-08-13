@@ -17,10 +17,6 @@ export const INFOS: FooterMenuType[] = [
 		label: 'Прайс-листы'
 	},
 	{
-		href: ROUTE.TABLES,
-		label: 'Таблицы компонентов'
-	},
-	{
 		href: ROUTE.POLICIES,
 		label: 'Политика конфиденциальности'
 	}
@@ -57,5 +53,9 @@ export const CONTACTS: FooterMenuType[] = [
 	{
 		href: 'https://yandex.ru/maps/-/CDbr724l',
 		label: `${ADDRESS}, Самарская обл., 445047 (вход со стороны магазина «БИТКОМ»)`
+	},
+	{
+		href: `${ROUTE.SERVICE}#form`,
+		label: 'Оставить заявку в сервисный центр'
 	}
 ]

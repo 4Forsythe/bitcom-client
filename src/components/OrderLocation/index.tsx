@@ -52,8 +52,9 @@ export const OrderLocation: React.FC<Props> = ({ availableProducts }) => {
 					href={ROUTE.POLICIES}
 					target='_blank'
 				>
-					политики конфиднциальности.
-				</Link>
+					политики конфиднциальности
+				</Link>{' '}
+				для обработки персональных данных.
 			</p>
 		</section>
 	)

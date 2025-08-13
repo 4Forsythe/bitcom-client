@@ -75,9 +75,9 @@ export type CreateProductType = {
 	name: string
 	description?: string
 	price: number
-	discountPrice?: number
-	count?: number
-	sku?: string[]
+	discountPrice: number | null
+	count: number | null
+	sku: string[]
 	guarantee?: number
 	isArchived?: boolean
 	isPublished?: boolean

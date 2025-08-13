@@ -75,7 +75,7 @@ export const TextArea = React.forwardRef<
 				>
 					{label && (
 						<label
-							htmlFor={rest.id}
+							htmlFor={rest.name}
 							className={styles.label}
 						>
 							{label}
@@ -83,6 +83,7 @@ export const TextArea = React.forwardRef<
 					)}
 
 					<textarea
+						id={rest.name}
 						ref={textareaRef}
 						className={clsx(styles.area, className)}
 						value={value}

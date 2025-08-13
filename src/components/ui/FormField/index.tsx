@@ -8,12 +8,18 @@ import { useFormContext, get } from 'react-hook-form'
 import { Field, type IField } from '@/components/ui/Field'
 
 import styles from './form-field.module.scss'
+import clsx from 'clsx'
 
 interface IFormField extends IField {
 	name: string
+	className?: string
 }
 
-export const FormField: React.FC<IFormField> = ({ name, ...rest }) => {
+export const FormField: React.FC<IFormField> = ({
+	name,
+	className,
+	...rest
+}) => {
 	const {
 		register,
 		formState: { errors }
@@ -22,7 +28,7 @@ export const FormField: React.FC<IFormField> = ({ name, ...rest }) => {
 	const error = get(errors, name)
 
 	return (
-		<div className={styles.container}>
+		<div className={clsx(styles.container, className)}>
 			<Field
 				id={name}
 				isError={error}

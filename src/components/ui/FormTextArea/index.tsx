@@ -8,15 +8,17 @@ import { useFormContext, get, Controller } from 'react-hook-form'
 import { TextArea, type ITextArea } from '@/components/ui/TextArea'
 
 import styles from './form-text-area.module.scss'
+import clsx from 'clsx'
 
 interface IFormTextArea extends ITextArea {
 	name: string
+	className?: string
 }
 
 export const FormTextArea = React.forwardRef<
 	HTMLTextAreaElement | { resize: () => void },
 	IFormTextArea
->(({ name, ...rest }, ref) => {
+>(({ name, className, ...rest }, ref) => {
 	const {
 		watch,
 		register,
@@ -27,7 +29,7 @@ export const FormTextArea = React.forwardRef<
 	const error = get(errors, name)
 
 	return (
-		<div className={styles.container}>
+		<div className={clsx(styles.container, className)}>
 			<Controller
 				name={name}
 				control={control}
