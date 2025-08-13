@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import clsx from 'clsx'
 import { X } from 'lucide-react'
 
@@ -10,8 +11,10 @@ import {
 	EmptyBlock,
 	ArchiveListItem,
 	ArchiveListItemSkeleton,
-	SmallSearchBar
+	SmallSearchBar,
+	Button
 } from '@/components'
+import { API_BASE_URL } from '@/constants'
 
 import { useArchive } from '@/hooks/useArchive'
 import { useProductCategories } from '@/hooks/useProductCategories'
@@ -44,11 +47,21 @@ export const ArchiveList: React.FC = () => {
 		<div className={styles.container}>
 			{isFetched && (
 				<div className={styles.topbar}>
-					<SmallSearchBar
-						className={styles.searchbar}
-						placeholder='Поиск позиции...'
-						onFetch={(query) => refetch({ search: query })}
-					/>
+					<div className={styles.topbarMenu}>
+						<SmallSearchBar
+							className={styles.searchbar}
+							placeholder='Поиск позиции...'
+							onFetch={(query) => refetch({ search: query })}
+						/>
+						<Link
+							className={styles.exportLink}
+							href={`${API_BASE_URL}/product/export`}
+							target='_blank'
+							download
+						>
+							Экспорт в Excel
+						</Link>
+					</div>
 					{isProductCategoriesLoading ? (
 						<div className='w-full h-[40px] flex bg-gray-200 rounded-3xl animate-pulse' />
 					) : (

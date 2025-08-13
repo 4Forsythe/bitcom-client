@@ -2,8 +2,14 @@
 	@apply h-full flex flex-col;
 	.topbar {
 		@apply gap-5 flex flex-col items-start justify-between;
-		.searchbar {
-			@apply max-w-80 w-full;
+		.topbarMenu {
+			@apply w-full gap-5 flex flex-wrap items-center;
+			.searchbar {
+				@apply max-w-80 w-full;
+			}
+			.exportLink {
+				@apply px-3 py-1 text-sm font-semibold text-zinc-600 bg-zinc-100 border border-zinc-300 rounded-lg hover:bg-zinc-200/80 transition duration-200;
+			}
 		}
 		.categories {
 			@apply gap-3 flex flex-wrap items-center;
