@@ -80,7 +80,6 @@ export const AuthVerifyForm: React.FC = () => {
 					<div className={styles.fields}>
 						<FormField
 							name='code'
-							className={styles.input}
 							placeholder='Введите код'
 							isError={isError}
 						/>

@@ -3,11 +3,12 @@
 import React from 'react'
 
 import clsx from 'clsx'
-import { LoaderCircle } from 'lucide-react'
+import { LoaderCircle, type LucideIcon } from 'lucide-react'
 
 import styles from './field.module.scss'
 
 export interface IField extends React.InputHTMLAttributes<HTMLInputElement> {
+	icon?: LucideIcon
 	label?: string
 	hint?: string
 	variant?: 'contained' | 'outlined'
@@ -20,6 +21,7 @@ export interface IField extends React.InputHTMLAttributes<HTMLInputElement> {
 export const Field = React.forwardRef<HTMLInputElement, IField>(
 	(
 		{
+			icon: Icon,
 			label,
 			hint,
 			variant = 'contained',
@@ -66,9 +68,18 @@ export const Field = React.forwardRef<HTMLInputElement, IField>(
 						</label>
 					)}
 
+					{Icon && (
+						<Icon
+							className={styles.icon}
+							size={20}
+						/>
+					)}
+
 					<input
 						ref={ref}
-						className={clsx(styles.input, className)}
+						className={clsx(styles.input, className, {
+							[styles.withIcon]: Icon
+						})}
 						type={type !== 'number' ? type : 'text'}
 						disabled={isLoading}
 						placeholder={placeholder}

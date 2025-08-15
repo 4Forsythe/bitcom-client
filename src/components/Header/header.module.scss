@@ -3,7 +3,7 @@
 	.information {
 		@apply max-w-[1280px] w-full mx-auto my-0 px-2.5 gap-2.5 flex items-center;
 		.link {
-			@apply px-2.5 py-1 gap-1 flex items-center bg-zinc-200/50 font-medium outline-none rounded-xl hover:text-zinc-50 hover:bg-zinc-600
+			@apply px-2.5 py-1 gap-1 flex items-center bg-zinc-200/50 text-sm font-medium outline-none rounded-xl hover:bg-zinc-300
 			transition-all duration-300;
 			.icon {
 				@apply w-auto h-4 text-red-700;
@@ -45,26 +45,17 @@
 	}
 }
 @media (max-width: 768px) {
-	.container {
-		@apply mb-2;
-		.inner {
-			.menu {
-				@apply justify-center;
-				.bar {
-					@apply hidden;
-				}
-			}
-		}
-	}
-}
-@media (max-width: 650px) {
 	.roof {
 		@apply hidden;
 	}
 	.container {
+		@apply mb-2;
 		.inner {
 			.menu {
 				@apply h-auto py-1.5 gap-2.5;
+				.bar {
+					@apply hidden;
+				}
 			}
 		}
 	}

@@ -1,0 +1,21 @@
+.container {
+	@apply flex;
+	.root {
+		@apply w-fit p-3 bg-zinc-50 border border-zinc-200 rounded-xl shadow overflow-hidden;
+		.day {
+			@apply w-8 h-8 rounded-lg hover:bg-zinc-200 transition duration-200;
+			.dayButton {
+				@apply w-8 h-8;
+			}
+		}
+		.today {
+			@apply text-red-500 font-semibold;
+		}
+		.selected {
+			@apply text-red-500 bg-zinc-200;
+		}
+		.chevron {
+			@apply fill-red-500;
+		}
+	}
+}

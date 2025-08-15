@@ -93,14 +93,12 @@ export const AuthLoginForm: React.FC<IAuthLoginForm> = ({ setMethod }) => {
 					<div className={styles.fields}>
 						<FormField
 							name='email'
-							className={styles.input}
 							type='text'
 							placeholder='Электронная почта'
 							isError={isError}
 						/>
 						<FormField
 							name='password'
-							className={styles.input}
 							type='password'
 							placeholder='Пароль (обязательно)'
 							isError={isError}

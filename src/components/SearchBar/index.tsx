@@ -75,6 +75,8 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 		}
 	}
 
+	console.log('targetItem:', target)
+
 	const onSearch = () => {
 		if (!value.trim() && target < 1) {
 			inputRef.current?.blur()
@@ -88,8 +90,8 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 			inputRef.current?.blur()
 		}
 
-		if (target > 0 && data?.items[target]) {
-			router.push(`${ROUTE.PRODUCT}/${data.items[target].slug}`)
+		if (target > 0 && data?.items[target - 1]) {
+			router.push(`${ROUTE.PRODUCT}/${data.items[target - 1].slug}`)
 			inputRef.current?.blur()
 		}
 

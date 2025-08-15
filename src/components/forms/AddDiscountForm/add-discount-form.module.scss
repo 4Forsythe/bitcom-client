@@ -1,0 +1,57 @@
+.container {
+	@apply mx-12 flex flex-1 flex-col;
+	.inner {
+		@apply my-14 max-w-[636px];
+		.form {
+			@apply gap-14 flex flex-1 flex-col;
+			.block {
+				@apply gap-8 flex flex-col;
+				.title {
+					@apply text-2xl font-semibold;
+				}
+				.field {
+					@apply gap-2.5 flex flex-col;
+					.fieldHeading {
+						@apply flex flex-col;
+						.fieldTitle {
+							@apply text-lg font-semibold;
+						}
+						.fieldCaption {
+							@apply text-sm;
+						}
+					}
+					.fieldDescription {
+						@apply text-[0.85rem] text-zinc-500;
+					}
+					.imageList {
+						@apply gap-2 flex flex-wrap;
+						.imageContainer {
+							@apply flex flex-col;
+							.imagePreview {
+								@apply w-[150px] h-[115px] mb-5 flex flex-col border-2 border-transparent items-center justify-center rounded-xl relative overflow-hidden;
+								&.primary {
+									@apply mb-0 border-2 border-red-500;
+								}
+								.imageSource {
+									@apply w-full h-full object-cover;
+								}
+								.imageDeleteButton {
+									@apply top-1 right-1 p-1 bg-zinc-200 rounded-full shadow-md absolute;
+									.icon {
+										@apply w-4 h-4;
+									}
+								}
+							}
+							.imageCaption {
+								@apply text-sm text-zinc-500/80;
+							}
+						}
+					}
+				}
+			}
+			.buttons {
+				@apply h-fit bottom-0 py-3.5 gap-2 backdrop-blur-sm flex items-center sticky;
+			}
+		}
+	}
+}

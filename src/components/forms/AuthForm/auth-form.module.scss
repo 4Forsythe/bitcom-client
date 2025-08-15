@@ -21,9 +21,6 @@
 				.divider {
 					@apply my-1;
 				}
-				.input {
-					@apply p-5 w-full h-full border border-zinc-300 text-lg font-semibold outline-none placeholder:text-base placeholder:font-medium;
-				}
 			}
 		}
 		.action {

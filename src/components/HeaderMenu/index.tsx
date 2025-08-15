@@ -48,13 +48,13 @@ export const HeaderMenu: React.FC = () => {
 		{
 			title: 'Корзина',
 			icon: ShoppingCart,
-			badge: String(cart ? cart.length : 0),
+			badge: cart && cart.length ? String(cart.length) : undefined,
 			onClick: () => router.push(ROUTE.CART)
 		},
 		{
 			title: 'Желаемое',
 			icon: Heart,
-			badge: String(wishlist ? wishlist.length : 0),
+			badge: wishlist && wishlist.length ? String(wishlist.length) : undefined,
 			onClick: () => router.push(ROUTE.WISHLIST)
 		},
 		{

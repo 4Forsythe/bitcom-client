@@ -42,7 +42,7 @@
 				}
 			}
 			.address {
-				@apply w-fit px-2.5 py-1 font-medium outline-none hover:text-zinc-50 hover:bg-zinc-700 rounded-md
+				@apply w-fit px-2.5 py-1 font-medium outline-none text-zinc-50 bg-zinc-700 hover:text-zinc-700 hover:bg-zinc-200 rounded-md
 				transition-all duration-300;
 			}
 		}

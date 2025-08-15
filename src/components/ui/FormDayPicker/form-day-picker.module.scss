@@ -1,0 +1,15 @@
+.container {
+	@apply w-fit *:w-fit flex flex-col relative;
+	.input {
+		@apply select-none cursor-pointer;
+	}
+	.error {
+		@apply w-fit px-1.5 gap-1 inline-flex items-center text-[0.85rem] text-red-600;
+	}
+	.picker {
+		@apply mt-16 top-0 z-20 invisible absolute;
+		&.opened {
+			@apply visible;
+		}
+	}
+}

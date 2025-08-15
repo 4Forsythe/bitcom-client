@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import { MapPin, Sheet } from 'lucide-react'
-import { ADDRESS, PHONE } from '@/constants/contacts.constants'
+import { ADDRESS, PHONE, SECOND_PHONE } from '@/constants/contacts.constants'
 
 import { useProfile } from '@/hooks/useProfile'
 import { Button, HeaderMenu, SearchBar, SearchBarSkeleton } from '@/components'
@@ -40,10 +40,17 @@ export const Header: React.FC = () => {
 					</Link>
 					<Link
 						className={styles.link}
-						href={'https://t.me/+79277839022'}
+						href={'tel:+78482411212'}
 						target='_blank'
 					>
 						{PHONE}
+					</Link>
+					<Link
+						className={styles.link}
+						href={'https://t.me/+79277839022'}
+						target='_blank'
+					>
+						{SECOND_PHONE}
 					</Link>
 
 					<div className={styles.additional}>

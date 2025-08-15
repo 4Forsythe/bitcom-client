@@ -401,7 +401,6 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 								<div className={styles.fieldHeading}>
 									<h5 className={styles.fieldTitle}>Гарантия</h5>
 								</div>
-								{}
 								<FormField
 									name='guarantee'
 									variant='outlined'
@@ -430,7 +429,7 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 
 							<div className={styles.field}>
 								<div className={styles.fieldHeading}>
-									<h5 className={styles.fieldTitle}>Архивация</h5>
+									<h5 className={styles.fieldTitle}>Поместить в архив</h5>
 								</div>
 								<SwitchButton
 									name='isArchived'

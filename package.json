@@ -27,6 +27,7 @@
 		"next-nprogress-bar": "^2.3.13",
 		"plaiceholder": "^3.0.0",
 		"react": "^18",
+		"react-day-picker": "^9.8.1",
 		"react-dom": "^18",
 		"react-hook-form": "^7.51.5",
 		"react-hot-toast": "^2.4.1",

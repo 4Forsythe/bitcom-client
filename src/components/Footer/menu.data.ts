@@ -1,6 +1,11 @@
 import { ROUTE } from '@/config/routes.config'
 
-import { PHONE, EMAIL, ADDRESS } from '@/constants/contacts.constants'
+import {
+	PHONE,
+	EMAIL,
+	ADDRESS,
+	SECOND_PHONE
+} from '@/constants/contacts.constants'
 
 type FooterMenuType = {
 	href: string
@@ -45,6 +50,10 @@ export const CONTACTS: FooterMenuType[] = [
 	{
 		href: `tel:${PHONE}`,
 		label: `${PHONE} (с 9:30 до 18:00)`
+	},
+	{
+		href: `tel:${SECOND_PHONE}`,
+		label: SECOND_PHONE
 	},
 	{
 		href: `mailto:${EMAIL}`,

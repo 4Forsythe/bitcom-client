@@ -91,28 +91,24 @@ export const AuthRegisterForm: React.FC<IAuthRegisterForm> = ({
 					<div className={styles.fields}>
 						<FormField
 							name='name'
-							className={styles.input}
 							type='text'
 							placeholder='Имя (необязательно)'
 							isError={isError}
 						/>
 						<FormField
 							name='email'
-							className={styles.input}
 							type='text'
 							placeholder='Электронная почта'
 							isError={isError}
 						/>
 						<FormField
 							name='password'
-							className={styles.input}
 							type='password'
 							placeholder='Пароль (обязательно)'
 							isError={isError}
 						/>
 						<FormField
 							name='confirmPassword'
-							className={styles.input}
 							type='password'
 							placeholder='Повторить пароль'
 							isError={isError}

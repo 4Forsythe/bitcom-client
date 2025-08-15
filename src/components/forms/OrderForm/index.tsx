@@ -124,6 +124,7 @@ export const OrderForm = () => {
 						>
 							Telegram
 						</Link>
+						.
 					</p>
 					<p className={styles.disclaimerText}>
 						Наши контактные номера телефонов:

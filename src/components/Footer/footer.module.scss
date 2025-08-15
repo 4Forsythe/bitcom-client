@@ -15,21 +15,21 @@
 						@apply text-sm hover:text-zinc-400 transition-colors duration-200;
 					}
 				}
-				.marketplaces {
-					@apply py-1.5 gap-1.5 flex flex-wrap items-center;
-					.market {
-						@apply w-fit px-3 py-1 flex items-center justify-center grayscale bg-zinc-100 rounded-lg hover:bg-neutral-100/80 hover:grayscale-0 transition-colors duration-300;
-						.image {
-							@apply w-auto h-[1.15rem];
-						}
-					}
-				}
 				.socials {
-					@apply gap-1.5 flex items-center;
+					@apply mb-3 gap-1.5 flex items-center;
 					.socialItem {
 						@apply px-2 py-1.5 rounded-lg bg-zinc-200 hover:bg-zinc-300 transition-colors duration-200;
 						.icon {
 							@apply w-auto h-5 object-cover;
+						}
+					}
+				}
+				.marketplaces {
+					@apply gap-1.5 flex flex-wrap items-center;
+					.market {
+						@apply w-fit px-3 py-1 flex items-center justify-center grayscale bg-zinc-100 rounded-lg hover:bg-neutral-100/80 hover:grayscale-0 transition-colors duration-300;
+						.image {
+							@apply w-auto h-[1.15rem];
 						}
 					}
 				}

@@ -1,5 +1,5 @@
 .container {
-	@apply my-2.5 px-2;
+	@apply my-2.5 px-3.5;
 	.items {
 		@apply flex items-center flex-wrap;
 		.item {
@@ -16,6 +16,7 @@
 
 @media (max-width: 380px) {
 	.container {
+		@apply px-5;
 		.items {
 			.item {
 				@apply text-xs;

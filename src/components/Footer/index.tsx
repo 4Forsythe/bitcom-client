@@ -30,6 +30,25 @@ export const Footer: React.FC = () => {
 								</li>
 							))}
 						</ul>
+						<ul className={styles.socials}>
+							{SOCIALS.map((item) => (
+								<Link
+									className={styles.socialItem}
+									key={item.href}
+									href={item.href}
+									target='_blank'
+								>
+									<Image
+										className={styles.icon}
+										width={64}
+										height={64}
+										src={item.imageUrl}
+										alt={item.tag}
+										priority
+									/>
+								</Link>
+							))}
+						</ul>
 						<ul className={styles.marketplaces}>
 							{MARKETPLACES.map((item) => (
 								<li key={item.href}>
@@ -81,25 +100,6 @@ export const Footer: React.FC = () => {
 										{item.label}
 									</Link>
 								</li>
-							))}
-						</ul>
-						<ul className={styles.socials}>
-							{SOCIALS.map((item) => (
-								<Link
-									className={styles.socialItem}
-									key={item.href}
-									href={item.href}
-									target='_blank'
-								>
-									<Image
-										className={styles.icon}
-										width={64}
-										height={64}
-										src={item.imageUrl}
-										alt={item.tag}
-										priority
-									/>
-								</Link>
 							))}
 						</ul>
 					</address>
