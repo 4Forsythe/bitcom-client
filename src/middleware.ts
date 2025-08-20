@@ -20,7 +20,8 @@ export async function middleware(request: NextRequest) {
 	const isPrivateRoute = [
 		'/my/upload-docx',
 		'/my/archive',
-		'/product/add-item'
+		'/product/add-item',
+		'/product/add-discount'
 	].some((path) => url.includes(path))
 
 	if (isProtectedRoute && !refreshToken) {
