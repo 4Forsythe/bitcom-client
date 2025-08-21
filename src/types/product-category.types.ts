@@ -1,3 +1,9 @@
+export type ProductCategoryParamsType = {
+	flat?: boolean
+	take?: number
+	skip?: number
+}
+
 export type ProductCategoryType = {
 	id: string
 	name: string

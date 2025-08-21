@@ -1,6 +1,10 @@
 'use client'
 
 import React from 'react'
+import clsx from 'clsx'
+import { ChevronDown, Lock } from 'lucide-react'
+
+import { useDropdown } from '@/hooks/useDropdown'
 
 import styles from './select.module.scss'
 
@@ -24,48 +28,45 @@ export const Select: React.FC<Props> = ({
 	placeholder,
 	onSelect
 }) => {
-	const [isDropdown, setIsDropdown] = React.useState(false)
-
-	const dropdownRef = React.useRef<HTMLDivElement>(null)
-
-	React.useEffect(() => {
-		const handleClick = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
-				setIsDropdown(false)
-			}
-		}
-
-		document.addEventListener('click', handleClick)
-
-		return () => {
-			document.removeEventListener('click', handleClick)
-		}
-	})
+	const { ref, isDropdown, setIsDropdown } = useDropdown()
 
 	return (
 		<div
-			ref={dropdownRef}
+			ref={ref}
 			className={styles.container}
 		>
 			<button
+				type='button'
 				className={styles.targetItem}
 				onClick={() => setIsDropdown((prev) => !prev)}
 			>
 				{selected ? selected.title : placeholder}
+				<ChevronDown
+					className={clsx(styles.icon, { [styles.opened]: isDropdown })}
+					size={20}
+				/>
 			</button>
 			{isDropdown && items.length > 0 && (
 				<div className={styles.dropdown}>
-					{items.map((item) => (
-						<button
-							key={item.title}
-							onClick={() => onSelect(item.id)}
-						>
-							{item.node}
-						</button>
-					))}
+					<div className={styles.items}>
+						{items.map((item) => (
+							<button
+								type='button'
+								key={item.title}
+								className={clsx(styles.item, {
+									[styles.active]: item.id === selected?.id
+								})}
+								onClick={() => {
+									onSelect(item.id)
+									setIsDropdown(false)
+								}}
+								disabled={item.disabled}
+							>
+								{item.disabled && <Lock size={20} />}
+								{item.node}
+							</button>
+						))}
+					</div>
 				</div>
 			)}
 		</div>

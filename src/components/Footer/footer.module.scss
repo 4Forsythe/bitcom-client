@@ -1,7 +1,7 @@
 .container {
 	@apply mt-8 text-zinc-50 bg-zinc-800;
 	.inner {
-		@apply max-w-[1180px] mx-auto my-0 pt-14 px-14;
+		@apply max-w-[1180px] mx-auto my-0 pt-14 px-4;
 		.navbar {
 			@apply gap-12 flex justify-between;
 			.menu {

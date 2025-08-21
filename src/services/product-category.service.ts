@@ -2,14 +2,17 @@ import { api } from '@/api/interceptors/api-instance'
 
 import type {
 	ProductCategoryType,
-	ProductCategoriesType
+	ProductCategoriesType,
+	ProductCategoryParamsType
 } from '@/types/product-category.types'
 
 class ProductCategoryService {
 	private endpoint = '/product-category'
 
-	async getAll(): Promise<ProductCategoriesType> {
-		const response = await api.get(this.endpoint)
+	async getAll(
+		params?: ProductCategoryParamsType
+	): Promise<ProductCategoriesType> {
+		const response = await api.get(this.endpoint, { params })
 
 		return response.data
 	}

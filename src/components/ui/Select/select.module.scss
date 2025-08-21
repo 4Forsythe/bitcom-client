@@ -1,0 +1,27 @@
+.container {
+	@apply relative;
+	.targetItem {
+		@apply w-fit px-3.5 py-2 gap-1.5 font-semibold text-zinc-50 bg-zinc-700 flex items-center rounded-3xl shadow relative hover:bg-zinc-600 transition duration-200;
+		.icon {
+			@apply w-5 h-5 transition duration-200;
+			&.opened {
+				@apply rotate-180;
+			}
+		}
+	}
+	.dropdown {
+		@apply max-w-[720px] w-max left-0 top-0 mt-12 z-20 bg-zinc-50 border border-zinc-200 rounded-lg shadow overflow-hidden absolute;
+		.items {
+			@apply p-1.5 gap-1.5 flex flex-col overflow-y-auto;
+			.item {
+				@apply px-3.5 py-2 gap-1.5 flex items-center text-zinc-700 bg-zinc-50 rounded-lg hover:text-red-500 relative transition duration-200;
+				&.active {
+					@apply bg-zinc-200 hover:bg-zinc-200/90;
+				}
+				&:disabled {
+					@apply opacity-35 bg-zinc-100 pointer-events-none;
+				}
+			}
+		}
+	}
+}

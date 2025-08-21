@@ -12,7 +12,7 @@ export const useUpdateProduct = () => {
 
 	const { mutate, mutateAsync, isPending, isSuccess, isError, error } =
 		useMutation({
-			mutationKey: ['create product'],
+			mutationKey: ['update product'],
 			mutationFn: ({ id, dto }: { id: string; dto: UpdateProductType }) =>
 				productService.update(id, dto),
 			onSuccess: () => {
@@ -20,7 +20,7 @@ export const useUpdateProduct = () => {
 				toast.success('Информация о товаре обновлена')
 			},
 			onError: () => {
-				toast.error('Возникла проблема во время изменения товара')
+				toast.error('Возникла проблема при обновлении товара')
 			}
 		})
 

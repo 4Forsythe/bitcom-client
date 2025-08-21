@@ -31,9 +31,7 @@ export const SmallSearchBar: React.FC<Props> = ({
 	}, [onFetch])
 
 	React.useEffect(() => {
-		if (query) {
-			onFetch(query)
-		}
+		onFetch(query)
 	}, [query])
 
 	return (
@@ -42,7 +40,7 @@ export const SmallSearchBar: React.FC<Props> = ({
 				ref={inputRef}
 				className={styles.form}
 				value={value}
-				onChange={(e) => setValue(e.target.value)}
+				onChange={(event) => setValue(event.target.value)}
 				type='text'
 				placeholder={placeholder || 'Поиск'}
 				spellCheck={false}

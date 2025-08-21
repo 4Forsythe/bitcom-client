@@ -2,7 +2,7 @@
 	&.small {
 		@apply gap-1.5 flex flex-wrap flex-row-reverse items-center;
 		.discount {
-			@apply px-1.5 py-0 text-base font-semibold;
+			@apply p-0 text-xl text-red-500 bg-transparent;
 		}
 		.price {
 			.percent {

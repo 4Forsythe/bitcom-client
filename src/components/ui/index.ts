@@ -1,6 +1,7 @@
 export { AddWishlistButton } from './AddWishlistButton'
 export { Badge } from './Badge'
 export { Button } from './Button'
+export { Checkbox } from './Checkbox'
 export { CooldownTimer } from './CooldownTimer'
 export { DayPicker } from './DayPicker'
 export { ErrorMessage } from './ErrorMessage'

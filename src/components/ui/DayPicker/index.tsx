@@ -14,13 +14,14 @@ import styles from './day-picker.module.scss'
 
 interface Props {
 	selected: Date | undefined
-	onSelect: (value: Date | undefined) => void
+	required?: boolean
 	disabledDayBefore?: boolean
+	onSelect: (value: Date | null) => void
 	className?: string
 }
 
 export const DayPicker = React.forwardRef<HTMLDivElement, Props>(
-	({ selected, onSelect, disabledDayBefore, className }, ref) => {
+	({ selected, required, disabledDayBefore, onSelect, className }, ref) => {
 		return (
 			<div
 				ref={ref}
@@ -31,9 +32,10 @@ export const DayPicker = React.forwardRef<HTMLDivElement, Props>(
 					mode='single'
 					navLayout='around'
 					locale={ru}
+					required={required}
 					startMonth={new Date()}
 					selected={selected}
-					onSelect={(date) => onSelect(date)}
+					onSelect={(date: Date | undefined) => onSelect(date || null)}
 					classNames={{
 						root: clsx(getDefaultClassNames().root, styles.root),
 						day: styles.day,

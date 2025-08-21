@@ -1,15 +1,21 @@
-import { api } from '@/api/interceptors/api-instance'
+import { api, apiWithHeaders } from '@/api/interceptors/api-instance'
+
+import type {
+	DiscountType,
+	CreateDiscountType,
+	UpdateDiscountType
+} from '@/types/discount.types'
 
 class DiscountService {
-	private endpoint = '/discounts'
+	private endpoint = '/discount'
 
-	async getAll() {
-		const response = await api.get(this.endpoint)
+	async create(data: CreateDiscountType): Promise<DiscountType> {
+		const response = await apiWithHeaders.post(this.endpoint, data)
 		return response.data
 	}
 
-	async getOne(id: string) {
-		const response = await api.get(`${this.endpoint}/${id}`)
+	async update(id: string, data: UpdateDiscountType): Promise<DiscountType> {
+		const response = await apiWithHeaders.patch(`${this.endpoint}/${id}`, data)
 		return response.data
 	}
 }

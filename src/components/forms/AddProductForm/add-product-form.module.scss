@@ -1,5 +1,5 @@
 .container {
-	@apply mx-12 flex flex-1 flex-col;
+	@apply mx-2 sm:mx-12 flex flex-1 flex-col;
 	.inner {
 		@apply my-14 max-w-[636px];
 		.form {
@@ -50,7 +50,7 @@
 				}
 			}
 			.buttons {
-				@apply h-fit bottom-0 py-3.5 gap-2 backdrop-blur-sm flex items-center sticky;
+				@apply h-fit bottom-0 py-3.5 gap-2 z-30 backdrop-blur-sm flex items-center sticky;
 			}
 		}
 	}

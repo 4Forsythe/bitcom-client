@@ -1,0 +1,22 @@
+.container {
+	@apply gap-3 flex flex-wrap items-center;
+	.item {
+		@apply w-fit text-sm text-zinc-600/80 bg-zinc-200 flex items-center rounded-3xl hover:text-zinc-700 hover:bg-zinc-300/80 transition duration-200;
+		&.active {
+			@apply text-zinc-50 bg-zinc-700;
+		}
+		.button {
+			@apply px-2 py-0.5;
+		}
+		.buttonIcon {
+			@apply pr-2 py-0.5;
+			.icon {
+				@apply text-zinc-50 bg-zinc-500 rounded-3xl;
+			}
+		}
+	}
+}
+
+.error {
+	@apply w-fit mt-3.5 px-1.5 gap-1 inline-flex items-center text-[0.85rem] text-red-600;
+}

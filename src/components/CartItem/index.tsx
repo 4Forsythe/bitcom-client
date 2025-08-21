@@ -16,11 +16,11 @@ import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
 import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { calcNounDeclension } from '@/utils/calc-noun-declension'
 
 import type { CartItemType } from '@/types/cart.types'
 
 import styles from './cart-item.module.scss'
-import { calcNounDeclension } from '@/utils/calc-noun-declension'
 
 export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 	const { isWishlistLoading } = useWishlist()

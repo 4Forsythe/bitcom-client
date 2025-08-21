@@ -19,6 +19,7 @@ interface IFormDayPicker {
 	name: string
 	label?: string
 	hint?: string
+	required?: boolean
 	disabledDayBefore?: boolean
 	className?: string
 }
@@ -27,6 +28,7 @@ export const FormDayPicker: React.FC<IFormDayPicker> = ({
 	name,
 	label,
 	hint,
+	required,
 	disabledDayBefore,
 	className
 }) => {
@@ -81,9 +83,7 @@ export const FormDayPicker: React.FC<IFormDayPicker> = ({
 						type='text'
 						hint={hint}
 						className={styles.input}
-						value={
-							field.value ? getTimestamp(field.value) : getTimestamp(new Date())
-						}
+						value={field.value ? getTimestamp(field.value) : 'Не задано'}
 						onClick={() => setIsDropdown((prev) => !prev)}
 						isError={error}
 						readOnly
@@ -96,12 +96,14 @@ export const FormDayPicker: React.FC<IFormDayPicker> = ({
 					)}
 
 					<DayPicker
+						key={field.value}
 						className={clsx(styles.picker, { [styles.opened]: isDropdown })}
-						selected={field.value}
+						selected={field.value ?? null}
 						onSelect={(date) => {
-							field.onChange(date)
+							field.onChange(date || null)
 							setIsDropdown(false)
 						}}
+						required={required}
 						disabledDayBefore={disabledDayBefore}
 					/>
 				</div>

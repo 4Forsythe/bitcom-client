@@ -18,7 +18,7 @@ export const useCreateProduct = () => {
 				queryClient.invalidateQueries({ queryKey: ['products'] })
 			},
 			onError: () => {
-				toast.error('Возникла проблема во время создания товара')
+				toast.error('Возникла проблема при создании товара')
 			}
 		})
 

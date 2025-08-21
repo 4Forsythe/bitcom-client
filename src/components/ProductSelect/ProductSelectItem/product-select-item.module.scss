@@ -1,0 +1,21 @@
+.container {
+	@apply max-w-full w-full h-20 gap-2.5 p-2.5 flex items-center bg-zinc-50 border border-zinc-200 rounded-xl relative cursor-pointer transition duration-200;
+	&.selected {
+		@apply bg-red-50 border-red-500;
+	}
+	.image {
+		@apply shrink-0;
+	}
+	.link {
+		@apply left-1.5 top-1.5 p-0.5 z-10 text-zinc-400 bg-white border border-zinc-200 rounded-md absolute hover:text-zinc-700 transition duration-200;
+	}
+	.checkbox {
+		@apply top-2.5 right-2.5 z-10 absolute;
+	}
+	.title {
+		@apply text-sm font-bold line-clamp-2 shrink grow;
+	}
+	.pricetab {
+		@apply mt-auto shrink-0;
+	}
+}

@@ -45,7 +45,9 @@ export {
 	ProductGroupItemSkeleton
 } from './ProductGroup'
 export { ProductList } from './ProductList'
+export { ProductSelect } from './ProductSelect'
 export { ProductCategories } from './ProductCategories'
+export { ProductCategorySelect } from './ProductCategorySelect'
 export { Profile, ProfileSidebar, ProfileSkeleton } from './Profile'
 export { SearchBar, SearchBarSkeleton } from './SearchBar'
 export { SmallSearchBar } from './SmallSearchBar'
