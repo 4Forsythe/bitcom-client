@@ -11,6 +11,7 @@ class ROUTES {
 	CART = `${this.BASE_URL}cart`
 	WISHLIST = `${this.BASE_URL}wish-list`
 	PRODUCT = `${this.BASE_URL}product`
+	DISCOUNTS = `${this.BASE_URL}discounts`
 	ADD_PRODUCT = `${this.BASE_URL}product/add-item`
 	THANKS = `${this.CART}/thanks`
 

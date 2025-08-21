@@ -1,7 +1,7 @@
 .container {
 	@apply mb-5 grid grid-cols-[1.1fr,0.9fr] bg-zinc-50 shadow-sm;
 	.gallery {
-		@apply top-[120px] h-fit sticky;
+		@apply top-0 lg:top-[120px] h-fit static lg:sticky;
 		.overlay {
 			@apply inset-0 z-[30] bg-zinc-50/70 flex items-center justify-center absolute;
 			.overlayTitle {
@@ -87,7 +87,7 @@
 	}
 }
 
-@media (max-width: 1074px) {
+@media (max-width: 1024px) {
 	.container {
 		@apply flex flex-col;
 	}

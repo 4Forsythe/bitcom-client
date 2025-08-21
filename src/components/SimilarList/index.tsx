@@ -50,17 +50,20 @@ export const SimilarList: React.FC<ISimilarList> = ({
 								{...item}
 							/>
 						))}
+						slidesPerView={5}
 						spaceBetween={14}
-						slidesPerView={4}
 						navigation
 						breakpoints={{
 							1160: {
-								slidesPerView: 4
+								slidesPerView: 5
 							},
 							768: {
+								slidesPerView: 4
+							},
+							600: {
 								slidesPerView: 3
 							},
-							480: {
+							390: {
 								slidesPerView: 2
 							},
 							0: {

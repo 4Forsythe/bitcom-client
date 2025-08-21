@@ -1,0 +1,6 @@
+.container {
+	@apply w-full;
+	.items {
+		@apply w-full flex items-center;
+	}
+}

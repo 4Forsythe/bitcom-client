@@ -36,10 +36,10 @@
 				@apply opacity-80 translate-x-0;
 			}
 			&.prev {
-				@apply -left-3;
+				@apply left-0;
 			}
 			&.next {
-				@apply -right-3;
+				@apply right-0;
 			}
 		}
 		&.hint {

@@ -27,6 +27,7 @@ interface CarouselProps {
 	autoplay?: number
 	navigation?: boolean
 	pagination?: boolean
+	navigationAsHints?: boolean
 	spaceBetween?: number
 	slidesPerView?: number
 	breakpoints?: {
@@ -41,6 +42,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 	speed = undefined,
 	autoplay = 0,
 	navigation = false,
+	navigationAsHints = false,
 	spaceBetween = 0,
 	slidesPerView = 3,
 	breakpoints,
@@ -106,7 +108,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
 				{isNavButtonsVisible && (
 					<NavButtons
-						asHint={!!autoplay}
+						asHint={!!autoplay || navigationAsHints}
 						isLoop={loop}
 					/>
 				)}

@@ -7,7 +7,9 @@ import {
 	HomeWidget,
 	Badge,
 	ProductCategories,
-	TelegramBanner
+	TelegramBanner,
+	DiscountSlide,
+	DiscountSlider
 } from '@/components'
 
 const AboutUs = dynamic(() => import('@/components').then((mod) => mod.AboutUs))
@@ -64,6 +66,8 @@ export const Home: React.FC<Props> = async ({
 					<TelegramBanner />
 				</div>
 			</div>
+
+			<DiscountSlider />
 
 			<div className={styles.block}>
 				<ProductCategories />

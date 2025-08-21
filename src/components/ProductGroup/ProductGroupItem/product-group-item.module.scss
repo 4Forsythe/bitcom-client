@@ -2,7 +2,7 @@
 	@apply w-full h-full flex flex-1 grow flex-col bg-zinc-50 border border-zinc-200 overflow-hidden rounded-xl hover:shadow-lg hover:shadow-zinc-200
   transition-shadow duration-200;
 	.cover {
-		@apply w-full h-[140px] flex items-center justify-center overflow-hidden relative;
+		@apply w-full h-auto flex items-center justify-center overflow-hidden relative;
 		.overlay {
 			@apply inset-0 z-[30] bg-zinc-50/70 flex items-center justify-center absolute;
 			.overlayTitle {
