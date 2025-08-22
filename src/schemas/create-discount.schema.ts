@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { discountTypes } from '@/types/discount.types'
+import { DiscountTypeVariables } from '@/types/discount.types'
 
 export const createDiscountSchema = z
 	.object({
@@ -9,22 +9,15 @@ export const createDiscountSchema = z
 			.trim()
 			.min(1, { message: 'Укажите заголовок для акции' })
 			.max(250, { message: 'Слишком длинный заголовок' }),
-		type: z.enum(discountTypes, { message: 'Укажите тип акции' }),
+		type: z.nativeEnum(DiscountTypeVariables, { message: 'Укажите тип акции' }),
 		amount: z.coerce
 			.number()
 			.int({ message: 'Значение должно быть целым числом' })
 			.min(0, { message: 'Значение не может быть нулевым' }),
-		priority: z.preprocess(
-			(value) => {
-				value === '' || value === undefined || value === null
-					? undefined
-					: Number(value)
-			},
-			z
-				.number({ message: 'Укажите приоритет' })
-				.int({ message: 'Значение должно быть целым числом' })
-				.max(10, { message: 'Значение не может быть больше 9' })
-		),
+		priority: z.coerce
+			.number({ message: 'Укажите приоритет' })
+			.int({ message: 'Значение должно быть целым числом' })
+			.max(10, { message: 'Значение не может быть больше 9' }),
 		products: z.array(z.string()).default([]),
 		categoryId: z.string().nullable().optional(),
 		isArchived: z.boolean().optional(),
@@ -39,16 +32,22 @@ export const createDiscountSchema = z
 	})
 	.refine(
 		(data) =>
-			data.type === 'percentage' && data.amount < 100 && data.amount > 0,
+			data.type === DiscountTypeVariables.PERCENT &&
+			data.amount < 100 &&
+			data.amount > 0,
 		{
 			message: 'Процентная скидка должна быть в диапазоне от 0% до 99%',
 			path: ['amount']
 		}
 	)
-	.refine((data) => data.priority >= 0 && data.priority <= 9, {
-		message: 'Приоритет должен быть числом от 0 до 9 включительно',
-		path: ['priority']
-	})
+	.refine(
+		(data) =>
+			data.priority !== undefined && data.priority >= 0 && data.priority <= 9,
+		{
+			message: 'Приоритет должен быть числом от 0 до 9 включительно',
+			path: ['priority']
+		}
+	)
 	.superRefine((data, ctx) => {
 		if (data.startedAt > data.expiresAt) {
 			ctx.addIssue({
