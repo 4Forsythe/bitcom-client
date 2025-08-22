@@ -67,7 +67,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 		isProductsFetching,
 		intersectionRef,
 		refetch
-	} = useInfiniteProducts()
+	} = useInfiniteProducts('archive')
 
 	const {
 		createDiscountAsync,
@@ -332,7 +332,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 															)
 														: field.onChange([...(field.value ?? []), item.id])
 												}}
-												onFetch={(query) => refetch(query)}
+												onFetch={(query) => refetch({ search: query })}
 												isLoading={isProductsLoading}
 												isFetching={isProductsFetching}
 												error={

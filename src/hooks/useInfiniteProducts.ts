@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import toast from 'react-hot-toast'
 import { useSearchParams } from 'next/navigation'
 
 import { useInView } from 'react-intersection-observer'
@@ -8,15 +9,31 @@ import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query'
 
 import { productService } from '@/services/product.service'
 
+interface ProductsRefetchOptions {
+	search?: string
+	categoryId?: string
+	page?: number
+}
+
+interface ProductsFilters {
+	search?: string
+	categoryId?: string
+}
+
 interface IUseInfiniteProducts {
-	query?: string
 	enabled?: boolean
 }
 
-export function useInfiniteProducts(options?: IUseInfiniteProducts) {
+export function useInfiniteProducts(
+	type: 'all' | 'archive' = 'all',
+	options?: IUseInfiniteProducts
+) {
 	const searchParams = useSearchParams()
 
-	const [query, setQuery] = React.useState(options?.query || '')
+	const [filters, setFilters] = React.useState<ProductsFilters>({
+		search: '',
+		categoryId: ''
+	})
 	const [page, setPage] = React.useState(Number(searchParams.get('page')) || 1)
 	const [limit, setLimit] = React.useState(
 		Number(searchParams.get('limit')) || 15
@@ -35,13 +52,21 @@ export function useInfiniteProducts(options?: IUseInfiniteProducts) {
 		refetch,
 		fetchNextPage
 	} = useInfiniteQuery({
-		queryKey: ['products', query, page, limit],
+		queryKey: ['products', page, limit, filters],
 		queryFn: ({ pageParam = skip }) =>
-			productService.getAll({
-				name: query.trim(),
-				take: limit,
-				skip: pageParam
-			}),
+			type === 'all'
+				? productService.getAll({
+						name: filters.search?.trim(),
+						categoryId: filters.categoryId,
+						take: limit,
+						skip: pageParam
+					})
+				: productService.getArchive({
+						name: filters.search?.trim(),
+						categoryId: filters.categoryId,
+						take: limit,
+						skip: pageParam
+					}),
 		initialPageParam: skip,
 		getNextPageParam: (lastPage, allPages) => {
 			const total =
@@ -60,6 +85,12 @@ export function useInfiniteProducts(options?: IUseInfiniteProducts) {
 		if (inView && hasNextPage) fetchNextPage()
 	}, [inView, hasNextPage])
 
+	React.useEffect(() => {
+		if (isError) {
+			toast.error('Возникла проблема при запросе товаров')
+		}
+	}, [isError])
+
 	return {
 		products: data,
 		status,
@@ -67,8 +98,15 @@ export function useInfiniteProducts(options?: IUseInfiniteProducts) {
 		isProductsFetching: isFetching,
 		isProductsSuccess: isSuccess,
 		isProductsError: isError,
-		refetch: (query: string) => {
-			setQuery(query)
+		refetch: (options: ProductsRefetchOptions) => {
+			if (options.page) setPage(options.page)
+
+			const { search, categoryId } = options
+			setFilters((prev) => ({
+				...prev,
+				search,
+				categoryId
+			}))
 		},
 		fetchNextPage,
 		intersectionRef: ref

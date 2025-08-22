@@ -1,13 +1,11 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
 import clsx from 'clsx'
 import { X } from 'lucide-react'
 
 import {
 	BackToTop,
-	Pagination,
 	EmptyBlock,
 	ArchiveListItem,
 	ArchiveListItemSkeleton,
@@ -16,22 +14,48 @@ import {
 } from '@/components'
 import { API_BASE_URL } from '@/constants'
 
-import { useArchive } from '@/hooks/useArchive'
+import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
 import { useProductCategories } from '@/hooks/useProductCategories'
 
 import styles from './archive-list.module.scss'
+import toast from 'react-hot-toast'
 
 export const ArchiveList: React.FC = () => {
 	const isFetched = React.useRef(false)
+
+	const [isFileProcessing, setIsFileProcessing] = React.useState(false)
+	const [search, setSearch] = React.useState('')
 	const [targetCategory, setTargetCategory] = React.useState<string | null>(
 		null
 	)
 
+	const handleDownloadFile = async () => {
+		setIsFileProcessing(true)
+
+		try {
+			window.open(`${API_BASE_URL}/product/export`, '_blank')
+		} catch (error) {
+			console.error('ArchiveList: handleDownloadFile', error)
+			toast.error('Возникла ошибка при экспорте в Excel')
+		} finally {
+			setIsFileProcessing(false)
+		}
+	}
+
 	const { productCategories, isProductCategoriesLoading } =
 		useProductCategories(undefined, { flat: true })
 
-	const { products, isProductsLoading, isProductsSuccess, refetch } =
-		useArchive()
+	const {
+		products,
+		isProductsLoading,
+		isProductsSuccess,
+		intersectionRef,
+		refetch
+	} = useInfiniteProducts('archive')
+
+	const flatProducts = products
+		? products.pages.flatMap((item) => item.items)
+		: []
 
 	React.useEffect(() => {
 		if (products && isProductsSuccess && !isFetched.current) {
@@ -39,9 +63,13 @@ export const ArchiveList: React.FC = () => {
 		}
 
 		if (products && isProductsSuccess && isFetched.current) {
-			refetch({ categoryId: targetCategory || '' })
+			refetch({ search, categoryId: targetCategory || '' })
 		}
-	}, [products, productCategories, targetCategory])
+
+		if (search.trim()) {
+			refetch({ search, categoryId: targetCategory || '' })
+		}
+	}, [products, productCategories, search, targetCategory])
 
 	return (
 		<div className={styles.container}>
@@ -51,16 +79,15 @@ export const ArchiveList: React.FC = () => {
 						<SmallSearchBar
 							className={styles.searchbar}
 							placeholder='Поиск позиции...'
-							onFetch={(query) => refetch({ search: query })}
+							onFetch={(query) => setSearch(query)}
 						/>
-						<Link
+						<Button
 							className={styles.exportLink}
-							href={`${API_BASE_URL}/product/export`}
-							target='_blank'
-							download
+							onClick={handleDownloadFile}
+							isLoading={isFileProcessing}
 						>
-							Экспорт в Excel
-						</Link>
+							{isFileProcessing ? 'Генерируем файл...' : 'Экспорт в Excel'}
+						</Button>
 					</div>
 					{isProductCategoriesLoading ? (
 						<div className='w-full h-[40px] flex bg-gray-200 rounded-3xl animate-pulse' />
@@ -106,23 +133,24 @@ export const ArchiveList: React.FC = () => {
 							<ArchiveListItemSkeleton key={index} />
 						))
 					: products &&
-						products.items.map((item) => (
-							<ArchiveListItem
-								key={item.id}
-								{...item}
-							/>
-						))}
+						flatProducts.length > 0 &&
+						flatProducts.map((item, index) => {
+							const isLast = index === flatProducts.length - 1
+
+							return (
+								<React.Fragment key={item.id}>
+									<ArchiveListItem {...item} />
+									{isLast && <div ref={intersectionRef} />}
+								</React.Fragment>
+							)
+						})}
 			</div>
 
-			{!isProductsLoading && !(products && products.items.length > 0) && (
+			{!isProductsLoading && !(products && flatProducts.length > 0) && (
 				<EmptyBlock
 					title='Архив пуст'
 					description='В этом разделе будут находиться архивированные и неопубликованные товары'
 				/>
-			)}
-
-			{products && products.items.length > 0 && (
-				<Pagination total={products.count} />
 			)}
 
 			<BackToTop />

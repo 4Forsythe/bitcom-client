@@ -14,12 +14,7 @@ export const BackToTop: React.FC = () => {
 
 	const handleScrollY = () => {
 		const scrollY = window.scrollY
-		const documentHeight = document.documentElement.scrollHeight
-		const innerHeight = window.innerHeight
-
-		const scrollYInPercent = (scrollY / (documentHeight - innerHeight)) * 100
-
-		setIsVisible(scrollY > 200 && scrollYInPercent < 80)
+		setIsVisible(scrollY > 200)
 	}
 
 	React.useEffect(() => {
@@ -38,7 +33,7 @@ export const BackToTop: React.FC = () => {
 			)}
 		>
 			<button
-				className='w-12 h-10 flex items-center justify-center bg-zinc-50 border border-zinc-300 rounded-lg shadow hover:bg-zinc-100 hover:shadow-md transition duration-200'
+				className='w-14 h-14 flex items-center justify-center bg-zinc-50 border border-zinc-200 rounded-lg shadow hover:bg-zinc-100 hover:shadow-md transition duration-200'
 				onClick={scrollTop}
 			>
 				<ChevronUp size={24} />
