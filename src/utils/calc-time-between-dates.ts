@@ -1,7 +1,7 @@
 import { calcNounDeclension } from './calc-noun-declension'
 
 export function calcTimeBetweenDates(start: Date, end: Date): string | 0 {
-	const diff = start.getTime() - end.getTime()
+	const diff = end.getTime() - start.getTime()
 
 	if (diff <= 0) {
 		return 0

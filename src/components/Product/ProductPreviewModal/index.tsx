@@ -4,7 +4,6 @@ import React from 'react'
 import Image from 'next/image'
 
 import { SERVER_BASE_URL } from '@/constants'
-import { useModal } from '@/hooks/useModal'
 
 import type { ProductImageType } from '@/types/product.types'
 
@@ -100,8 +99,8 @@ export const ProductPreviewModal: React.FC<Props> = ({
 					<Image
 						key={image && image.url}
 						className={styles.image}
-						width={700}
-						height={500}
+						width={720}
+						height={720}
 						src={image && `${SERVER_BASE_URL}/${image.url}`}
 						alt={alt}
 						priority

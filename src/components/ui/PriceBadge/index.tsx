@@ -28,7 +28,11 @@ export const PriceBadge: React.FC<Props> = ({
 				[styles.small]: size === 'small'
 			})}
 		>
-			{hasDiscount && <div className={styles.discount}>{discountPrice} ₽</div>}
+			{hasDiscount && (
+				<div className={styles.discount}>
+					{new Intl.NumberFormat('ru-RU').format(Number(discountPrice))} ₽
+				</div>
+			)}
 			<div className={styles.price}>
 				{hasDiscount && (
 					<div className={styles.percent}>
@@ -41,7 +45,9 @@ export const PriceBadge: React.FC<Props> = ({
 						[styles.nullable]: !Number(price) || Number(price) === 0
 					})}
 				>
-					{+price > 0 ? `${price} ₽` : 'Цена по запросу'}
+					{+price > 0
+						? `${new Intl.NumberFormat('ru-RU').format(Number(price))} ₽`
+						: 'Цена по запросу'}
 				</span>
 			</div>
 		</div>

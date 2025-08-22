@@ -1,5 +1,5 @@
 .container {
-	@apply mb-8;
+	@apply w-full;
 	.items {
 		@apply gap-4 flex flex-wrap items-center justify-center;
 	}
@@ -7,7 +7,7 @@
 		@apply h-[220px] gap-4 grid grid-cols-6 overflow-hidden;
 	}
 	.item {
-		@apply w-full h-[220px] flex-1 bg-zinc-50 rounded-lg relative hover:translate-y-1 hover:shadow-xl hover:shadow-zinc-200
+		@apply w-full h-[220px] flex-1 bg-white rounded-lg relative hover:translate-y-1 hover:shadow-xl hover:shadow-zinc-200
 		transition-all duration-200;
 		.link {
 			@apply w-full h-full px-5 py-6 gap-1.5 flex flex-col outline-none relative hover:opacity-100;

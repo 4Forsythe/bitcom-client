@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import clsx from 'clsx'
-import { formatCase } from '@/utils/format-case'
+import { ChevronDown } from 'lucide-react'
 
 import type { FilterItemType } from '@/components/Filters/filters.data'
 
@@ -54,25 +54,37 @@ export const FiltersRecursiveItem: React.FC<Props> = ({
 
 	const targetId = getTargetIdFromURL(path, searchParams, pathname)
 	const isInPath = isInPathToTarget(item, targetId)
+	const [isPopup, setIsPopup] = React.useState(isInPath)
 
 	return (
 		<React.Fragment>
-			<Link
+			<button
 				className={clsx({
 					[styles.item]: !nesting,
 					[styles.nestedItem]: nesting,
 					[styles.target]: isInPath
 				})}
 				style={{ paddingLeft: `${nesting ? nesting * 16 : 16}px` }}
-				href={path + item.id}
-				onClick={onClick}
+				onClick={() => setIsPopup((prev) => !prev)}
 			>
-				{item.name}
-			</Link>
+				{item.children && item.children.length > 0 && (
+					<ChevronDown className={styles.icon} />
+				)}
+				<Link
+					href={path + item.id}
+					className={styles.link}
+					onClick={(event) => {
+						event.stopPropagation()
+						onClick()
+					}}
+				>
+					{item.name}
+				</Link>
+			</button>
 
-			{isInPath &&
-				item.children &&
+			{item.children &&
 				item.children.length > 0 &&
+				isPopup &&
 				item.children.map((child) => (
 					<FiltersRecursiveItem
 						key={child.id}

@@ -4,7 +4,7 @@
 		@apply cursor-pointer;
 	}
 	&.large {
-		@apply w-full h-[456px] aspect-[4/3];
+		@apply w-full h-[608px] aspect-[4/3];
 		.placeholder {
 			.icon {
 				@apply w-20 h-20;
@@ -12,13 +12,16 @@
 		}
 	}
 	&.medium {
-		@apply max-w-[300px] h-full aspect-square;
+		@apply max-w-[400px] h-full aspect-square;
 	}
 	&.small {
 		@apply w-[150px] h-[150px] aspect-square;
 	}
+	&.extrasmall {
+		@apply w-[80px] h-[80px] aspect-square;
+	}
 	&.thumbnail {
-		@apply w-[75px] h-[55px];
+		@apply w-[55px] h-[55px];
 		.placeholder {
 			.icon {
 				@apply w-7 h-7;

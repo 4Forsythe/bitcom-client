@@ -1,7 +1,13 @@
 .container {
 	@apply mb-8 my-2.5 flex flex-col;
-	.title {
-		@apply mb-2.5 pl-1.5 text-3xl font-semibold;
+	.heading {
+		@apply mb-2.5 flex items-center justify-between;
+		.title {
+			@apply pl-1.5 text-3xl font-semibold;
+		}
+		.link {
+			@apply text-sm font-semibold text-zinc-500 underline uppercase;
+		}
 	}
 	.inner {
 		@apply gap-x-5 gap-y-3.5 grid grid-cols-5 flex-nowrap items-center place-items-center *:w-full;

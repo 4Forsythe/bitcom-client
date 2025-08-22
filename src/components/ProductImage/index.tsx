@@ -11,7 +11,7 @@ interface Props {
 	width: number
 	height: number
 	fill?: boolean
-	size?: 'large' | 'medium' | 'small' | 'thumbnail'
+	size?: 'large' | 'medium' | 'small' | 'extrasmall' | 'thumbnail'
 	isPlaceholder?: boolean
 	alt: string
 	priority?: boolean
@@ -52,6 +52,7 @@ export const ProductImage: React.FC<Props> = ({
 				[styles.large]: size === 'large',
 				[styles.medium]: size === 'medium',
 				[styles.small]: size === 'small',
+				[styles.extrasmall]: size === 'extrasmall',
 				[styles.thumbnail]: size === 'thumbnail',
 				[styles.clickable]: src && !!onClick
 			})}

@@ -66,7 +66,7 @@ export const ProductImageGallery: React.FC<Props> = ({
 					src={imageSrc}
 					isPlaceholder={!images.length && !!category.imageUrl}
 					width={608}
-					height={456}
+					height={608}
 					size='large'
 					priority
 					alt={alt}

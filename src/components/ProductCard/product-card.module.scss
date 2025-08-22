@@ -1,7 +1,7 @@
 .container {
 	@apply max-w-[1096px] w-full h-[200px] gap-3 p-6 flex bg-zinc-50 border border-zinc-200 rounded-2xl shadow-sm;
 	.cover {
-		@apply w-[180px] h-[150px] flex items-center justify-center rounded-lg overflow-hidden relative;
+		@apply w-[150px] h-[150px] flex items-center justify-center rounded-lg overflow-hidden relative;
 		.discount {
 			@apply top-1 right-1 px-1.5 z-10 text-sm font-medium text-zinc-50 bg-red-500 rounded-md absolute;
 		}
@@ -12,9 +12,12 @@
 			@apply mb-1.5 px-1.5 shrink text-lg font-medium line-clamp-4 hover:text-red-500 overflow-hidden
       transition-colors duration-200;
 		}
-		.type {
-			@apply w-fit px-2 py-0.5 text-sm text-zinc-400 bg-zinc-200/60 rounded-md hover:text-zinc-500 hover:bg-zinc-200
-			transition-colors duration-200;
+		.meta {
+			@apply gap-1.5 flex flex-wrap items-center;
+			.type {
+				@apply w-fit px-2 py-0.5 text-sm text-zinc-400 bg-zinc-200/60 rounded-md hover:text-zinc-500 hover:bg-zinc-200
+				transition-colors duration-200;
+			}
 		}
 		.description {
 			@apply my-1.5 px-1.5 text-sm text-gray-400 line-clamp-3;
@@ -58,20 +61,14 @@
 }
 
 .tile {
-	@apply h-[480px] p-0 gap-0 flex flex-col overflow-hidden;
+	@apply min-h-[480px] h-auto p-0 gap-0 flex flex-col overflow-hidden;
 	.cover {
-		@apply w-auto h-[200px] flex items-center justify-center rounded-none overflow-hidden;
-		.image {
-			@apply w-[80%] max-h-[80%] h-auto object-cover;
-		}
-		.placeholder {
-			@apply grayscale opacity-50 contrast-200;
-		}
+		@apply w-full h-auto flex items-center justify-center rounded-none overflow-hidden;
 	}
 	.information {
 		@apply mb-2 px-4 pt-4;
 		.title {
-			@apply px-0;
+			@apply px-0 line-clamp-4;
 		}
 	}
 	.details {

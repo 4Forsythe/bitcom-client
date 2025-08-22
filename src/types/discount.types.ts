@@ -1,21 +1,49 @@
 import type { ProductType } from './product.types'
 import type { ProductCategoryType } from './product-category.types'
 
-export const discountTypes = ['percentage', 'fixed'] as const
-export type DiscountTypeVariables = (typeof discountTypes)[number]
+export enum DiscountTypeVariables {
+	PERCENT = 'PERCENT',
+	FIXED = 'FIXED'
+}
+
+export enum DiscountTargetTypeVariables {
+	PRODUCT = 'PRODUCT',
+	CATEGORY = 'CATEGORY'
+}
+
+export type DiscountTargetType = {
+	id: string
+	type: DiscountTargetTypeVariables
+	priority: number
+	discountId: string
+	productId: string | null
+	categoryId: string | null
+	product: ProductType | null
+	category: ProductCategoryType | null
+}
 
 export type DiscountType = {
 	id: string
 	name: string
 	type: DiscountTypeVariables
-	amount: number
-	priority: number
-	products: ProductType[] | []
-	category: ProductCategoryType | null
-	categoryId: string | null
+	amount: string
 	isArchived: boolean
+	targets: DiscountTargetType[]
 	startedAt: string
 	expiresAt: string
+}
+
+export type DiscountsType = {
+	items: DiscountType[]
+	count: number
+}
+
+export type DiscountParamsType = {
+	categoryId?: string
+	sortBy?: string
+	orderBy?: string
+	take?: number
+	skip?: number
 }
 
 export type DiscountFormType = {

@@ -1,0 +1,9 @@
+.container {
+	@apply w-fit my-1 px-2.5 py-1 gap-1.5 flex items-center bg-yellow-200/70 rounded-3xl;
+	.icon {
+		@apply w-5 h-5;
+	}
+	.text {
+		@apply text-sm text-orange-700 leading-5;
+	}
+}

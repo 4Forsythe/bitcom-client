@@ -7,7 +7,7 @@ html {
 }
 
 body {
-	@apply w-full min-h-[100vh] flex flex-col font-source-sans text-zinc-700 bg-zinc-200/55 overflow-x-hidden scrollbar-thin
+	@apply w-full min-h-[100vh] flex flex-col font-source-sans text-zinc-700 bg-zinc-100 overflow-x-hidden scrollbar-thin
 	scrollbar-thumb-zinc-300 scrollbar-track-zinc-200;
 }
 

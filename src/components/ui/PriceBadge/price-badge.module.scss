@@ -20,7 +20,7 @@
 		}
 	}
 	.discount {
-		@apply w-fit px-3 py-1.5 text-3xl font-bold text-zinc-50 bg-red-500 rounded-lg;
+		@apply w-fit px-3 py-1.5 text-3xl font-bold text-zinc-50 bg-red-500 rounded-2xl;
 	}
 	.price {
 		@apply gap-1.5 flex items-start justify-end;

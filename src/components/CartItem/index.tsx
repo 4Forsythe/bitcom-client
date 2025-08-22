@@ -17,6 +17,7 @@ import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
 import { calcDiscountPercent } from '@/utils/calc-discount-price'
 import { calcNounDeclension } from '@/utils/calc-noun-declension'
+import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
 
 import type { CartItemType } from '@/types/cart.types'
 
@@ -32,6 +33,25 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 			: product.category.imageUrl
 				? `/static/${product.category.imageUrl}`
 				: undefined
+
+	const { price, discountPrice, discountTargets } = product
+
+	const isDiscountAvailable =
+		discountTargets.length > 0 &&
+		new Date(discountTargets[0].discount.expiresAt) > new Date()
+
+	const discountTarget = isDiscountAvailable
+		? {
+				type: discountTargets[0].discount.type,
+				amount: discountTargets[0].discount.amount
+			}
+		: null
+
+	const discountValue = calcMaxDiscountValue(
+		price,
+		discountPrice,
+		discountTarget
+	)
 
 	const { updateCartItem, isUpdateCartItemPending } = useUpdateCartItem()
 	const { deleteCartItem, isDeleteCartItemPending } = useDeleteCartItem()
@@ -78,17 +98,11 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 			)}
 			<div className={styles.inner}>
 				<div className={styles.cover}>
-					{product.discountPrice &&
-						Number(product.discountPrice) < Number(product.price) && (
-							<div className={styles.discount}>
-								-
-								{calcDiscountPercent(
-									Number(product.price),
-									Number(product.discountPrice)
-								)}
-								%
-							</div>
-						)}
+					{discountValue && Number(discountValue) < Number(price) && (
+						<div className={styles.discount}>
+							-{calcDiscountPercent(Number(price), Number(discountValue))}%
+						</div>
+					)}
 					<Link
 						className={styles.link}
 						href={`${ROUTE.PRODUCT}/${product.slug}`}
@@ -185,8 +199,8 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 				</div>
 				<PriceBadge
 					size='small'
-					price={product.price}
-					discountPrice={product.discountPrice}
+					price={price}
+					discountPrice={discountValue}
 				/>
 			</div>
 		</div>

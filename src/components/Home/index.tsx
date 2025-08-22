@@ -4,11 +4,8 @@ import dynamic from 'next/dynamic'
 
 import {
 	Navbar,
-	HomeWidget,
-	Badge,
 	ProductCategories,
 	TelegramBanner,
-	DiscountSlide,
 	DiscountSlider
 } from '@/components'
 
@@ -41,7 +38,9 @@ export const Home: React.FC<Props> = async ({
 }) => {
 	return (
 		<div className={styles.container}>
-			<Navbar />
+			<div className={styles.block}>
+				<Navbar />
+			</div>
 
 			<div className={styles.block}>
 				<div className={styles.promo}>
@@ -67,15 +66,13 @@ export const Home: React.FC<Props> = async ({
 				</div>
 			</div>
 
-			<DiscountSlider />
-
 			<div className={styles.block}>
 				<ProductCategories />
 			</div>
 
 			{discountProducts.items.length >= 5 && (
 				<ProductGroup
-					title='🔥 По скидке'
+					title='🔥 Выгодно'
 					items={discountProducts.items}
 				/>
 			)}

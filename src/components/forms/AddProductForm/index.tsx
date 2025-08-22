@@ -193,8 +193,6 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 	}
 
 	const onSubmit = async (data: ProductFormType) => {
-		console.log('discountPrice', data.discountPrice)
-
 		const dto: CreateProductType = {
 			name: data.name,
 			description: data.description,
@@ -264,6 +262,7 @@ export const AddProductForm: React.FC<Props> = ({ product, category }) => {
 		router.push(
 			item ? `${ROUTE.PRODUCT}/${item.slug}` : `${ROUTE.CATALOG}/${category.id}`
 		)
+		router.refresh()
 	}
 
 	return (

@@ -1,5 +1,6 @@
 'use client'
 
+import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
@@ -20,6 +21,13 @@ export const useCreateCartItem = () => {
 			queryClient.invalidateQueries({ queryKey: ['cart'] })
 			setCart(response)
 			toast.success('Товар добавлен в корзину')
+		},
+		onError: (error) => {
+			toast.error(
+				axios.isAxiosError(error)
+					? error.response?.data.message
+					: 'Ошибка при добавлении товара в корзину'
+			)
 		}
 	})
 

@@ -25,6 +25,7 @@ import { calcDiscountPercent } from '@/utils/calc-discount-price'
 import type { WishlistItemType } from '@/types/wishlist.types'
 
 import styles from './wishlist-item.module.scss'
+import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
 
 export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 	const imageSrc =
@@ -62,6 +63,25 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: createCartItem({ productId: product.id })
 	}
 
+	const { price, discountPrice, discountTargets } = product
+
+	const isDiscountAvailable =
+		discountTargets.length > 0 &&
+		new Date(discountTargets[0].discount.expiresAt) > new Date()
+
+	const discountTarget = isDiscountAvailable
+		? {
+				type: discountTargets[0].discount.type,
+				amount: discountTargets[0].discount.amount
+			}
+		: null
+
+	const discountValue = calcMaxDiscountValue(
+		price,
+		discountPrice,
+		discountTarget
+	)
+
 	// const descriptionHtml = product.description
 	// 	? product.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
 	// 	: 'Описание отсуствует'
@@ -78,17 +98,11 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 					href={`${ROUTE.PRODUCT}/${product.slug}`}
 					className={styles.cover}
 				>
-					{product.discountPrice &&
-						Number(product.discountPrice) < Number(product.price) && (
-							<div className={styles.discount}>
-								-
-								{calcDiscountPercent(
-									Number(product.price),
-									Number(product.discountPrice)
-								)}
-								%
-							</div>
-						)}
+					{discountValue && Number(discountValue) < Number(price) && (
+						<div className={styles.discount}>
+							-{calcDiscountPercent(Number(price), Number(discountValue))}%
+						</div>
+					)}
 					<ProductImage
 						src={imageSrc}
 						isPlaceholder={
@@ -126,8 +140,8 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			<div className={styles.details}>
 				<PriceBadge
 					size='small'
-					price={product.price}
-					discountPrice={product.discountPrice}
+					price={price}
+					discountPrice={discountValue}
 				/>
 				{!product.isArchived && (
 					<span

@@ -9,6 +9,7 @@ import { ArchiveListItemSkeleton } from './skeleton'
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
 import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
 
 import type { ProductType } from '@/types/product.types'
 
@@ -20,6 +21,7 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 	name,
 	description,
 	images,
+	discountTargets,
 	count,
 	price,
 	discountPrice,
@@ -33,6 +35,23 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 			: category.imageUrl
 				? `/static/${category.imageUrl}`
 				: undefined
+
+	const isDiscountAvailable =
+		discountTargets.length > 0 &&
+		new Date(discountTargets[0].discount.expiresAt) > new Date()
+
+	const discountTarget = isDiscountAvailable
+		? {
+				type: discountTargets[0].discount.type,
+				amount: discountTargets[0].discount.amount
+			}
+		: null
+
+	const discountValue = calcMaxDiscountValue(
+		price,
+		discountPrice,
+		discountTarget
+	)
 
 	// const descriptionHtml = description
 	// 	? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
@@ -50,9 +69,9 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 							<span className={styles.thumbnailTitle}>В архиве</span>
 						</div>
 					)}
-					{discountPrice && Number(discountPrice) < Number(price) && (
+					{discountValue && Number(discountValue) < Number(price) && (
 						<div className={styles.discount}>
-							-{calcDiscountPercent(Number(price), Number(discountPrice))}%
+							-{calcDiscountPercent(Number(price), Number(discountValue))}%
 						</div>
 					)}
 					<ProductImage
@@ -92,7 +111,7 @@ export const ArchiveListItem: React.FC<ProductType> = ({
 				<PriceBadge
 					size='small'
 					price={price}
-					discountPrice={discountPrice}
+					discountPrice={discountValue}
 				/>
 				<span
 					className={clsx(styles.breadcrumb, {

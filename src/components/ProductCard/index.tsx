@@ -10,13 +10,15 @@ import {
 	Button,
 	AddWishlistButton,
 	ProductImage,
-	PriceBadge
+	PriceBadge,
+	DiscountBadge
 } from '@/components'
 import { ViewType } from '@/components/ProductList'
 
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
 import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
 
 import { useCartStore } from '@/store/cart'
 import { useWishlistStore } from '@/store/wishlist'
@@ -37,8 +39,8 @@ export const ProductCard: React.FC<IProductCard> = ({
 	id,
 	slug,
 	name,
-	description,
 	images,
+	discountTargets,
 	price,
 	discountPrice,
 	count,
@@ -82,6 +84,23 @@ export const ProductCard: React.FC<IProductCard> = ({
 		return <ProductCardSkeleton />
 	}
 
+	const isDiscountAvailable =
+		discountTargets.length > 0 &&
+		new Date(discountTargets[0].discount.expiresAt) > new Date()
+
+	const discountTarget = isDiscountAvailable
+		? {
+				type: discountTargets[0].discount.type,
+				amount: discountTargets[0].discount.amount
+			}
+		: null
+
+	const discountValue = calcMaxDiscountValue(
+		price,
+		discountPrice,
+		discountTarget
+	)
+
 	// const descriptionHtml = description
 	// 	? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
 	// 	: 'Описание отсуствует'
@@ -105,7 +124,7 @@ export const ProductCard: React.FC<IProductCard> = ({
 					src={imageSrc}
 					isPlaceholder={!images.length && !!category.imageUrl}
 					width={400}
-					height={250}
+					height={400}
 					alt={name}
 				/>
 			</Link>
@@ -116,14 +135,25 @@ export const ProductCard: React.FC<IProductCard> = ({
 				>
 					{name}
 				</Link>
-				{category && (
-					<Link
-						className={styles.type}
-						href={`${ROUTE.CATALOG}/${category.id}`}
-					>
-						{category.name}
-					</Link>
-				)}
+				<div className={styles.meta}>
+					{!isArchived &&
+						discountTargets.length > 0 &&
+						new Date(discountTargets[0].discount.expiresAt) > new Date() &&
+						discountTarget && (
+							<DiscountBadge
+								iconUrl='/icons/Fire.gif'
+								expiredAt={discountTargets[0].discount.expiresAt}
+							/>
+						)}
+					{category && (
+						<Link
+							className={styles.type}
+							href={`${ROUTE.CATALOG}/${category.id}`}
+						>
+							{category.name}
+						</Link>
+					)}
+				</div>
 				{/* <p
 					className={styles.description}
 					dangerouslySetInnerHTML={{
@@ -136,7 +166,7 @@ export const ProductCard: React.FC<IProductCard> = ({
 					<PriceBadge
 						size='small'
 						price={price}
-						discountPrice={discountPrice}
+						discountPrice={discountValue}
 					/>
 					{!isArchived && (
 						<span

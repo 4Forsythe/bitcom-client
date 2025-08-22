@@ -1,5 +1,7 @@
 'use client'
 
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { useWishlistStore } from '@/store/wishlist'
@@ -18,6 +20,13 @@ export const useCreateWishlistItem = () => {
 		onSuccess: (response) => {
 			queryClient.invalidateQueries({ queryKey: ['wishlist'] })
 			setWishlist(response)
+		},
+		onError: (error) => {
+			toast.error(
+				axios.isAxiosError(error)
+					? error.response?.data.message
+					: 'Ошибка при добавлении товара в желаемое'
+			)
 		}
 	})
 

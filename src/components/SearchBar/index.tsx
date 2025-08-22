@@ -75,8 +75,6 @@ export const SearchBar: React.FC<ISearchBarProps> = ({
 		}
 	}
 
-	console.log('targetItem:', target)
-
 	const onSearch = () => {
 		if (!value.trim() && target < 1) {
 			inputRef.current?.blur()

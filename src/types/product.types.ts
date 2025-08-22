@@ -1,4 +1,5 @@
 import type { ProductCategoryType } from './product-category.types'
+import type { DiscountType, DiscountTargetType } from './discount.types'
 
 export type ProductCharacteristicType = {
 	id: string
@@ -28,6 +29,7 @@ export type ProductType = {
 	slug: string
 	name: string
 	images: ProductImageType[] | []
+	discountTargets: (DiscountTargetType & { discount: DiscountType })[]
 	description?: string
 	price: string
 	discountPrice?: string

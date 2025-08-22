@@ -28,7 +28,7 @@ export const ArchiveList: React.FC = () => {
 	)
 
 	const { productCategories, isProductCategoriesLoading } =
-		useProductCategories()
+		useProductCategories(undefined, { flat: true })
 
 	const { products, isProductsLoading, isProductsSuccess, refetch } =
 		useArchive()

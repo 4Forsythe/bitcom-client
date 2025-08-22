@@ -98,7 +98,7 @@ export const ProductManagerControls: React.FC<Props> = ({
 					onClick={onEditClick}
 				>
 					<PencilLine size={24} />
-					Редактировать
+					Изменить
 				</button>
 				<button
 					className={clsx(styles.button, styles.wide, {

@@ -1,5 +1,5 @@
 .container {
-	@apply w-full h-full flex flex-1 grow flex-col bg-zinc-50 border border-zinc-200 overflow-hidden rounded-xl hover:shadow-lg hover:shadow-zinc-200
+	@apply w-full h-full flex flex-1 grow flex-col bg-white border border-zinc-100 overflow-hidden rounded-xl hover:shadow-lg hover:shadow-zinc-200
   transition-shadow duration-200;
 	.cover {
 		@apply w-full h-auto flex items-center justify-center overflow-hidden relative;

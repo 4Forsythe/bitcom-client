@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import clsx from 'clsx'
-import { Archive, Eye, EyeOff, PencilLine } from 'lucide-react'
 import { ProductImageGallery } from './ProductImageGallery'
 import {
 	AddWishlistButton,
 	Badge,
 	Button,
+	DiscountBadge,
 	PriceBadge,
 	ProductManagerControls
 } from '@/components'
@@ -25,11 +25,12 @@ import { useCreateCartItem } from '@/hooks/useCreateCartItem'
 import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 
 import { ROUTE } from '@/config/routes.config'
+import { calcNounDeclension } from '@/utils/calc-noun-declension'
+import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
 
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
-import { calcNounDeclension } from '@/utils/calc-noun-declension'
 
 export const Product: React.FC<ProductType> = ({
 	id,
@@ -37,6 +38,7 @@ export const Product: React.FC<ProductType> = ({
 	name,
 	description,
 	images,
+	discountTargets,
 	price,
 	discountPrice,
 	count,
@@ -62,6 +64,23 @@ export const Product: React.FC<ProductType> = ({
 	const { items: wishlist, archived: archivedWishlist } = useWishlistStore()
 
 	const isLoading = isCartLoading || isWishlistLoading || isProfileLoading
+
+	const isDiscountAvailable =
+		discountTargets.length > 0 &&
+		new Date(discountTargets[0].discount.expiresAt) > new Date()
+
+	const discountTarget = isDiscountAvailable
+		? {
+				type: discountTargets[0].discount.type,
+				amount: discountTargets[0].discount.amount
+			}
+		: null
+
+	const discountValue = calcMaxDiscountValue(
+		price,
+		discountPrice,
+		discountTarget
+	)
 
 	const isInCart = Boolean(
 		cart.concat(archivedCart).find((item) => item.product.id === id)
@@ -141,6 +160,15 @@ export const Product: React.FC<ProductType> = ({
 									</Badge>
 								</Link>
 							)}
+							{!isArchived &&
+								discountTargets.length > 0 &&
+								new Date(discountTargets[0].discount.expiresAt) > new Date() &&
+								discountTarget && (
+									<DiscountBadge
+										iconUrl='/icons/Fire.gif'
+										expiredAt={discountTargets[0].discount.expiresAt}
+									/>
+								)}
 							{!isArchived && (
 								<span
 									className={clsx(styles.breadcrumb, {
@@ -210,7 +238,7 @@ export const Product: React.FC<ProductType> = ({
 							)}
 							<PriceBadge
 								price={price}
-								discountPrice={discountPrice}
+								discountPrice={discountValue}
 							/>
 						</div>
 					</div>
