@@ -12,8 +12,14 @@
 	.checkbox {
 		@apply top-2.5 right-2.5 z-10 absolute;
 	}
-	.title {
-		@apply text-sm font-bold line-clamp-2 shrink grow;
+	.information {
+		@apply gap-1.5 flex flex-col shrink grow;
+		.title {
+			@apply text-sm font-bold line-clamp-2;
+		}
+		.discountMembership {
+			@apply text-sm;
+		}
 	}
 	.pricetab {
 		@apply mt-auto shrink-0;

@@ -95,6 +95,11 @@ export const ProductSelect = React.forwardRef<HTMLDivElement, Props>(
 
 			const item = flatItems[index]
 
+			const discountTarget =
+				item.discountTargets.length > 0
+					? item.discountTargets[0].discount
+					: null
+
 			if (item) {
 				return (
 					<div
@@ -104,12 +109,14 @@ export const ProductSelect = React.forwardRef<HTMLDivElement, Props>(
 						<ProductSelectItem
 							ref={index === flatItems.length - 1 ? ref : null}
 							product={item}
-							discountPrice={calcDiscountPrice(
-								item.discountPrice
-									? Number(item.discountPrice)
-									: Number(item.price),
-								discountPercent
-							)}
+							discountPrice={
+								discountTarget
+									? calcDiscountPrice(
+											Number(item.price),
+											Number(discountTarget.amount)
+										)
+									: calcDiscountPrice(Number(item.price), discountPercent)
+							}
 							isSelected={isSelectedSet.has(item.id)}
 							onSelect={onSelect}
 						/>

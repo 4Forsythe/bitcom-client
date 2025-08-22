@@ -23,9 +23,10 @@ interface Props {
 export const ProductSelectItem = React.memo(
 	React.forwardRef<HTMLDivElement, Props>(
 		({ product, discountPrice, isSelected, onSelect }, ref) => {
-			const defaultPrice = product.discountPrice
-				? Number(product.discountPrice)
-				: Number(product.price)
+			const discountTarget =
+				product.discountTargets.length > 0
+					? product.discountTargets[0].discount
+					: null
 
 			const imageSrc =
 				product.images.length > 0
@@ -73,12 +74,21 @@ export const ProductSelectItem = React.memo(
 							alt={product.name}
 						/>
 					</Link>
-					<span className={styles.title}>{product.name}</span>
+					<div className={styles.information}>
+						<span className={styles.title}>{product.name}</span>
+						{discountTarget && (
+							<span className={styles.discountMembership}>
+								Уже участвует в акции
+							</span>
+						)}
+					</div>
 					<PriceBadge
 						className={styles.pricetab}
 						size='small'
-						price={defaultPrice}
-						discountPrice={isSelected ? discountPrice : undefined}
+						price={Number(product.price)}
+						discountPrice={
+							discountTarget || isSelected ? discountPrice : undefined
+						}
 					/>
 				</div>
 			)

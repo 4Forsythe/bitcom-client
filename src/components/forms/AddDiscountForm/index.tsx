@@ -1,68 +1,47 @@
 'use client'
 
 import React from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { ChevronRight } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Controller, FormProvider, get, useForm } from 'react-hook-form'
 
-import { ROUTE } from '@/config/routes.config'
-import { SERVER_BASE_URL } from '@/constants'
-import { createProductSchema } from '@/schemas'
 import {
-	AddProductImageInput,
 	Button,
-	DayPicker,
 	FormDayPicker,
 	FormField,
-	FormTextArea,
 	InfoBlock,
 	ProductCategorySelect,
-	ProductEditingAlert,
 	ProductSelect,
 	Select,
 	SwitchButton
 } from '@/components'
-import { useUploadImages } from '@/hooks/useUploadImages'
-import { useCreateProduct } from '@/hooks/useCreateProduct'
-import { useUpdateProduct } from '@/hooks/useUpdateProduct'
-import { isImageFileAllowed } from '@/utils/is-image-file-allowed'
-import { downscaleImage } from '@/utils/downscale-Image'
 
-import type { ProductCategoryType } from '@/types/product-category.types'
-import type {
-	ProductType,
-	ProductFormType,
-	CreateProductType
-} from '@/types/product.types'
+import { calcNounDeclension } from '@/utils/calc-noun-declension'
+import { createDiscountSchema } from '@/schemas/create-discount.schema'
+
+import { useCreateDiscount } from '@/hooks/useCreateDiscount'
+import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
+import { useProductCategories } from '@/hooks/useProductCategories'
+
+import {
+	type DiscountFormType,
+	type CreateDiscountType,
+	DiscountTypeVariables
+} from '@/types/discount.types'
+import type { SelectItemType } from '@/components/ui/Select'
 
 import styles from './add-discount-form.module.scss'
-import { CreateDiscountType, DiscountFormType } from '@/types/discount.types'
-import { createDiscountSchema } from '@/schemas/create-discount.schema'
-import type { SelectItemType } from '@/components/ui/Select'
-import { useProductCategories } from '@/hooks/useProductCategories'
-import { useProducts } from '@/hooks/useProducts'
-import { calcNounDeclension } from '@/utils/calc-noun-declension'
-import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
-import clsx from 'clsx'
-import { useCreateDiscount } from '@/hooks/useCreateDiscount'
 
 const DISCOUNT_TYPES: SelectItemType[] = [
 	{
-		id: 'percentage',
+		id: DiscountTypeVariables.PERCENT,
 		title: '(%) Процентная скидка',
 		node: '(%) Процентная скидка'
 	},
 	{
-		id: 'fixed',
+		id: DiscountTypeVariables.FIXED,
 		title: '(₽) Фиксированная скидка',
 		node: '(₽) Фиксированная скидка',
-		disabled: true
-	},
-	{
-		id: 'bundle',
-		title: 'Несколько по цене 1',
-		node: 'Несколько по цене 1',
 		disabled: true
 	}
 ]
@@ -103,7 +82,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 		resolver: zodResolver(createDiscountSchema),
 		defaultValues: {
 			name: '',
-			type: 'percentage',
+			type: DiscountTypeVariables.PERCENT,
 			amount: undefined,
 			priority: undefined,
 			products: [],
@@ -113,8 +92,6 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 			expiresAt: expiresAt
 		}
 	})
-
-	console.log('form fields:', methods.getValues())
 
 	const categoryFieldError = get(methods.formState.errors, 'categoryId')
 	const productsFieldError = get(methods.formState.errors, 'products')
@@ -130,7 +107,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 	React.useEffect(() => {
 		methods.reset({
 			name: '',
-			type: 'percentage',
+			type: DiscountTypeVariables.PERCENT,
 			amount: undefined,
 			priority: undefined,
 			products: [],
@@ -165,7 +142,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 			name: data.name,
 			type: data.type,
 			amount: data.amount,
-			priority: 0,
+			priority: Number(data.priority),
 			products: data.products,
 			categoryId: data.categoryId || null,
 			isArchived: submitActionType === 'publish' ? false : data.isArchived,
