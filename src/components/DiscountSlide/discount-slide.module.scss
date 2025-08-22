@@ -1,16 +1,21 @@
 .container {
-	@apply max-w-full max-h-[206px] w-full h-full px-5 py-6 gap-2 flex flex-col bg-white border border-zinc-200 rounded-xl overflow-hidden relative;
+	@apply max-w-full h-[208px] w-full p-5 gap-2 flex flex-col bg-white border border-zinc-100 rounded-xl overflow-hidden relative;
+	&:hover {
+		.cover {
+			@apply translate-y-1.5;
+		}
+	}
 	.title {
 		@apply text-lg font-bold;
 	}
 	.targetLink {
-		@apply text-sm line-clamp-2;
+		@apply text-sm line-clamp-2 hover:text-red-500 transition duration-200;
 	}
 	.discountPercent {
-		@apply text-2xl font-bold leading-5 text-red-500;
+		@apply mt-auto text-2xl font-bold leading-5 text-red-500;
 	}
 	.prices {
-		@apply w-fit gap-1.5 flex items-center relative;
+		@apply mt-auto w-fit gap-1.5 flex items-center relative;
 		.price {
 			@apply text-sm text-zinc-400 line-through;
 		}
@@ -22,6 +27,6 @@
 		@apply w-fit z-10;
 	}
 	.cover {
-		@apply w-[120px] h-[120px] -bottom-4 right-4 rounded-xl overflow-hidden absolute;
+		@apply w-[120px] h-[120px] -bottom-4 right-3.5 rounded-xl overflow-hidden absolute transition duration-300;
 	}
 }

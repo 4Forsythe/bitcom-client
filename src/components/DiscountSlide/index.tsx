@@ -2,70 +2,62 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
-import type { DiscountType } from '@/types/discount.types'
+import { Button } from '../ui'
+
+import { ROUTE } from '@/config/routes.config'
+import { SERVER_BASE_URL } from '@/constants'
+import { calcTimeBetweenDates } from '@/utils/calc-time-between-dates'
+
+import {
+	type DiscountType,
+	DiscountTypeVariables
+} from '@/types/discount.types'
 
 import styles from './discount-slide.module.scss'
-import { ROUTE } from '@/config/routes.config'
-import { Button } from '../ui'
-import { BadgePercent } from 'lucide-react'
-import Image from 'next/image'
-import { calcDiscountPercent } from '@/utils/calc-discount-price'
-import { ProductCategoryType } from '@/types/product-category.types'
-import { ProductType } from '@/types/product.types'
-import { SERVER_BASE_URL } from '@/constants'
-import { calcDaysDifference } from '@/utils/calc-days-difference'
-import { calcTimeBetweenDates } from '@/utils/calc-time-between-dates'
 
 export const DiscountSlide: React.FC<DiscountType> = ({
 	id,
 	type,
 	amount,
-	products,
-	category,
-	categoryId,
-	startedAt,
+	targets,
 	expiresAt
 }) => {
-	const firstTarget =
-		products.length > 0 ? products[0] : category ? category : null
+	const firstTarget = targets.length > 0 ? targets[0] : null
 
 	if (!firstTarget) {
 		return null
 	}
 
-	const isProduct = (
-		item: ProductType | ProductCategoryType
-	): item is ProductType => {
-		return 'price' in item
-	}
+	const isProduct = firstTarget.product
 
-	const price = isProduct(firstTarget)
-		? new Intl.NumberFormat('ru-RU').format(Number(firstTarget.price))
+	const price = isProduct
+		? new Intl.NumberFormat('ru-RU').format(Number(isProduct.price))
 		: null
 
-	const discountPrice = isProduct(firstTarget)
+	const discountPrice = isProduct
 		? new Intl.NumberFormat('ru-RU').format(
-				Number(firstTarget.price) - (Number(firstTarget.price) / 100) * amount
+				Number(isProduct.price) -
+					(Number(isProduct.price) / 100) * Number(amount)
 			)
 		: null
 
 	const expires = calcTimeBetweenDates(new Date(), new Date(expiresAt))
 
-	const imageUrl = isProduct(firstTarget)
-		? firstTarget.images.length > 0
-			? `${SERVER_BASE_URL}/${firstTarget.images[0].url}`
-			: firstTarget.category.imageUrl
-				? `/static/${firstTarget.category.imageUrl}`
+	const imageUrl = isProduct
+		? isProduct.images.length > 0
+			? `${SERVER_BASE_URL}/${isProduct.images[0].url}`
+			: isProduct.category.imageUrl
+				? `/static/${isProduct.category.imageUrl}`
 				: undefined
-		: firstTarget.imageUrl
-			? `/static/${firstTarget.imageUrl}`
+		: firstTarget.category && firstTarget.category.imageUrl
+			? `/static/${firstTarget.category.imageUrl}`
 			: undefined
 
-	const firstTargetHref =
-		products.length > 0
-			? `${ROUTE.PRODUCT}/${products[0].slug}`
-			: `${ROUTE.CATALOG}/${categoryId}`
+	const firstTargetHref = firstTarget.product
+		? `${ROUTE.PRODUCT}/${firstTarget.product.slug}`
+		: `${ROUTE.CATALOG}/${firstTarget.categoryId}`
 
 	return (
 		<div className={styles.container}>
@@ -76,10 +68,10 @@ export const DiscountSlide: React.FC<DiscountType> = ({
 				href={firstTargetHref}
 				className={styles.targetLink}
 			>
-				{firstTarget.name}
+				{isProduct ? isProduct.name : firstTarget.category?.name}
 			</Link>
 
-			{type === 'percentage' && !isProduct(firstTarget) ? (
+			{type === DiscountTypeVariables.PERCENT && !isProduct ? (
 				<span className={styles.discountPercent}>-{amount}%</span>
 			) : (
 				<div className={styles.prices}>
