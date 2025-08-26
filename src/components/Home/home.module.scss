@@ -4,16 +4,16 @@
 		@apply mb-8;
 	}
 	.block {
-		@apply mb-[60px];
+		@apply mb-10 lg:mb-[60px];
 	}
 	.promo {
-		@apply px-8 gap-10 flex items-center;
+		@apply px-0 md:px-8 gap-8 md:gap-10 flex items-center;
 		.promoInner {
-			@apply gap-10 flex items-center;
+			@apply gap-5 md:gap-10 flex items-center;
 			.promoContent {
 				@apply h-fit pl-8 border-l-2 border-zinc-500;
 				.promoText {
-					@apply text-lg font-medium;
+					@apply text-base md:text-lg font-medium;
 				}
 			}
 		}

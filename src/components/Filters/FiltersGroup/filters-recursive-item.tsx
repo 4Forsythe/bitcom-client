@@ -68,7 +68,9 @@ export const FiltersRecursiveItem: React.FC<Props> = ({
 				onClick={() => setIsPopup((prev) => !prev)}
 			>
 				{item.children && item.children.length > 0 && (
-					<ChevronDown className={styles.icon} />
+					<ChevronDown
+						className={clsx(styles.icon, { [styles.opened]: isPopup })}
+					/>
 				)}
 				<Link
 					href={path + item.id}

@@ -66,10 +66,6 @@ export const Home: React.FC<Props> = async ({
 				</div>
 			</div>
 
-			<div className={styles.block}>
-				<ProductCategories />
-			</div>
-
 			{discountProducts.items.length >= 5 && (
 				<ProductGroup
 					title='🔥 Выгодно'

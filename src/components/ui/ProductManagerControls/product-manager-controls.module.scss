@@ -5,7 +5,7 @@
 	}
 	.button {
 		@apply w-[72px] h-[54px] p-1.5 text-[0.85rem] font-medium flex flex-col items-center justify-center bg-zinc-200 rounded-xl
-					hover:bg-zinc-300/80 active:bg-zinc-300/60 transition duration-200;
+		hover:bg-zinc-300/80 active:bg-zinc-300/60 transition duration-200;
 		&.wide {
 			@apply w-fit h-10 px-3.5 gap-1.5 text-sm flex-row;
 		}
@@ -17,6 +17,9 @@
 
 @media (max-width: 350px) {
 	.container {
+		.buttons {
+			@apply w-full mr-0;
+		}
 		.button {
 			@apply w-full h-10 px-3.5 gap-1.5 text-sm flex flex-row items-center;
 			&.wide {

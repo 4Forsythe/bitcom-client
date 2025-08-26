@@ -4,7 +4,7 @@
 		@apply cursor-pointer;
 	}
 	&.large {
-		@apply w-full h-[608px] aspect-[4/3];
+		@apply w-full max-h-[608px] h-full aspect-square;
 		.placeholder {
 			.icon {
 				@apply w-20 h-20;

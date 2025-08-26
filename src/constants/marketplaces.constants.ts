@@ -14,5 +14,10 @@ export const MARKETPLACES: MarketplaceItemType[] = [
 		id: 'Яндекс.Маркет',
 		href: 'https://market.yandex.ru/business--resurstekhno-elektronika/1148896',
 		imageUrl: '/icons/Yandex.Market.svg'
+	},
+	{
+		id: 'Озон',
+		href: 'https://www.ozon.ru/seller/bitkom-397371',
+		imageUrl: '/icons/Ozon.svg'
 	}
 ]

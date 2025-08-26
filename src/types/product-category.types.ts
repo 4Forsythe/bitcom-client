@@ -1,3 +1,5 @@
+import type { DiscountType, DiscountTargetType } from './discount.types'
+
 export type ProductCategoryParamsType = {
 	flat?: boolean
 	take?: number
@@ -9,6 +11,7 @@ export type ProductCategoryType = {
 	name: string
 	imageUrl?: string
 	parentId?: string
+	discountTargets: (DiscountTargetType & { discount: DiscountType })[]
 	children: ProductCategoryType[]
 }
 

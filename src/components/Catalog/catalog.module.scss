@@ -1,24 +1,43 @@
 .container {
 	@apply mb-10 gap-2.5 grid grid-cols-4;
 	.card {
-		@apply w-[294px] grid grid-rows-[auto,1fr] items-center text-center bg-zinc-50 rounded-xl shadow-md
-    hover:shadow-lg transition-all duration-200;
-		&:hover {
-			.title {
-				@apply text-red-500;
+		@apply w-[294px] bg-zinc-50 rounded-xl shadow-md relative hover:shadow-lg transition duration-200;
+		&.hint:hover {
+			.categories {
+				@apply opacity-100 z-10;
+			}
+			.category {
+				@apply opacity-0 -z-10;
 			}
 		}
-		.cover {
-			@apply w-full h-[150px] p-5 flex items-center justify-center rounded-lg overflow-hidden hover:*:scale-110;
-			.image {
-				@apply w-auto h-full object-cover transition-transform duration-300;
+		.categories {
+			@apply inset-0 opacity-0 -z-10 space-y-1 flex flex-col items-center justify-center absolute transition duration-200;
+			.categoriesTitle {
+				@apply font-semibold;
 			}
-			.placeholder {
-				@apply w-full h-auto object-cover transition-transform duration-300;
+			.categoriesLink {
+				@apply text-sm hover:text-red-500 transition duration-200;
 			}
 		}
-		.title {
-			@apply p-4 font-semibold text-wrap whitespace-normal break-words truncate transition-colors duration-200;
+		.category {
+			@apply w-full h-full opacity-100 z-10 grid grid-rows-[auto,1fr] items-center text-center transition duration-200;
+			&:hover {
+				.categoryTitle {
+					@apply text-red-500;
+				}
+			}
+			.categoryCover {
+				@apply w-full h-[150px] p-5 flex items-center justify-center rounded-lg overflow-hidden hover:*:scale-110;
+				.image {
+					@apply w-auto h-full object-cover transition-transform duration-300;
+				}
+				.placeholder {
+					@apply w-full h-auto object-cover transition-transform duration-300;
+				}
+			}
+			.categoryTitle {
+				@apply p-4 font-semibold text-wrap whitespace-normal break-words truncate transition-colors duration-200;
+			}
 		}
 	}
 }

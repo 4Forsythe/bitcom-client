@@ -6,6 +6,9 @@
 			@apply gap-12 flex justify-between;
 			.menu {
 				@apply min-w-[250px] not-italic;
+				&.primary {
+					@apply w-max shrink-0;
+				}
 				.title {
 					@apply mb-5 pb-5 text-lg font-bold border-b border-zinc-400/50;
 				}
@@ -16,7 +19,7 @@
 					}
 				}
 				.socials {
-					@apply mb-3 gap-1.5 flex items-center;
+					@apply mb-5 gap-1.5 flex items-center;
 					.socialItem {
 						@apply px-2 py-1.5 rounded-lg bg-zinc-200 hover:bg-zinc-300 transition-colors duration-200;
 						.icon {
@@ -75,6 +78,13 @@
 	.container {
 		.inner {
 			@apply px-8 pt-8;
+			.navbar {
+				.menu {
+					&.primary {
+						@apply w-auto shrink;
+					}
+				}
+			}
 		}
 	}
 }

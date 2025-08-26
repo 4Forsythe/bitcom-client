@@ -14,14 +14,18 @@ import type {
 
 export const useProductCategories = (
 	initialData?: ProductCategoriesType,
-	params?: ProductCategoryParamsType
+	options?: {
+		enable?: boolean
+		params?: ProductCategoryParamsType
+	}
 ) => {
 	const { setProductCategories } = useFiltersStore()
 
 	const { data, isLoading, isSuccess, isError } = useQuery({
-		queryKey: ['product-categories', params],
-		queryFn: () => productCategoryService.getAll(params),
-		initialData
+		queryKey: ['product-categories', options?.params],
+		queryFn: () => productCategoryService.getAll(options?.params),
+		initialData,
+		enabled: options?.enable ?? true
 	})
 
 	React.useEffect(() => {

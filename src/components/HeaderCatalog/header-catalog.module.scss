@@ -1,0 +1,22 @@
+.container {
+	@apply top-[100%] left-0 right-0 mt-1.5 z-50 opacity-0 max-w-[1280px] max-h-[500px] sm:max-h-fit w-full mx-auto my-0 p-2.5 gap-2.5 flex flex-col bg-white rounded-2xl shadow-lg absolute
+  transition duration-300;
+	&.popup {
+		@apply opacity-100;
+	}
+	.categories {
+		@apply w-full h-full gap-5 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 justify-center overflow-y-auto;
+		.categoryColumn {
+			@apply w-full p-5 gap-1.5 flex flex-col;
+			.categoryRoot {
+				@apply text-lg font-semibold hover:text-red-500 transition duration-200;
+			}
+			.subcategories {
+				@apply gap-1 flex flex-col;
+				.category {
+					@apply text-base hover:text-red-500 transition duration-200;
+				}
+			}
+		}
+	}
+}

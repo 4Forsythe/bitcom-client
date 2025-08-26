@@ -1,12 +1,13 @@
 import React from 'react'
+import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import { MARKETPLACES } from '@/constants/marketplaces.constants'
 import { INFOS, SERVICES, CONTACTS } from './menu.data'
+import { SOCIALS } from '@/constants'
 
 import styles from './footer.module.scss'
-import { SOCIALS } from '@/constants'
 
 export const Footer: React.FC = () => {
 	return (
@@ -14,7 +15,7 @@ export const Footer: React.FC = () => {
 			<div className={styles.inner}>
 				<div className={styles.navbar}>
 					<nav
-						className={styles.menu}
+						className={clsx(styles.menu, styles.primary)}
 						aria-label='Навигация: общая информация'
 					>
 						<h3 className={styles.title}>Общая информация</h3>

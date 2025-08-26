@@ -11,7 +11,7 @@
 		}
 		.additional {
 			@apply ml-auto gap-2.5 flex items-center justify-center;
-			.prices {
+			.additionalButton {
 				@apply px-2.5 gap-1 flex items-center text-zinc-500 text-sm font-medium hover:text-zinc-700 hover:*:text-zinc-700 transition duration-300;
 				.icon {
 					@apply w-auto h-3.5 text-zinc-500;
@@ -23,13 +23,22 @@
 .container {
 	@apply w-full top-0 mb-5 py-2 z-50 bg-zinc-50 border-b border-zinc-200 shadow-lg shadow-zinc-200/50 sticky;
 	.inner {
-		@apply max-w-[1280px] mx-auto my-0 px-2.5 gap-2 flex flex-col;
+		@apply max-w-[1280px] mx-auto my-0 px-2.5 gap-2 flex flex-col relative;
 		.menu {
-			@apply h-20 px-3.5 pt-1.5 gap-7 flex items-center;
+			@apply h-20 px-3.5 pt-1.5 gap-5 flex items-center;
 			.logotype {
-				@apply outline-none select-none;
+				@apply gap-2 flex items-center outline-none select-none;
 				.image {
-					@apply w-52 h-auto;
+					@apply w-52 h-auto shrink-0;
+				}
+				.catalogButton {
+					@apply p-3.5 gap-1.5 bg-neutral-200/70 flex items-center rounded-xl hover:bg-neutral-200 transition duration-200;
+					.catalogButtonText {
+						@apply font-medium;
+					}
+					.icon {
+						@apply w-5 h-5;
+					}
 				}
 			}
 			.bar {
@@ -42,6 +51,22 @@
 @media (max-width: 1024px) {
 	.container {
 		@apply mb-3.5;
+	}
+}
+@media (max-width: 874px) {
+	.container {
+		.inner {
+			.menu {
+				.logotype {
+					.catalogButton {
+						@apply p-2.5;
+						.catalogButtonText {
+							@apply hidden;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 @media (max-width: 768px) {
@@ -66,7 +91,7 @@
 			.menu {
 				@apply flex-col;
 				.logotype {
-					@apply max-w-[200px];
+					@apply max-w-[200px] flex-row-reverse;
 				}
 			}
 		}
