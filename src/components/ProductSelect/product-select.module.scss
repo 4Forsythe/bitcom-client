@@ -1,9 +1,21 @@
 .container {
 	@apply w-full p-3.5 flex flex-col bg-zinc-50 rounded-xl;
 	.panel {
-		@apply mb-5;
-		.searchbar {
-			@apply max-w-72;
+		@apply mb-5 flex flex-col;
+		.topbarPanel {
+			@apply flex items-center justify-between;
+			.searchbar {
+				@apply mb-3.5 max-w-72;
+			}
+			.clearButton {
+				@apply w-fit font-normal border border-zinc-200;
+			}
+		}
+		.tabs {
+			@apply mb-3.5 gap-2 flex items-center;
+			.tab {
+				@apply text-zinc-500;
+			}
 		}
 	}
 	.list {

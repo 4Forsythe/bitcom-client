@@ -12,7 +12,7 @@
 		}
 	}
 	&.medium {
-		@apply max-w-[400px] h-full aspect-square;
+		@apply max-w-[400px] h-full aspect-square rounded-none;
 	}
 	&.small {
 		@apply w-[150px] h-[150px] aspect-square;

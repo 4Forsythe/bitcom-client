@@ -17,6 +17,9 @@
 			.icon {
 				@apply w-auto h-5;
 			}
+			.tabBadge {
+				@apply px-1 text-[0.75rem] font-medium text-zinc-50 bg-red-500 uppercase rounded-sm;
+			}
 		}
 	}
 }

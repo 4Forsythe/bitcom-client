@@ -1,6 +1,15 @@
 .container {
-	@apply w-full h-full flex flex-1 grow flex-col bg-white border border-zinc-100 overflow-hidden rounded-xl hover:shadow-lg hover:shadow-zinc-200
+	@apply w-full h-full p-6 py-8 flex flex-1 grow flex-col bg-white border border-zinc-100 rounded-md overflow-hidden
   transition-shadow duration-200;
+	&:hover {
+		.information {
+			.details {
+				.cartButton {
+					@apply opacity-100 pointer-events-auto;
+				}
+			}
+		}
+	}
 	.cover {
 		@apply w-full h-auto flex items-center justify-center overflow-hidden relative;
 		.overlay {
@@ -9,29 +18,26 @@
 				@apply text-zinc-700/70 text-xl font-bold uppercase;
 			}
 		}
-		.discount {
-			@apply top-2.5 right-2.5 px-1.5 z-10 text-sm font-medium text-zinc-50 bg-red-500 rounded-md absolute;
+		.discountPercentTab {
+			@apply top-1 right-1 px-1.5 z-10 text-sm font-medium text-zinc-50 bg-red-500 rounded-md absolute;
+		}
+		.hasDiscountTab {
+			@apply top-1 left-1 px-1.5 py-0.5 z-10 text-sm font-medium text-yellow-500 bg-yellow-200 rounded-md absolute;
 		}
 	}
 	.information {
-		@apply w-full p-3.5 gap-2.5 flex shrink flex-1 flex-col justify-between grow overflow-hidden;
+		@apply w-full gap-3.5 flex shrink flex-1 flex-col justify-between grow overflow-hidden;
 		.name {
-			@apply w-full font-semibold line-clamp-4 leading-5 hover:text-red-500
+			@apply w-full font-medium line-clamp-4 leading-5 hover:text-red-500
       transition-colors duration-200;
 		}
 		.details {
-			@apply gap-y-2.5 inline-flex flex-wrap items-center justify-between leading-4;
-			.breadcrumb {
-				@apply w-fit px-1.5 text-sm bg-zinc-200 flex items-center rounded-md;
-				&.positive {
-					@apply text-green-600 bg-green-200/50;
-				}
-				&.negative {
-					@apply text-red-600 bg-red-200/50;
-				}
-				&.warning {
-					@apply text-orange-500 bg-orange-100/50;
-				}
+			@apply mt-auto gap-y-2.5 inline-flex flex-wrap items-center justify-between leading-4;
+			.price {
+				@apply hover:text-red-500 transition-colors duration-200;
+			}
+			.cartButton {
+				@apply opacity-0 pointer-events-none transition duration-300;
 			}
 		}
 	}

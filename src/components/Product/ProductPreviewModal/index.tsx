@@ -2,182 +2,78 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
 
 import { SERVER_BASE_URL } from '@/constants'
+import { ProductImageGalleryNavigation } from '../ProductImageGallery/product-image-gallery-navigation'
+import { ProductImageGalleryPagination } from '../ProductImageGallery/product-image-gallery-pagination'
 
 import type { ProductImageType } from '@/types/product.types'
 
 import styles from './product-preview-modal.module.scss'
-import { ProductImage } from '@/components/ProductImage'
-import clsx from 'clsx'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Props {
-	targetIndex: number
 	images: ProductImageType[]
+	activeIndex: number
 	alt: string
 }
 
 export const ProductPreviewModal: React.FC<Props> = ({
-	targetIndex,
 	images,
+	activeIndex,
 	alt
 }) => {
-	const [targetImage, setTargetImage] = React.useState(targetIndex)
-	const [errors, setErrors] = React.useState<Record<number, boolean>>({})
-	const [isZoom, setIsZoom] = React.useState(false)
-	const [cursor, setCursor] = React.useState<{ x: number; y: number }>({
-		x: 0,
-		y: 0
-	})
-	const [zoomStyle, setZoomStyle] = React.useState<{
-		left: string
-		top: string
-	}>({
-		left: '50%',
-		top: '50%'
-	})
-
-	const image = images[targetImage]
-	const hasError = !!errors[targetImage]
-
-	const handleMouseMove = (event: React.MouseEvent) => {
-		if (hasError) return
-
-		setIsZoom(true)
-
-		const { left, top, width, height } =
-			event.currentTarget.getBoundingClientRect()
-		const x = event.clientX - left
-		const y = event.clientY - top
-
-		const xInPercent = (x / width) * 100
-		const yInPercent = (y / height) * 100
-
-		setCursor({ x, y })
-		setZoomStyle({
-			left: `${xInPercent}%`,
-			top: `${yInPercent}%`
-		})
-	}
-
-	const handleMouseLeave = () => {
-		setIsZoom(false)
-	}
-
-	const handleErrorImage = (index: number) => {
-		setErrors((prev) => ({ ...prev, [index]: true }))
-	}
-
-	const handleTabClick = (index: number) => {
-		setTargetImage(index)
-		setIsZoom(false)
-	}
-
-	const onSlidePrev = () => {
-		setTargetImage((prev) => (prev - 1 >= 0 ? prev - 1 : images.length - 1))
-		setIsZoom(false)
-	}
-
-	const onSlideNext = () => {
-		setTargetImage((prev) => (prev + 1 >= images.length ? 0 : prev + 1))
-		setIsZoom(false)
-	}
+	const [targetImage, setTargetImage] = React.useState(activeIndex)
 
 	return (
-		<div
-			className={styles.container}
-			aria-label='Свернуть модальное окно'
-		>
-			<div
-				className={styles.frame}
-				style={{ cursor: isZoom ? 'crosshair' : 'default' }}
-				// onMouseMove={handleMouseMove}
-				// onMouseLeave={handleMouseLeave}
-			>
-				{images.length > 0 && !hasError ? (
-					<Image
-						key={image && image.url}
-						className={styles.image}
-						width={720}
-						height={720}
-						src={image && `${SERVER_BASE_URL}/${image.url}`}
-						alt={alt}
-						priority
-						onError={() => handleErrorImage(targetImage)}
-					/>
-				) : (
-					<div className={styles.error}>
-						<span className={styles.paragraph}>
-							Не удалось загрузить изображение
-						</span>
-					</div>
-				)}
-
-				{images.length > 0 && !hasError && isZoom && (
-					<div
-						className={styles.zoom}
-						style={{
-							top: `${cursor.y - 125}px`,
-							left: `${cursor.x - 150}px`
+		<div className={styles.container}>
+			<div className={styles.frame}>
+				<React.Fragment>
+					<Swiper
+						tag='menu'
+						role='list'
+						className={styles.slider}
+						modules={[Navigation]}
+						style={{ overflow: 'visible' }}
+						spaceBetween={8}
+						slidesPerView={1}
+						navigation={{
+							nextEl: '.swiper-navigation-next',
+							prevEl: '.swiper-navigation-prev'
 						}}
+						loop
+						initialSlide={activeIndex}
+						onSlideChange={(slider) => setTargetImage(slider.realIndex)}
 					>
-						<Image
-							className={styles.zoomImage}
-							width={1200}
-							height={900}
-							style={{
-								transformOrigin: `${zoomStyle.left} ${zoomStyle.top}`
-							}}
-							src={image && `${SERVER_BASE_URL}/${image.url}`}
-							alt='Увеличенное изображение'
-							priority
-						/>
-					</div>
-				)}
+						{images.map((image, index) => (
+							<SwiperSlide
+								key={image.id}
+								className={styles.slide}
+								role='listitem'
+							>
+								<Image
+									key={image.id}
+									src={`${SERVER_BASE_URL}/${image.url}`}
+									width={720}
+									height={720}
+									priority={index === 0}
+									alt={alt}
+								/>
+							</SwiperSlide>
+						))}
 
-				{images.length > 1 && (
-					<React.Fragment>
-						<button
-							className={clsx(styles.navButton, styles.left)}
-							onClick={onSlidePrev}
-						>
-							<ChevronLeft
-								className={styles.icon}
-								size={32}
+						<ProductImageGalleryNavigation isLoop />
+
+						{images.length > 1 && (
+							<ProductImageGalleryPagination
+								images={images}
+								alt={alt}
 							/>
-						</button>
-						<button
-							className={clsx(styles.navButton, styles.right)}
-							onClick={onSlideNext}
-						>
-							<ChevronRight
-								className={styles.icon}
-								size={32}
-							/>
-						</button>
-					</React.Fragment>
-				)}
+						)}
+					</Swiper>
+				</React.Fragment>
 			</div>
-
-			{images.length > 1 && (
-				<div className={styles.tabs}>
-					{images.map((image, index) => (
-						<ProductImage
-							key={image.id}
-							src={`${SERVER_BASE_URL}/${image.url}`}
-							width={100}
-							height={60}
-							size='thumbnail'
-							alt={`${alt} ${index + 1}`}
-							className={clsx(styles.tab, {
-								[styles.target]: targetImage === index
-							})}
-							onClick={() => handleTabClick(index)}
-						/>
-					))}
-				</div>
-			)}
 		</div>
 	)
 }

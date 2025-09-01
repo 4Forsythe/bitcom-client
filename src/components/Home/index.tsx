@@ -66,15 +66,19 @@ export const Home: React.FC<Props> = async ({
 				</div>
 			</div>
 
+			<React.Suspense>
+				<DiscountSlider />
+			</React.Suspense>
+
 			{discountProducts.items.length >= 5 && (
 				<ProductGroup
-					title='🔥 Выгодно'
+					title='Выгодные цены'
 					items={discountProducts.items}
 				/>
 			)}
 			{products.items.length >= 5 && (
 				<ProductGroup
-					title='Новинки'
+					title='Лучшие новинки'
 					items={products.items}
 				/>
 			)}

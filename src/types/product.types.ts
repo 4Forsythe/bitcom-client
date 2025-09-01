@@ -24,16 +24,27 @@ export type ProductImageType = {
 	sortOrder: number
 }
 
+export type ProductDiscountType = {
+	id: string
+	name: string
+	type: DiscountType
+	targetType: DiscountTargetType
+	amount: string
+	priority: number
+	startedAt: string
+	expiresAt: string
+}
+
 export type ProductType = {
 	id: string
 	slug: string
 	name: string
 	images: ProductImageType[] | []
-	discountTargets: (DiscountTargetType & { discount: DiscountType })[]
 	description?: string
+	count?: number
 	price: string
 	discountPrice?: string
-	count?: number
+	discount?: ProductDiscountType
 	sku: string[]
 	guarantee?: number
 	isArchived: boolean
@@ -53,11 +64,16 @@ export type ProductParamsType = {
 	id?: string
 	name?: string
 	categoryId?: string
+	discountId?: string
 	onlyOriginalPrice?: boolean
 	sortBy?: string
 	orderBy?: string
 	take?: number
 	skip?: number
+}
+
+export type ArchiveProductParamsType = ProductParamsType & {
+	type?: 'all' | 'archive' | 'unpublished'
 }
 
 export type ProductFormType = {

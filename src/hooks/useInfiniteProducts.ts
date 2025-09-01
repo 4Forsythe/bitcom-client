@@ -25,7 +25,7 @@ interface IUseInfiniteProducts {
 }
 
 export function useInfiniteProducts(
-	type: 'all' | 'archive' = 'all',
+	type: 'all' | 'archive' | 'unpublished' = 'all',
 	options?: IUseInfiniteProducts
 ) {
 	const searchParams = useSearchParams()
@@ -49,24 +49,17 @@ export function useInfiniteProducts(
 		isSuccess,
 		isError,
 		hasNextPage,
-		refetch,
 		fetchNextPage
 	} = useInfiniteQuery({
-		queryKey: ['products', page, limit, filters],
+		queryKey: ['products', page, limit, filters, type],
 		queryFn: ({ pageParam = skip }) =>
-			type === 'all'
-				? productService.getAll({
-						name: filters.search?.trim(),
-						categoryId: filters.categoryId,
-						take: limit,
-						skip: pageParam
-					})
-				: productService.getArchive({
-						name: filters.search?.trim(),
-						categoryId: filters.categoryId,
-						take: limit,
-						skip: pageParam
-					}),
+			productService.getArchive({
+				name: filters.search?.trim(),
+				categoryId: filters.categoryId,
+				type,
+				take: limit,
+				skip: pageParam
+			}),
 		initialPageParam: skip,
 		getNextPageParam: (lastPage, allPages) => {
 			const total =
@@ -76,7 +69,7 @@ export function useInfiniteProducts(
 		},
 		refetchOnWindowFocus: false,
 		placeholderData: keepPreviousData,
-		enabled: true
+		enabled: options?.enabled ?? true
 	})
 
 	const { ref, inView } = useInView()

@@ -6,7 +6,7 @@ import { LoaderCircle } from 'lucide-react'
 import styles from './button.module.scss'
 
 interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	size?: 'sm' | 'md'
+	size?: 'sm' | 'md' | 'icon'
 	variant?: 'contained' | 'outlined' | 'transparent'
 	error?: string
 	isLoading?: boolean
@@ -36,6 +36,7 @@ export const Button: React.FC<React.PropsWithChildren<IButton>> = ({
 				<div
 					className={cn(styles.variant, className, {
 						[styles.small]: size === 'sm',
+						[styles.icon]: size === 'icon',
 						[styles.contained]: variant === 'contained',
 						[styles.outlined]: variant === 'outlined',
 						[styles.transparent]: variant === 'transparent',
@@ -55,6 +56,7 @@ export const Button: React.FC<React.PropsWithChildren<IButton>> = ({
 			<button
 				className={cn(styles.variant, className, {
 					[styles.small]: size === 'sm',
+					[styles.icon]: size === 'icon',
 					[styles.contained]: variant === 'contained',
 					[styles.outlined]: variant === 'outlined',
 					[styles.transparent]: variant === 'transparent',

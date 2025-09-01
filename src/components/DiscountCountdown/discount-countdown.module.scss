@@ -1,0 +1,18 @@
+.container {
+	@apply w-56 py-3 gap-2 bg-zinc-100 border border-zinc-200 flex flex-col items-center justify-center shadow-md;
+	.title {
+		@apply text-sm font-medium;
+	}
+	.timer {
+		@apply gap-2.5 grid grid-cols-3;
+		.count {
+			@apply flex flex-col items-center;
+			.time {
+				@apply text-3xl font-bold;
+			}
+			.unit {
+				@apply font-semibold;
+			}
+		}
+	}
+}

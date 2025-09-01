@@ -23,10 +23,7 @@ interface Props {
 export const ProductSelectItem = React.memo(
 	React.forwardRef<HTMLDivElement, Props>(
 		({ product, discountPrice, isSelected, onSelect }, ref) => {
-			const discountTarget =
-				product.discountTargets.length > 0
-					? product.discountTargets[0].discount
-					: null
+			const discountTarget = product.discount ? product.discount : null
 
 			const imageSrc =
 				product.images.length > 0

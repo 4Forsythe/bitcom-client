@@ -2,18 +2,21 @@
 
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
-import clsx from 'clsx'
+import { AddCartButton, PriceBadge, ProductImage } from '@/components'
+
+import { useCart } from '@/hooks/useCart'
+import { useCartStore } from '@/store/cart'
+import { useCreateCartItem } from '@/hooks/useCreateCartItem'
+
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
+import { calcProductPriceValue } from '@/utils/calc-product-price-value'
 
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product-group-item.module.scss'
-import { calcDiscountPercent } from '@/utils/calc-discount-price'
-import { ProductImage } from '@/components/ProductImage'
-import { PriceBadge } from '@/components/ui'
 
 export const ProductGroupItem: React.FC<ProductType> = ({
 	id,
@@ -22,10 +25,23 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 	images,
 	price,
 	discountPrice,
-	count,
 	category,
 	isArchived
 }) => {
+	const router = useRouter()
+	const [isMounted, setIsMounted] = React.useState(false)
+
+	const { isCartLoading, isCartSuccess } = useCart()
+	const { items: cart } = useCartStore()
+
+	const isInCart = cart.find((item) => item.product.id === id)
+
+	const { createCartItem, isCreateCartItemPending } = useCreateCartItem()
+
+	const onAddCartItem = () => {
+		isInCart ? router.push(ROUTE.CART) : createCartItem({ productId: id })
+	}
+
 	const imageSrc =
 		images.length > 0
 			? `${SERVER_BASE_URL}/${images[0].url}`
@@ -33,20 +49,21 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 				? `/static/${category.imageUrl}`
 				: undefined
 
+	const discountValue = calcProductPriceValue(price, discountPrice)
+
+	React.useEffect(() => {
+		setIsMounted(true)
+	}, [])
+
 	return (
-		<Link
-			className={styles.container}
-			href={`${ROUTE.PRODUCT}/${slug}`}
-		>
-			<div className={styles.cover}>
+		<div className={styles.container}>
+			<Link
+				className={styles.cover}
+				href={`${ROUTE.PRODUCT}/${slug}`}
+			>
 				{isArchived && (
 					<div className={styles.overlay}>
 						<h5 className={styles.overlayTitle}>Нет в наличии</h5>
-					</div>
-				)}
-				{discountPrice && Number(discountPrice) < Number(price) && (
-					<div className={styles.discount}>
-						-{calcDiscountPercent(Number(price), Number(discountPrice))}%
 					</div>
 				)}
 				<ProductImage
@@ -58,31 +75,39 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 					size='medium'
 					priority
 				/>
-			</div>
+			</Link>
 			<div className={styles.information}>
-				<h1 className={styles.name}>{name}</h1>
+				<Link
+					className={styles.name}
+					href={`${ROUTE.PRODUCT}/${slug}`}
+				>
+					{name}
+				</Link>
 				<div className={styles.details}>
-					{!isArchived && (
-						<span
-							className={clsx(styles.breadcrumb, {
-								[styles.positive]: count !== 0,
-								[styles.negative]: count === 0,
-								[styles.warning]: count && count > 0 && count < 5
-							})}
-						>
-							{count || count === 0
-								? `На складе ${count} шт.`
-								: 'Есть в наличии'}
-						</span>
+					<Link
+						className={styles.price}
+						href={`${ROUTE.PRODUCT}/${slug}`}
+					>
+						<PriceBadge
+							price={price}
+							discountPrice={discountValue}
+						/>
+					</Link>
+					{isMounted && !isArchived && !isCartLoading && isCartSuccess && (
+						<AddCartButton
+							className={styles.cartButton}
+							variant={isInCart ? 'outlined' : 'contained'}
+							isLoading={isCreateCartItemPending}
+							onClick={(event) => {
+								event.preventDefault()
+								event.stopPropagation()
+								onAddCartItem()
+							}}
+						/>
 					)}
-					<PriceBadge
-						size='small'
-						price={price}
-						discountPrice={discountPrice}
-					/>
 				</div>
 			</div>
-		</Link>
+		</div>
 	)
 }
 

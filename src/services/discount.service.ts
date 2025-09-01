@@ -26,8 +26,10 @@ class DiscountService {
 		return response.data
 	}
 
-	async getActual(params?: DiscountParamsType): Promise<DiscountsType> {
-		const response = await api.get(`${this.endpoint}/actual`, { params })
+	async getArchive(params?: DiscountParamsType): Promise<DiscountsType> {
+		const response = await apiWithHeaders.get(`${this.endpoint}/archive`, {
+			params
+		})
 		return response.data
 	}
 

@@ -24,6 +24,7 @@ import styles from './header.module.scss'
 
 export const Header: React.FC = () => {
 	const router = useRouter()
+	const catalogRef = React.useRef<HTMLButtonElement>(null)
 	const [isCatalogPopup, setIsCatalogPopup] = React.useState(false)
 
 	const { profile } = useProfile()
@@ -98,8 +99,12 @@ export const Header: React.FC = () => {
 								/>
 							</Link>
 							<button
+								ref={catalogRef}
 								className={styles.catalogButton}
-								onClick={() => setIsCatalogPopup((prev) => !prev)}
+								onClick={(event) => {
+									event.stopPropagation()
+									setIsCatalogPopup((prev) => !prev)
+								}}
 							>
 								<List className={styles.icon} />
 								<span className={styles.catalogButtonText}>Каталог</span>
@@ -114,6 +119,7 @@ export const Header: React.FC = () => {
 					</div>
 				</div>
 				<HeaderCatalog
+					buttonRef={catalogRef}
 					items={productCategories?.items}
 					isPopup={isCatalogPopup}
 					setIsPopup={setIsCatalogPopup}

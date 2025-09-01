@@ -1,0 +1,65 @@
+.container {
+	@apply my-3.5 gap-1.5 flex flex-wrap items-center;
+	&.small {
+		.buttons {
+			.amount {
+				.value {
+					@apply text-xl font-medium;
+				}
+			}
+		}
+	}
+	.buttons {
+		@apply min-h-[42px] gap-3.5 flex flex-wrap items-center;
+		.amount {
+			@apply gap-1.5 flex items-center;
+			&.editing {
+				@apply items-end;
+			}
+			&:hover {
+				.edit {
+					@apply opacity-100 text-red-500;
+				}
+			}
+			.value {
+				@apply text-red-500 text-2xl font-semibold;
+			}
+			.edit {
+				@apply opacity-50 transition duration-200;
+			}
+			.field {
+				@apply max-w-16 flex flex-col;
+				.fieldTitle {
+					@apply text-[0.7rem] font-semibold leading-3;
+				}
+				.fieldInput {
+					@apply h-[28px] py-0 font-medium;
+				}
+			}
+		}
+	}
+	.button {
+		@apply w-[72px] h-[54px] p-1.5 text-[0.85rem] font-medium flex flex-col items-center justify-center bg-zinc-200 rounded-xl
+		hover:bg-zinc-300/80 active:bg-zinc-300/60 transition duration-200;
+		&.wide {
+			@apply w-fit h-10 px-3 gap-1.5 text-sm flex-row;
+		}
+		&.active {
+			@apply text-zinc-50 bg-red-500;
+		}
+	}
+}
+
+@media (max-width: 350px) {
+	.container {
+		.buttons {
+			@apply w-full mr-0;
+		}
+		.button {
+			@apply w-full h-10 px-3.5 gap-1.5 text-sm flex flex-row items-center;
+			&.wide {
+				@apply w-full flex items-center;
+			}
+		}
+	}
+}

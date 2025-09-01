@@ -1,49 +1,53 @@
 'use client'
 
 import React from 'react'
-import clsx from 'clsx'
-import { X } from 'lucide-react'
 
 import {
+	Badge,
 	BackToTop,
 	EmptyBlock,
-	ArchiveListItem,
+	ProductArchiveListItem,
 	ArchiveListItemSkeleton,
 	SmallSearchBar,
-	Button
+	FlatCategoryFilter
 } from '@/components'
-import { API_BASE_URL } from '@/constants'
 
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
 import { useProductCategories } from '@/hooks/useProductCategories'
 
-import styles from './archive-list.module.scss'
-import toast from 'react-hot-toast'
+import styles from './product-archive-list.module.scss'
 
-export const ArchiveList: React.FC = () => {
+type TabType = {
+	name: string
+	property: string
+}
+
+const TABS: TabType[] = [
+	{
+		name: 'На продаже',
+		property: 'public'
+	},
+	{
+		name: 'В архиве',
+		property: 'archive'
+	},
+	{
+		name: 'Черновики',
+		property: 'unpublished'
+	}
+]
+
+export const ProductArchiveList: React.FC = () => {
 	const isFetched = React.useRef(false)
 
-	const [isFileProcessing, setIsFileProcessing] = React.useState(false)
+	const [tab, setTab] = React.useState(TABS[0])
 	const [search, setSearch] = React.useState('')
 	const [targetCategory, setTargetCategory] = React.useState<string | null>(
 		null
 	)
 
-	const handleDownloadFile = async () => {
-		setIsFileProcessing(true)
-
-		try {
-			window.open(`${API_BASE_URL}/product/export`, '_blank')
-		} catch (error) {
-			console.error('ArchiveList: handleDownloadFile', error)
-			toast.error('Возникла ошибка при экспорте в Excel')
-		} finally {
-			setIsFileProcessing(false)
-		}
-	}
-
 	const { productCategories, isProductCategoriesLoading } =
-		useProductCategories(undefined, { flat: true })
+		useProductCategories(undefined, { params: { flat: true } })
 
 	const {
 		products,
@@ -51,7 +55,13 @@ export const ArchiveList: React.FC = () => {
 		isProductsSuccess,
 		intersectionRef,
 		refetch
-	} = useInfiniteProducts('archive')
+	} = useInfiniteProducts(
+		tab.property === 'unpublished'
+			? 'unpublished'
+			: tab.property === 'archive'
+				? 'archive'
+				: 'all'
+	)
 
 	const flatProducts = products
 		? products.pages.flatMap((item) => item.items)
@@ -78,52 +88,25 @@ export const ArchiveList: React.FC = () => {
 					<div className={styles.topbarMenu}>
 						<SmallSearchBar
 							className={styles.searchbar}
-							placeholder='Поиск позиции...'
+							placeholder='Поиск по названию...'
 							onFetch={(query) => setSearch(query)}
 						/>
-						<Button
-							className={styles.exportLink}
-							onClick={handleDownloadFile}
-							isLoading={isFileProcessing}
-						>
-							{isFileProcessing ? 'Генерируем файл...' : 'Экспорт в Excel'}
-						</Button>
+						<div className={styles.sortTabs}>
+							{TABS.map((item) => (
+								<Badge
+									key={item.property}
+									variant={tab === item ? 'contained' : 'outlined'}
+									onClick={() => setTab(item)}
+								>
+									{item.name}
+								</Badge>
+							))}
+						</div>
 					</div>
-					{isProductCategoriesLoading ? (
-						<div className='w-full h-[40px] flex bg-gray-200 rounded-3xl animate-pulse' />
-					) : (
-						productCategories &&
-						productCategories.items.length > 0 && (
-							<ul className={styles.categories}>
-								{productCategories.items.map((category) => (
-									<li
-										key={category.id}
-										className={clsx(styles.categoryItem, {
-											[styles.active]: targetCategory === category.id
-										})}
-									>
-										<button
-											className={styles.categoryButton}
-											onClick={() => setTargetCategory(category.id)}
-										>
-											{category.name}
-										</button>
-										{targetCategory === category.id && (
-											<button
-												className={clsx(styles.categoryIcon, 'animate-opacity')}
-												onClick={() => setTargetCategory(null)}
-											>
-												<X
-													className={styles.icon}
-													size={16}
-												/>
-											</button>
-										)}
-									</li>
-								))}
-							</ul>
-						)
-					)}
+					<FlatCategoryFilter
+						selected={targetCategory}
+						onSelect={(id) => setTargetCategory(id)}
+					/>
 				</div>
 			)}
 
@@ -139,7 +122,7 @@ export const ArchiveList: React.FC = () => {
 
 							return (
 								<React.Fragment key={item.id}>
-									<ArchiveListItem {...item} />
+									<ProductArchiveListItem {...item} />
 									{isLast && <div ref={intersectionRef} />}
 								</React.Fragment>
 							)

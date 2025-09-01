@@ -1,5 +1,10 @@
 .container {
 	@apply my-3.5 gap-1.5 flex flex-wrap items-center;
+	&.small {
+		.buttons {
+			@apply justify-end;
+		}
+	}
 	.buttons {
 		@apply gap-1.5 mr-auto flex flex-wrap items-center;
 	}

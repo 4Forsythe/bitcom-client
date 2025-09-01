@@ -8,7 +8,8 @@ import {
 	Button,
 	AddWishlistButton,
 	ProductImage,
-	PriceBadge
+	PriceBadge,
+	Badge
 } from '@/components'
 
 import { useCart } from '@/hooks/useCart'
@@ -20,12 +21,12 @@ import { useDeleteCartItem } from '@/hooks/useDeleteCartItem'
 
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
-import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { calcDiscountPercent } from '@/utils/calc-discount-percent'
+import { calcProductPriceValue } from '@/utils/calc-product-price-value'
 
 import type { WishlistItemType } from '@/types/wishlist.types'
 
 import styles from './wishlist-item.module.scss'
-import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
 
 export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 	const imageSrc =
@@ -34,6 +35,8 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: product.category.imageUrl
 				? `/static/${product.category.imageUrl}`
 				: undefined
+
+	const count = product.count
 
 	const { isCartLoading } = useCart()
 
@@ -63,24 +66,9 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 			: createCartItem({ productId: product.id })
 	}
 
-	const { price, discountPrice, discountTargets } = product
+	const { price, discountPrice } = product
 
-	const isDiscountAvailable =
-		discountTargets.length > 0 &&
-		new Date(discountTargets[0].discount.expiresAt) > new Date()
-
-	const discountTarget = isDiscountAvailable
-		? {
-				type: discountTargets[0].discount.type,
-				amount: discountTargets[0].discount.amount
-			}
-		: null
-
-	const discountValue = calcMaxDiscountValue(
-		price,
-		discountPrice,
-		discountTarget
-	)
+	const discountValue = calcProductPriceValue(price, discountPrice)
 
 	// const descriptionHtml = product.description
 	// 	? product.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
@@ -144,18 +132,20 @@ export const WishlistItem: React.FC<WishlistItemType> = ({ id, product }) => {
 					discountPrice={discountValue}
 				/>
 				{!product.isArchived && (
-					<span
-						className={clsx(styles.breadcrumb, {
-							[styles.positive]: product.count !== 0,
-							[styles.negative]: product.count === 0,
-							[styles.warning]:
-								product.count && product.count > 0 && product.count < 5
-						})}
+					<Badge
+						size='sm'
+						color={
+							count !== 0
+								? 'green'
+								: count === 0
+									? 'red'
+									: count && count > 0 && count < 5
+										? 'orange'
+										: 'grey'
+						}
 					>
-						{product.count || product.count === 0
-							? `На складе ${product.count} шт.`
-							: 'Есть в наличии'}
-					</span>
+						{count || count === 0 ? `На складе ${count} шт.` : 'Есть в наличии'}
+					</Badge>
 				)}
 				<div className={styles.controls}>
 					<AddWishlistButton

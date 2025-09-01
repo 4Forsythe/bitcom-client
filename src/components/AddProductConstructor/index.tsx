@@ -3,15 +3,10 @@
 import React from 'react'
 import clsx from 'clsx'
 import { ChevronRight } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
 
-import {
-	Button,
-	Heading,
-	AddProductForm,
-	ProductEditingAlert
-} from '@/components'
+import { Heading, AddProductForm, ProductEditingAlert } from '@/components'
 import { AddProductCategoryItem } from './add-product-category-item'
 
 import { productService } from '@/services/product.service'
@@ -25,9 +20,7 @@ import type { ProductCategoryType } from '@/types/product-category.types'
 import styles from './add-product.module.scss'
 
 export const AddProductConstructor: React.FC = () => {
-	const queryClient = useQueryClient()
 	const searchParams = useSearchParams()
-
 	const productId = searchParams.get('productId')
 
 	const {
@@ -89,11 +82,7 @@ export const AddProductConstructor: React.FC = () => {
 	}
 
 	React.useEffect(() => {
-		queryClient.removeQueries({ queryKey: [productId] })
-	}, [productId])
-
-	React.useEffect(() => {
-		if (product) {
+		if (isProductSuccess && product) {
 			setIsShowForm(true)
 		}
 	}, [productId, product, isProductSuccess])
@@ -183,8 +172,8 @@ export const AddProductConstructor: React.FC = () => {
 								<React.Fragment>
 									{[...new Array(3)].map((_, index) => (
 										<div
-											className='w-full h-[300px] bg-gray-200 rounded-md animate-pulse'
 											key={index}
+											className='w-full h-[300px] bg-gray-200 rounded-md animate-pulse'
 										/>
 									))}
 								</React.Fragment>

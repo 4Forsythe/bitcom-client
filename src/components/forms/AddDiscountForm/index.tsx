@@ -19,11 +19,14 @@ import {
 import { calcNounDeclension } from '@/utils/calc-noun-declension'
 import { createDiscountSchema } from '@/schemas/create-discount.schema'
 
+import { useDiscountDetails } from '@/hooks/useDiscountDetails'
 import { useCreateDiscount } from '@/hooks/useCreateDiscount'
+import { useUpdateDiscount } from '@/hooks/useUpdateDiscount'
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
 import { useProductCategories } from '@/hooks/useProductCategories'
 
 import {
+	type DiscountType,
 	type DiscountFormType,
 	type CreateDiscountType,
 	DiscountTypeVariables
@@ -31,6 +34,7 @@ import {
 import type { SelectItemType } from '@/components/ui/Select'
 
 import styles from './add-discount-form.module.scss'
+import { ROUTE } from '@/config/routes.config'
 
 const DISCOUNT_TYPES: SelectItemType[] = [
 	{
@@ -46,19 +50,23 @@ const DISCOUNT_TYPES: SelectItemType[] = [
 	}
 ]
 
-interface Props {}
+interface Props {
+	discount?: DiscountType
+}
 
-export const AddDiscountForm: React.FC<Props> = ({}) => {
+export const AddDiscountForm: React.FC<Props> = ({ discount }) => {
 	const router = useRouter()
 	const searchParams = useSearchParams()
 	const today = new Date()
 	const expiresAt = new Date(today)
 
-	const {
-		productCategories,
-		isProductCategoriesLoading,
-		isProductCategoriesError
-	} = useProductCategories(undefined, { flat: true })
+	const details = useDiscountDetails(discount)
+
+	// const {
+	// 	productCategories,
+	// 	isProductCategoriesLoading,
+	// 	isProductCategoriesError
+	// } = useProductCategories(undefined, { params: { flat: true } })
 
 	const {
 		products,
@@ -67,13 +75,19 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 		isProductsFetching,
 		intersectionRef,
 		refetch
-	} = useInfiniteProducts('archive')
+	} = useInfiniteProducts('all')
 
 	const {
 		createDiscountAsync,
 		isCreateDiscountPending,
 		isCreateDiscountError
 	} = useCreateDiscount()
+
+	const {
+		updateDiscountAsync,
+		isUpdateDiscountPending,
+		isUpdateDiscountError
+	} = useUpdateDiscount()
 
 	expiresAt.setDate(expiresAt.getDate() + 7)
 
@@ -106,23 +120,23 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 
 	React.useEffect(() => {
 		methods.reset({
-			name: '',
+			name: discount?.name,
 			type: DiscountTypeVariables.PERCENT,
-			amount: undefined,
-			priority: undefined,
-			products: [],
-			categoryId: null,
-			isArchived: false,
-			startedAt: today,
-			expiresAt: expiresAt
+			amount: Number(discount?.amount) || undefined,
+			priority: details.priority,
+			products: details.products,
+			categoryId: details.categoryId,
+			isArchived: discount?.isArchived,
+			startedAt: discount?.startedAt ? new Date(discount.startedAt) : today,
+			expiresAt: discount?.expiresAt ? new Date(discount.expiresAt) : expiresAt
 		})
-	}, [router, searchParams])
+	}, [router, searchParams, discount])
 
 	React.useEffect(() => {
-		if (isCreateDiscountError) {
+		if (isCreateDiscountError || isUpdateDiscountError) {
 			window.scrollTo(0, 0)
 		}
-	}, [isCreateDiscountError])
+	}, [isCreateDiscountError, isUpdateDiscountError])
 
 	const onSubmit = async (data: DiscountFormType) => {
 		const getMidnight = (date: Date) => {
@@ -150,7 +164,16 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 			expiresAt: getMidnight(data.expiresAt).toISOString()
 		}
 
-		await createDiscountAsync(dto)
+		let item = discount
+
+		if (discount) {
+			item = await updateDiscountAsync({ id: discount.id, dto })
+		} else {
+			item = await createDiscountAsync(dto)
+		}
+
+		router.push(item ? `${ROUTE.DISCOUNTS}/${item.id}` : ROUTE.DISCOUNTS)
+		router.refresh()
 	}
 
 	return (
@@ -161,7 +184,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 						className={styles.form}
 						onSubmit={methods.handleSubmit(onSubmit)}
 					>
-						{isCreateDiscountError && (
+						{(isCreateDiscountError || isUpdateDiscountError) && (
 							<InfoBlock variant='dangerous'>
 								К сожалению, возникла ошибка на стороне сервера
 							</InfoBlock>
@@ -260,10 +283,11 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 									type='number'
 									placeholder='от 0 до 9'
 									maxLength={1}
+									hint='Разный приоритет у скидок повышает предсказуемость ранжирования в порядке убывания: чем больше приоритет, тем меньше шансов того, что другая скидка "перекроет" стоимость товаров'
 								/>
 							</div>
 
-							<div className={styles.field}>
+							{/* <div className={styles.field}>
 								<div className={styles.fieldHeading}>
 									<h5 className={styles.fieldTitle}>Цель акции — категория</h5>
 									<p className={styles.fieldCaption}>
@@ -298,7 +322,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 										<div className={styles.overlay} />
 									)}
 								</div>
-							</div>
+							</div> */}
 
 							<div className={styles.field}>
 								<div className={styles.fieldHeading}>
@@ -332,7 +356,10 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 															)
 														: field.onChange([...(field.value ?? []), item.id])
 												}}
-												onFetch={(query) => refetch({ search: query })}
+												onFetch={({ query, categoryId }) =>
+													refetch({ search: query, categoryId })
+												}
+												onReset={() => field.onChange([])}
 												isLoading={isProductsLoading}
 												isFetching={isProductsFetching}
 												error={
@@ -348,23 +375,25 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 							</div>
 						</div>
 
-						<div className={styles.block}>
-							<h4 className={styles.title}>Дополнительно</h4>
+						{discount && (
+							<div className={styles.block}>
+								<h4 className={styles.title}>Дополнительно</h4>
 
-							<div className={styles.field}>
-								<div className={styles.fieldHeading}>
-									<h5 className={styles.fieldTitle}>Досрочное завершение</h5>
+								<div className={styles.field}>
+									<div className={styles.fieldHeading}>
+										<h5 className={styles.fieldTitle}>Досрочное завершение</h5>
+									</div>
+									<SwitchButton
+										name='isArchived'
+										label='Завершить акцию и отменить скидки на товары'
+									/>
+									<span className={styles.fieldDescription}>
+										После завершения акции всем товарам вернутся изначальные
+										цены, включая скидочные
+									</span>
 								</div>
-								<SwitchButton
-									name='isArchived'
-									label='Завершить акцию и отменить скидки на товары'
-								/>
-								<span className={styles.fieldDescription}>
-									После завершения акции всем товарам вернутся изначальные цены,
-									включая скидочные
-								</span>
 							</div>
-						</div>
+						)}
 
 						<div className={styles.buttons}>
 							<Button
@@ -372,7 +401,7 @@ export const AddDiscountForm: React.FC<Props> = ({}) => {
 								onClick={() => setSubmitActionType('publish')}
 								isLoading={isCreateDiscountPending}
 							>
-								Запланировать акцию
+								{discount ? 'Обновить изменения' : 'Запланировать акцию'}
 							</Button>
 							<Button
 								variant='outlined'

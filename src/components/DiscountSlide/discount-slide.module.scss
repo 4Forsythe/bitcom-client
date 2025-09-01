@@ -1,5 +1,5 @@
 .container {
-	@apply max-w-full h-[208px] w-full p-5 gap-2 flex flex-col bg-white border border-zinc-100 rounded-xl overflow-hidden relative;
+	@apply max-w-full h-[208px] w-full p-5 gap-2 flex flex-col bg-zinc-200 border border-zinc-300/30 rounded-xl shadow overflow-hidden relative;
 	&:hover {
 		.cover {
 			@apply translate-y-1.5;

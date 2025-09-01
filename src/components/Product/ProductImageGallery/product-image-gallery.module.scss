@@ -1,7 +1,7 @@
 .container {
-	@apply p-8 gap-5 flex flex-col items-center overflow-hidden;
+	@apply h-fit p-8 gap-5 flex flex-col items-center overflow-hidden;
 	.main {
-		@apply max-w-[608px] max-h-[608px] w-full h-full bg-white flex items-center justify-center rounded-lg relative overflow-hidden;
+		@apply max-w-[608px] w-full h-full flex items-center justify-center rounded-lg relative overflow-hidden;
 		&:hover {
 			.navButton {
 				@apply opacity-100;
@@ -20,12 +20,70 @@
 			@apply top-0 right-0;
 		}
 	}
+}
+
+.slider {
+	@apply relative;
+	&:hover {
+		.navigation {
+			&.hint {
+				.button {
+					&.prev {
+						@apply translate-x-0;
+					}
+					&.next {
+						@apply translate-x-0;
+					}
+				}
+			}
+		}
+	}
+}
+.pagination {
+	@apply mt-5 bg-transparent;
 	.list {
-		@apply gap-1.5 px-5 flex flex-wrap items-center justify-center;
+		@apply gap-2 px-5 flex flex-wrap items-center justify-center;
 		.listItem {
-			@apply w-[75px] h-[55px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
+			@apply w-[55px] h-[55px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
 			&.target {
 				@apply border-red-500;
+			}
+		}
+	}
+}
+.navigation {
+	.button {
+		@apply w-12 h-12 top-[50%] p-1.5 inline-flex items-center justify-center z-50 rounded-xl overflow-hidden absolute transition-all duration-200;
+		&:disabled {
+			@apply hidden;
+		}
+		&.prev,
+		&.next {
+			@apply -translate-y-[50%] bg-zinc-200/50 hover:bg-zinc-50;
+		}
+		.icon {
+			@apply w-7 h-7 opacity-80 text-zinc-800;
+		}
+	}
+	.button {
+		&.prev,
+		&.next {
+			@apply translate-x-0;
+		}
+		&.prev {
+			@apply left-1.5;
+		}
+		&.next {
+			@apply right-1.5;
+		}
+	}
+	&.hint {
+		.button {
+			&.prev {
+				@apply left-2 -translate-x-20;
+			}
+			&.next {
+				@apply right-2 translate-x-20;
 			}
 		}
 	}

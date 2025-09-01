@@ -1,0 +1,54 @@
+.container {
+	@apply mb-5 flex flex-1 flex-col bg-white shadow-sm;
+	.background {
+		@apply relative;
+		.overlay {
+			@apply inset-0 z-[30] bg-zinc-100/80 flex items-center justify-center pointer-events-none absolute;
+			.overlayTitle {
+				@apply text-zinc-700/70 text-2xl sm:text-3xl md:text-5xl font-semibold uppercase;
+			}
+		}
+	}
+	.inner {
+		@apply p-5 flex flex-1 flex-col;
+		.heading {
+			@apply flex items-start justify-between;
+			.headingInformation {
+				@apply flex flex-col;
+				.description {
+					@apply mb-1.5;
+				}
+			}
+		}
+		.list {
+			@apply min-h-60 my-5 gap-5 flex flex-1 md:flex-row flex-col-reverse items-stretch justify-between;
+			.items {
+				@apply gap-1.5 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+			}
+			.empty {
+				@apply min-h-full p-4 flex flex-1 flex-col items-center justify-center;
+				.description {
+					@apply text-center text-lg font-medium;
+				}
+			}
+			.countdown {
+				@apply md:top-[120px] shrink-0 md:sticky;
+				&.expired {
+					@apply opacity-35;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 350px) {
+	.container {
+		.inner {
+			.list {
+				.items {
+					@apply grid-cols-1;
+				}
+			}
+		}
+	}
+}

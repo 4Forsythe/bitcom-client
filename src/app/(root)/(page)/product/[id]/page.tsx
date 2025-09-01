@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
 	const product = await getProduct(id)
 
-	if (!product || !product.isPublished) notFound()
+	if (!product) notFound()
 
 	const similar = await getSimilar(id)
 

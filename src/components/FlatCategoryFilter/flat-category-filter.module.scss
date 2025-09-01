@@ -1,0 +1,33 @@
+.container {
+	@apply flex flex-col;
+	.filter {
+		@apply space-y-3.5 flex flex-col;
+		.title {
+			@apply font-semibold;
+		}
+		.list {
+			@apply h-6 gap-3 flex flex-wrap items-center overflow-hidden transition duration-200;
+			&.popup {
+				@apply h-fit;
+			}
+			.categoryItem {
+				@apply w-fit text-sm text-zinc-600/80 bg-zinc-200 flex items-center rounded-3xl hover:text-zinc-700 hover:bg-zinc-300/80 transition duration-200;
+				&.active {
+					@apply text-zinc-50 bg-zinc-700;
+				}
+				.categoryButton {
+					@apply px-2 py-0.5;
+				}
+				.categoryIcon {
+					@apply pr-2 py-0.5;
+					.icon {
+						@apply text-zinc-50 bg-zinc-500 rounded-3xl;
+					}
+				}
+			}
+		}
+		.categoryExpandButton {
+			@apply w-fit px-2 text-sm font-medium text-blue-700/70 hover:text-blue-700 transition duration-200;
+		}
+	}
+}

@@ -1,12 +1,14 @@
 import React from 'react'
-import clsx from 'clsx'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
 
 import { useModal } from '@/hooks/useModal'
 import { useWindowSize } from '@/hooks/useWindowSize'
 import { SERVER_BASE_URL } from '@/constants'
 import { ProductImage } from '@/components/ProductImage'
 import { ProductPreviewModal } from '../ProductPreviewModal'
+import { ProductImageGalleryNavigation } from './product-image-gallery-navigation'
+import { ProductImageGalleryPagination } from './product-image-gallery-pagination'
 
 import type { ProductImageType } from '@/types/product.types'
 import type { ProductCategoryType } from '@/types/product-category.types'
@@ -36,20 +38,12 @@ export const ProductImageGallery: React.FC<Props> = ({
 	const { onOpen } = useModal()
 	const { width } = useWindowSize()
 
-	const onSlidePrev = () => {
-		setTargetImage((prev) => (prev - 1 >= 0 ? prev - 1 : images.length - 1))
-	}
-
-	const onSlideNext = () => {
-		setTargetImage((prev) => (prev + 1 >= images.length ? 0 : prev + 1))
-	}
-
 	const onShowPreview = () => {
 		if (images.length > 0 && width && width >= 768) {
 			onOpen(
 				<ProductPreviewModal
-					targetIndex={targetImage}
 					images={images}
+					activeIndex={targetImage}
 					alt={alt}
 				/>
 			)
@@ -58,68 +52,76 @@ export const ProductImageGallery: React.FC<Props> = ({
 
 	return (
 		<div className={styles.container}>
-			<div
-				key={images[targetImage] ? images[targetImage].url : undefined}
-				className={styles.main}
-			>
-				<ProductImage
-					src={imageSrc}
-					isPlaceholder={!images.length && !!category.imageUrl}
-					width={608}
-					height={608}
-					size='large'
-					priority
-					alt={alt}
-					onClick={onShowPreview}
-				/>
-				{images.length > 1 && (
+			<div className={styles.main}>
+				{images.length > 1 ? (
 					<React.Fragment>
-						<button
-							className={clsx(styles.navButton, styles.left)}
-							onClick={onSlidePrev}
+						<Swiper
+							tag='menu'
+							role='list'
+							className={styles.slider}
+							modules={[Navigation]}
+							style={{ overflow: 'visible' }}
+							spaceBetween={8}
+							slidesPerView={1}
+							navigation={{
+								nextEl: '.swiper-navigation-next',
+								prevEl: '.swiper-navigation-prev'
+							}}
+							loop
+							onSlideChange={(slider) => setTargetImage(slider.realIndex)}
 						>
-							<ChevronLeft
-								className={styles.icon}
-								size={32}
+							{images.map((image, index) => (
+								<SwiperSlide
+									key={image.id}
+									role='listitem'
+								>
+									<ProductImage
+										key={image.id}
+										src={
+											image
+												? `${SERVER_BASE_URL}/${image.url}`
+												: category.imageUrl
+													? `/static/${category.imageUrl}`
+													: undefined
+										}
+										isPlaceholder={!images.length && !!category.imageUrl}
+										width={608}
+										height={608}
+										size='large'
+										priority={index === 0}
+										alt={alt}
+										onClick={onShowPreview}
+									/>
+								</SwiperSlide>
+							))}
+
+							<ProductImageGalleryNavigation
+								asHint
+								isLoop
 							/>
-						</button>
-						<button
-							className={clsx(styles.navButton, styles.right)}
-							onClick={onSlideNext}
-						>
-							<ChevronRight
-								className={styles.icon}
-								size={32}
-							/>
-						</button>
+
+							{images.length > 1 && (
+								<ProductImageGalleryPagination
+									images={images}
+									category={category}
+									alt={alt}
+								/>
+							)}
+						</Swiper>
 					</React.Fragment>
+				) : (
+					<ProductImage
+						src={imageSrc}
+						isPlaceholder={!images.length && !!category.imageUrl}
+						width={608}
+						height={608}
+						size='large'
+						priority
+						alt={alt}
+						onClick={onShowPreview}
+					/>
 				)}
 			</div>
-			{images.length > 1 && (
-				<div className={styles.list}>
-					{images.map((image, index) => (
-						<ProductImage
-							key={image.id}
-							src={
-								image
-									? `${SERVER_BASE_URL}/${image.url}`
-									: category.imageUrl
-										? `/static/${category.imageUrl}`
-										: undefined
-							}
-							isPlaceholder={!image && !!category.imageUrl}
-							width={75}
-							height={55}
-							size='thumbnail'
-							alt={`${alt} ${index + 1}`}
-							className={clsx(styles.listItem, {
-								[styles.target]: targetImage === index
-							})}
-							onClick={() => setTargetImage(index)}
-						/>
-					))}
-				</div>
-			)}
 		</div>
 	)
 }

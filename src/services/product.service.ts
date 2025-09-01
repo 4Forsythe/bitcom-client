@@ -4,6 +4,7 @@ import type {
 	ProductType,
 	ProductsType,
 	ProductParamsType,
+	ArchiveProductParamsType,
 	CreateProductType,
 	UpdateProductType,
 	UploadImagesPayloadType
@@ -54,7 +55,7 @@ class ProductService {
 		return response.data
 	}
 
-	async getArchive(params?: ProductParamsType): Promise<ProductsType> {
+	async getArchive(params?: ArchiveProductParamsType): Promise<ProductsType> {
 		const response = await apiWithHeaders.get(`${this.endpoint}/archive`, {
 			params
 		})
@@ -78,7 +79,9 @@ class ProductService {
 	}
 
 	async getByIds(ids: string[]): Promise<ProductsType> {
-		const response = await api.post<ProductsType>(this.endpoint, { ids })
+		const response = await api.get<ProductsType>(
+			`${this.endpoint}?ids=${ids.join(',')}`
+		)
 		return response.data
 	}
 

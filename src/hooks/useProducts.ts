@@ -18,13 +18,18 @@ interface ProductsFilters {
 	categoryId?: string
 }
 
-export function useProducts(type: 'all' | 'archive' = 'all') {
+export function useProducts(
+	type: 'all' | 'archive' = 'all',
+	options?: ProductsFilters
+) {
 	const searchParams = useSearchParams()
 
-	const [filters, setFilters] = React.useState<ProductsFilters>({
-		search: '',
-		categoryId: ''
-	})
+	const [filters, setFilters] = React.useState<ProductsFilters>(
+		options || {
+			search: '',
+			categoryId: ''
+		}
+	)
 	const [page, setPage] = React.useState(Number(searchParams.get('page')) || 1)
 	const [limit, setLimit] = React.useState(
 		Number(searchParams.get('limit')) || 15

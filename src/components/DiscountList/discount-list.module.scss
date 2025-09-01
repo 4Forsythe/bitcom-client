@@ -1,0 +1,62 @@
+.container {
+	@apply h-full gap-3 flex flex-1 relative;
+	.sortbar {
+		@apply gap-1.5 flex items-center;
+		.sortItems {
+			@apply gap-2 flex items-center;
+			.sortItem {
+				.sortItemSelect {
+					@apply px-2.5 py-1.5 gap-1.5 text-sm bg-zinc-200 flex items-center shadow-md rounded-md hover:bg-zinc-50 transition duration-200;
+					&.sortItemActive {
+						@apply text-red-500 bg-zinc-50;
+					}
+				}
+			}
+		}
+	}
+	.inner {
+		@apply w-full gap-5 flex flex-col grow;
+		.list {
+			@apply w-full mb-5 gap-3 flex flex-col;
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		.sidebar {
+			@apply hidden;
+		}
+		.inner {
+			@apply gap-2.5;
+		}
+	}
+}
+@media (max-width: 768px) {
+	.container {
+		.inner {
+			.list {
+				@apply gap-2 grid grid-cols-2;
+			}
+		}
+	}
+}
+@media (max-width: 530px) {
+	.container {
+		.inner {
+			.list {
+				@apply gap-2 grid grid-cols-1;
+			}
+		}
+	}
+}
+@media (max-width: 380px) {
+	.container {
+		@apply px-1.5;
+		.inner {
+			.list {
+				@apply grid-cols-1;
+			}
+		}
+	}
+}

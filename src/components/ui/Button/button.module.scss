@@ -5,6 +5,9 @@
 		&.small {
 			@apply px-5 py-1.5 text-sm;
 		}
+		&.icon {
+			@apply p-1.5 text-sm;
+		}
 		&.contained {
 			@apply text-zinc-200 bg-red-600/90 hover:bg-red-700/90 active:bg-red-600/90
 			transition-colors duration-200;

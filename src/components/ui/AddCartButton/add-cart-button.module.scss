@@ -1,0 +1,32 @@
+.container {
+	@apply p-3 border flex items-center justify-center rounded-lg relative
+  transition-colors duration-200;
+	&:disabled {
+		@apply opacity-50 pointer-events-none;
+	}
+	&.contained {
+		@apply text-zinc-50 bg-red-500 border-transparent hover:bg-red-400/90;
+	}
+	&.outlined {
+		@apply text-zinc-400 bg-zinc-200 border-zinc-200 rounded-lg hover:text-zinc-700;
+	}
+	&.loaded {
+		@apply opacity-75 text-transparent animate-pulse;
+		.loader {
+			@apply w-auto h-5 text-zinc-500 absolute animate-spin;
+		}
+		&.contained {
+			.loader {
+				@apply text-red-400;
+			}
+		}
+		&.outlined {
+			.loader {
+				@apply text-zinc-500;
+			}
+		}
+	}
+	.icon {
+		@apply w-auto h-5;
+	}
+}

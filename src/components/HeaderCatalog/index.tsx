@@ -33,6 +33,7 @@ interface Props {
 	items?: ProductCategoryType[]
 	isPopup?: boolean
 	isLoading?: boolean
+	buttonRef: React.RefObject<HTMLButtonElement>
 	setIsPopup: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -40,17 +41,40 @@ export const HeaderCatalog: React.FC<Props> = ({
 	items,
 	isPopup,
 	isLoading,
+	buttonRef,
 	setIsPopup
 }) => {
 	const pathname = usePathname()
+	const popupRef = React.useRef<HTMLDivElement>(null)
 
 	React.useEffect(() => {
 		setIsPopup(false)
 	}, [pathname])
 
+	const handleClickOutside = React.useCallback((event: MouseEvent) => {
+		if (
+			popupRef.current &&
+			!popupRef.current.contains(event.target as Node) &&
+			!(buttonRef.current && buttonRef.current.contains(event.target as Node))
+		) {
+			setIsPopup(false)
+		}
+	}, [])
+
+	React.useEffect(() => {
+		document.body.addEventListener('click', handleClickOutside)
+
+		return () => {
+			document.body.removeEventListener('click', handleClickOutside)
+		}
+	}, [handleClickOutside])
+
 	return (
 		<div className={clsx(styles.container, { [styles.popup]: isPopup })}>
-			<div className={styles.categories}>
+			<div
+				ref={popupRef}
+				className={styles.categories}
+			>
 				{isLoading
 					? [...new Array(4)].map((_, index) => (
 							<div

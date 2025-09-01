@@ -5,7 +5,15 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 
 import clsx from 'clsx'
-import { Archive, File, LogOut, PackagePlus } from 'lucide-react'
+import {
+	Archive,
+	BadgePercent,
+	Download,
+	File,
+	LogOut,
+	PackagePlus,
+	TicketPercent
+} from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui'
@@ -93,9 +101,33 @@ export const ProfileSidebar: React.FC = () => {
 					<React.Fragment>
 						<li className={styles.item}>
 							<Link
-								href={ROUTE.ARCHIVE}
+								href={ROUTE.MY_DISCOUNTS}
 								className={clsx(styles.tab, {
-									[styles.target]: pathname === ROUTE.ARCHIVE
+									[styles.target]: pathname === ROUTE.MY_DISCOUNTS
+								})}
+							>
+								<BadgePercent className={styles.icon} />
+								Акции
+								<span className={styles.tabBadge}>Новое</span>
+							</Link>
+						</li>
+						<li className={styles.item}>
+							<Link
+								href={ROUTE.ADD_DISCOUNT}
+								className={clsx(styles.tab, {
+									[styles.target]: pathname === ROUTE.ADD_DISCOUNT
+								})}
+							>
+								<TicketPercent className={styles.icon} />
+								Добавить акцию
+								<span className={styles.tabBadge}>Новое</span>
+							</Link>
+						</li>
+						<li className={styles.item}>
+							<Link
+								href={ROUTE.MY_PRODUCTS}
+								className={clsx(styles.tab, {
+									[styles.target]: pathname === ROUTE.MY_PRODUCTS
 								})}
 							>
 								<Archive className={styles.icon} />
@@ -104,7 +136,6 @@ export const ProfileSidebar: React.FC = () => {
 						</li>
 						<li className={styles.item}>
 							<Link
-								target='_blank'
 								href={ROUTE.ADD_PRODUCT}
 								className={clsx(styles.tab, {
 									[styles.target]: pathname === ROUTE.ADD_PRODUCT
@@ -112,6 +143,18 @@ export const ProfileSidebar: React.FC = () => {
 							>
 								<PackagePlus className={styles.icon} />
 								Добавить товар
+							</Link>
+						</li>
+						<li className={styles.item}>
+							<Link
+								href={ROUTE.EXPORT}
+								className={clsx(styles.tab, {
+									[styles.target]: pathname === ROUTE.EXPORT
+								})}
+							>
+								<Download className={styles.icon} />
+								Экспорт данных
+								<span className={styles.tabBadge}>Новое</span>
 							</Link>
 						</li>
 						<li className={styles.item}>

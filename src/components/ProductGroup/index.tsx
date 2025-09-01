@@ -1,9 +1,6 @@
 import React from 'react'
-import Link from 'next/link'
 
 import { ProductGroupItem, ProductGroupItemSkeleton } from './ProductGroupItem'
-
-import { ROUTE } from '@/config/routes.config'
 
 import type { ProductType } from '@/types/product.types'
 

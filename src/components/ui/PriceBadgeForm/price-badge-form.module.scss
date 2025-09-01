@@ -1,0 +1,23 @@
+.container {
+	@apply gap-1.5 flex items-center;
+	&.editing {
+		@apply items-end;
+	}
+	&:hover {
+		.edit {
+			@apply opacity-100 text-red-500;
+		}
+	}
+	.edit {
+		@apply opacity-50 transition duration-200;
+	}
+	.field {
+		@apply max-w-20 flex flex-col;
+		.fieldTitle {
+			@apply text-xs font-semibold;
+		}
+		.fieldInput {
+			@apply h-[28px] py-0 font-medium;
+		}
+	}
+}

@@ -1,7 +1,13 @@
 .container {
 	@apply w-auto h-full relative;
 	.frame {
-		@apply w-[720px] h-[720px] bg-white rounded-lg overflow-hidden relative;
+		@apply w-[720px] h-[800px] flex bg-white rounded-lg overflow-hidden relative;
+		.slider {
+			@apply flex flex-1 flex-col self-stretch relative;
+			.slide {
+				@apply flex items-center justify-center;
+			}
+		}
 		.navButton {
 			@apply w-12 h-full z-30 flex items-center justify-center text-zinc-50/80 bg-transparent absolute hover:text-zinc-50 hover:bg-zinc-700/30 transition duration-200;
 			.icon {
@@ -33,7 +39,7 @@
 	.tabs {
 		@apply mt-5 gap-1.5 flex flex-wrap items-center justify-center;
 		.tab {
-			@apply w-[75px] max-h-[55px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
+			@apply w-[55px] max-h-[55px] flex items-center justify-center border border-transparent object-cover overflow-hidden;
 			&.target {
 				@apply border-red-500;
 			}

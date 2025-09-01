@@ -16,7 +16,7 @@ interface DiscountsFilters {
 	categoryId?: string
 }
 
-export function useDiscounts(type: 'all' | 'actual' = 'actual') {
+export function useDiscounts(type: 'all' | 'archive' = 'all') {
 	const searchParams = useSearchParams()
 
 	const [filters, setFilters] = React.useState<DiscountsFilters>({
@@ -36,7 +36,7 @@ export function useDiscounts(type: 'all' | 'actual' = 'actual') {
 						take: limit,
 						skip: (page - 1) * limit
 					})
-				: discountService.getActual({
+				: discountService.getArchive({
 						categoryId: filters.categoryId,
 						take: limit,
 						skip: (page - 1) * limit

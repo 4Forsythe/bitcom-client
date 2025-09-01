@@ -36,7 +36,7 @@ export const createDiscountSchema = z
 			data.amount < 100 &&
 			data.amount > 0,
 		{
-			message: 'Процентная скидка должна быть в диапазоне от 0% до 99%',
+			message: 'Процентная скидка должна быть в диапазоне от 1% до 99%',
 			path: ['amount']
 		}
 	)

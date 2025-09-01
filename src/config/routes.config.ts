@@ -13,12 +13,15 @@ class ROUTES {
 	PRODUCT = `${this.BASE_URL}product`
 	DISCOUNTS = `${this.BASE_URL}discounts`
 	ADD_PRODUCT = `${this.BASE_URL}product/add-item`
+	ADD_DISCOUNT = `${this.BASE_URL}discounts/add-item`
 	THANKS = `${this.CART}/thanks`
 
 	PROFILE = `${this.BASE_URL}my`
-	ARCHIVE = `${this.BASE_URL}my/archive`
+	MY_PRODUCTS = `${this.BASE_URL}my/products`
+	MY_DISCOUNTS = `${this.BASE_URL}my/discounts`
 	ORDERLIST = `${this.BASE_URL}my/order-list`
 	UPLOAD_DOCX = `${this.BASE_URL}my/upload-docx`
+	EXPORT = `${this.BASE_URL}my/export-data`
 
 	BLOG = `${this.BASE_URL}blog`
 	ARTICLES = `${this.BASE_URL}articles`

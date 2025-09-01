@@ -5,7 +5,7 @@ import Link from 'next/link'
 import clsx from 'clsx'
 import { Minus, Plus, Heart, Trash } from 'lucide-react'
 
-import { PriceBadge } from '../ui'
+import { Badge, PriceBadge } from '../ui'
 import { ProductImage } from '../ProductImage'
 import { useWishlistStore } from '@/store/wishlist'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -15,13 +15,14 @@ import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 
 import { SERVER_BASE_URL } from '@/constants'
 import { ROUTE } from '@/config/routes.config'
-import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { calcDiscountPercent } from '@/utils/calc-discount-percent'
 import { calcNounDeclension } from '@/utils/calc-noun-declension'
-import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
+import { calcProductPriceValue } from '@/utils/calc-product-price-value'
 
 import type { CartItemType } from '@/types/cart.types'
 
 import styles from './cart-item.module.scss'
+import toast from 'react-hot-toast'
 
 export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 	const { isWishlistLoading } = useWishlist()
@@ -34,24 +35,9 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 				? `/static/${product.category.imageUrl}`
 				: undefined
 
-	const { price, discountPrice, discountTargets } = product
+	const { price, discountPrice } = product
 
-	const isDiscountAvailable =
-		discountTargets.length > 0 &&
-		new Date(discountTargets[0].discount.expiresAt) > new Date()
-
-	const discountTarget = isDiscountAvailable
-		? {
-				type: discountTargets[0].discount.type,
-				amount: discountTargets[0].discount.amount
-			}
-		: null
-
-	const discountValue = calcMaxDiscountValue(
-		price,
-		discountPrice,
-		discountTarget
-	)
+	const discountValue = calcProductPriceValue(price, discountPrice)
 
 	const { updateCartItem, isUpdateCartItemPending } = useUpdateCartItem()
 	const { deleteCartItem, isDeleteCartItemPending } = useDeleteCartItem()
@@ -156,18 +142,24 @@ export const CartItem: React.FC<CartItemType> = ({ id, product, count }) => {
 								</button>
 							</div>
 							<div className={styles.details}>
-								<span
-									className={clsx(styles.breadcrumb, {
-										[styles.positive]: product.count !== 0,
-										[styles.negative]: product.count === 0,
-										[styles.warning]:
-											product.count && product.count > 0 && product.count < 5
-									})}
+								<Badge
+									size='sm'
+									color={
+										product.count !== 0
+											? 'green'
+											: product.count === 0
+												? 'red'
+												: product.count &&
+													  product.count > 0 &&
+													  product.count < 5
+													? 'orange'
+													: 'grey'
+									}
 								>
 									{product.count || product.count === 0
 										? `На складе ${product.count} шт.`
 										: 'Есть в наличии'}
-								</span>
+								</Badge>
 								<p className={styles.guarantee}>
 									{product.guarantee
 										? `Гарантия ${calcNounDeclension(product.guarantee, 'месяц', 'месяца', 'месяцев')}`

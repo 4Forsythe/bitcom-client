@@ -1,5 +1,5 @@
 .container {
-	@apply mb-5 grid grid-cols-[1.1fr,0.9fr] bg-zinc-50 shadow-sm;
+	@apply mb-5 grid grid-cols-[1.1fr,0.9fr] bg-white shadow-sm;
 	.gallery {
 		@apply top-0 lg:top-[120px] h-fit static lg:sticky;
 		.overlay {
@@ -10,7 +10,7 @@
 		}
 	}
 	.information {
-		@apply py-8 pr-8 gap-2.5 flex flex-col relative;
+		@apply px-8 py-8 gap-2.5 flex flex-col relative;
 		.overview {
 			@apply gap-2.5 inline-flex flex-col;
 			.head {
@@ -18,9 +18,6 @@
 				.title {
 					@apply mb-1.5 text-2xl font-bold;
 				}
-			}
-			.category {
-				@apply rounded-xl;
 			}
 		}
 		.options {
@@ -40,10 +37,10 @@
 			.availables {
 				@apply gap-2 flex items-center;
 				.category {
-					@apply px-3 py-1 text-zinc-500 bg-zinc-200 hover:text-zinc-700 hover:bg-zinc-300 rounded-3xl;
+					@apply px-3 py-1 text-zinc-600 bg-zinc-200 hover:text-zinc-700 hover:bg-zinc-300 rounded-md;
 				}
 				.breadcrumb {
-					@apply w-fit my-1 px-2.5 py-1 text-sm text-zinc-500 bg-zinc-200/50 rounded-3xl;
+					@apply w-fit my-1 px-2.5 py-1 text-sm text-zinc-500 bg-zinc-200/50 rounded-md;
 					&.positive {
 						@apply text-green-600 bg-green-200/50;
 					}

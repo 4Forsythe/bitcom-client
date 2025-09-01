@@ -1,10 +1,37 @@
 .container {
-	@apply w-fit px-3 py-1.5 gap-1.5 inline-flex items-center text-sm outline-none rounded-md cursor-pointer transition-all duration-300;
+	@apply w-fit gap-1.5 inline-flex items-center text-sm outline-none rounded-md cursor-pointer transition-all duration-300;
+	&.medium {
+		@apply px-3 py-1.5;
+	}
+	&.small {
+		@apply px-2.5 py-1;
+	}
 	&.contained {
 		@apply text-zinc-50 bg-zinc-700 hover:bg-zinc-600;
+		&.green {
+			@apply text-zinc-50 bg-green-600;
+		}
+		&.red {
+			@apply text-zinc-50 bg-red-600;
+		}
+		&.orange {
+			@apply text-zinc-50 bg-orange-500;
+		}
 	}
 	&.outlined {
 		@apply text-zinc-700 bg-zinc-300/70 hover:bg-zinc-300;
+		&.green {
+			@apply text-green-600 bg-green-200/50;
+		}
+		&.red {
+			@apply text-red-600 bg-red-200/50;
+		}
+		&.orange {
+			@apply text-orange-500 bg-orange-100/50;
+		}
+	}
+	&.clickable {
+		@apply cursor-pointer;
 	}
 	&.disabled {
 		@apply pointer-events-none;

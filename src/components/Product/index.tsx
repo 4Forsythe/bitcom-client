@@ -26,32 +26,32 @@ import { useCreateWishlistItem } from '@/hooks/useCreateWishlistItem'
 
 import { ROUTE } from '@/config/routes.config'
 import { calcNounDeclension } from '@/utils/calc-noun-declension'
-import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
+import { calcProductPriceValue } from '@/utils/calc-product-price-value'
 
 import type { ProductType } from '@/types/product.types'
 
 import styles from './product.module.scss'
 
-export const Product: React.FC<ProductType> = ({
-	id,
-	slug,
-	name,
-	description,
-	images,
-	discountTargets,
-	price,
-	discountPrice,
-	count,
-	sku,
-	guarantee,
-	isArchived,
-	isPublished,
-	category
-}) => {
+export const Product: React.FC<ProductType> = (props) => {
 	const router = useRouter()
 	const [hasDescriptionHidden, setHasDescriptionHidden] = React.useState(false)
 	const [isDescriptionExpanded, setIsDescriptionExpanded] =
 		React.useState(false)
+
+	const {
+		id,
+		name,
+		description,
+		images,
+		price,
+		discountPrice,
+		discount,
+		count,
+		guarantee,
+		isArchived,
+		isPublished,
+		category
+	} = props
 
 	const { isCartLoading } = useCart()
 	const { isWishlistLoading } = useWishlist()
@@ -65,22 +65,7 @@ export const Product: React.FC<ProductType> = ({
 
 	const isLoading = isCartLoading || isWishlistLoading || isProfileLoading
 
-	const isDiscountAvailable =
-		discountTargets.length > 0 &&
-		new Date(discountTargets[0].discount.expiresAt) > new Date()
-
-	const discountTarget = isDiscountAvailable
-		? {
-				type: discountTargets[0].discount.type,
-				amount: discountTargets[0].discount.amount
-			}
-		: null
-
-	const discountValue = calcMaxDiscountValue(
-		price,
-		discountPrice,
-		discountTarget
-	)
+	const discountValue = calcProductPriceValue(price, discountPrice)
 
 	const isInCart = Boolean(
 		cart.concat(archivedCart).find((item) => item.product.id === id)
@@ -160,35 +145,35 @@ export const Product: React.FC<ProductType> = ({
 									</Badge>
 								</Link>
 							)}
-							{!isArchived &&
-								discountTargets.length > 0 &&
-								new Date(discountTargets[0].discount.expiresAt) > new Date() &&
-								discountTarget && (
-									<DiscountBadge
-										iconUrl='/icons/Fire.gif'
-										expiredAt={discountTargets[0].discount.expiresAt}
-									/>
-								)}
+							{!isArchived && discount && (
+								<DiscountBadge
+									discountId={discount.id}
+									iconUrl='/icons/Fire.gif'
+									expiredAt={discount.expiresAt}
+								/>
+							)}
 							{!isArchived && (
-								<span
-									className={clsx(styles.breadcrumb, {
-										[styles.positive]: count !== 0,
-										[styles.negative]: count === 0,
-										[styles.warning]: count && count > 0 && count < 5
-									})}
+								<Badge
+									color={
+										count !== 0
+											? 'green'
+											: count === 0
+												? 'red'
+												: count && count > 0 && count < 5
+													? 'orange'
+													: 'grey'
+									}
 								>
 									{count || count === 0
 										? `На складе ${count} шт.`
 										: 'Есть в наличии'}
-								</span>
+								</Badge>
 							)}
 						</div>
 						{user?.role && (
 							<ProductManagerControls
-								productId={id}
-								isPublished={isPublished}
-								isArchived={isArchived}
 								refreshPage
+								product={props}
 							/>
 						)}
 						<div className={styles.description}>

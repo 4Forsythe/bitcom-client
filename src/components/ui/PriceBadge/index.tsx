@@ -1,17 +1,17 @@
 import React from 'react'
 import clsx from 'clsx'
-import { calcDiscountPercent } from '@/utils/calc-discount-price'
+import { calcDiscountPercent } from '@/utils/calc-discount-percent'
 
 import styles from './price-badge.module.scss'
 
-interface Props {
-	size?: 'small' | 'default'
+export interface IPriceBadgeProps {
+	size?: 'default' | 'small'
 	price: string | number
 	discountPrice?: string | number
 	className?: string
 }
 
-export const PriceBadge: React.FC<Props> = ({
+export const PriceBadge: React.FC<IPriceBadgeProps> = ({
 	size = 'default',
 	price,
 	discountPrice,
@@ -28,17 +28,7 @@ export const PriceBadge: React.FC<Props> = ({
 				[styles.small]: size === 'small'
 			})}
 		>
-			{hasDiscount && (
-				<div className={styles.discount}>
-					{new Intl.NumberFormat('ru-RU').format(Number(discountPrice))} ₽
-				</div>
-			)}
 			<div className={styles.price}>
-				{hasDiscount && (
-					<div className={styles.percent}>
-						-{calcDiscountPercent(Number(price), Number(discountPrice))}%
-					</div>
-				)}
 				<span
 					className={clsx(styles.text, {
 						[styles.discounted]: hasDiscount,
@@ -49,7 +39,17 @@ export const PriceBadge: React.FC<Props> = ({
 						? `${new Intl.NumberFormat('ru-RU').format(Number(price))} ₽`
 						: 'Цена по запросу'}
 				</span>
+				{hasDiscount && (
+					<div className={styles.percent}>
+						-{calcDiscountPercent(Number(price), Number(discountPrice))}%
+					</div>
+				)}
 			</div>
+			{hasDiscount && (
+				<div className={styles.discount}>
+					{new Intl.NumberFormat('ru-RU').format(Number(discountPrice))} ₽
+				</div>
+			)}
 		</div>
 	)
 }

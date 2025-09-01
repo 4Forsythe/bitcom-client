@@ -32,6 +32,24 @@ export const PRODUCT_SORTS: SortType[] = [
 	}
 ]
 
+export const DISCOUNT_SORTS: SortType[] = [
+	{
+		name: 'Последние',
+		property: 'startedAt',
+		order: 'desc'
+	},
+	{
+		name: 'Выгодные',
+		property: 'amount',
+		order: 'desc'
+	},
+	{
+		name: 'Скоро закончатся',
+		property: 'expiresAt',
+		order: 'asc'
+	}
+]
+
 export const POST_SORTS: SortType[] = [
 	{
 		name: 'Сначала популярные',

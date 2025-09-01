@@ -11,14 +11,15 @@ import {
 	AddWishlistButton,
 	ProductImage,
 	PriceBadge,
-	DiscountBadge
+	DiscountBadge,
+	Badge
 } from '@/components'
 import { ViewType } from '@/components/ProductList'
 
 import { ROUTE } from '@/config/routes.config'
 import { SERVER_BASE_URL } from '@/constants'
-import { calcDiscountPercent } from '@/utils/calc-discount-price'
-import { calcMaxDiscountValue } from '@/utils/calc-max-discount-value'
+import { calcDiscountPercent } from '@/utils/calc-discount-percent'
+import { calcProductPriceValue } from '@/utils/calc-product-price-value'
 
 import { useCartStore } from '@/store/cart'
 import { useWishlistStore } from '@/store/wishlist'
@@ -40,9 +41,9 @@ export const ProductCard: React.FC<IProductCard> = ({
 	slug,
 	name,
 	images,
-	discountTargets,
 	price,
 	discountPrice,
+	discount,
 	count,
 	isArchived,
 	category,
@@ -84,22 +85,7 @@ export const ProductCard: React.FC<IProductCard> = ({
 		return <ProductCardSkeleton />
 	}
 
-	const isDiscountAvailable =
-		discountTargets.length > 0 &&
-		new Date(discountTargets[0].discount.expiresAt) > new Date()
-
-	const discountTarget = isDiscountAvailable
-		? {
-				type: discountTargets[0].discount.type,
-				amount: discountTargets[0].discount.amount
-			}
-		: null
-
-	const discountValue = calcMaxDiscountValue(
-		price,
-		discountPrice,
-		discountTarget
-	)
+	const discountValue = calcProductPriceValue(price, discountPrice)
 
 	// const descriptionHtml = description
 	// 	? description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />')
@@ -115,9 +101,9 @@ export const ProductCard: React.FC<IProductCard> = ({
 				className={styles.cover}
 				href={`${ROUTE.PRODUCT}/${slug}`}
 			>
-				{discountPrice && Number(discountPrice) < Number(price) && (
-					<div className={styles.discount}>
-						-{calcDiscountPercent(Number(price), Number(discountPrice))}%
+				{discountValue && Number(discountValue) < Number(price) && (
+					<div className={styles.discountPercentTab}>
+						-{calcDiscountPercent(Number(price), Number(discountValue))}%
 					</div>
 				)}
 				<ProductImage
@@ -136,15 +122,13 @@ export const ProductCard: React.FC<IProductCard> = ({
 					{name}
 				</Link>
 				<div className={styles.meta}>
-					{!isArchived &&
-						discountTargets.length > 0 &&
-						new Date(discountTargets[0].discount.expiresAt) > new Date() &&
-						discountTarget && (
-							<DiscountBadge
-								iconUrl='/icons/Fire.gif'
-								expiredAt={discountTargets[0].discount.expiresAt}
-							/>
-						)}
+					{!isArchived && discount && (
+						<DiscountBadge
+							discountId={discount.id}
+							iconUrl='/icons/Fire.gif'
+							expiredAt={discount.expiresAt}
+						/>
+					)}
 					{category && (
 						<Link
 							className={styles.type}
@@ -169,17 +153,22 @@ export const ProductCard: React.FC<IProductCard> = ({
 						discountPrice={discountValue}
 					/>
 					{!isArchived && (
-						<span
-							className={clsx(styles.breadcrumb, {
-								[styles.positive]: count !== 0,
-								[styles.negative]: count === 0,
-								[styles.warning]: count && count > 0 && count < 5
-							})}
+						<Badge
+							size='sm'
+							color={
+								count !== 0
+									? 'green'
+									: count === 0
+										? 'red'
+										: count && count > 0 && count < 5
+											? 'orange'
+											: 'grey'
+							}
 						>
 							{count || count === 0
 								? `На складе ${count} шт.`
 								: 'Есть в наличии'}
-						</span>
+						</Badge>
 					)}
 				</div>
 				{!isLoading && (

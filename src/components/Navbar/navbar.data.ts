@@ -15,6 +15,12 @@ export const FEATURES: NavbarItemType[] = [
 		description: 'Компьютерная, офисная техника, медицинское оборудование'
 	},
 	{
+		icon: 'discount.webp',
+		href: ROUTE.DISCOUNTS,
+		title: 'Акции',
+		description: 'Скидки, специальные и выгодные предложения'
+	},
+	{
 		icon: 'blog.webp',
 		href: ROUTE.BLOG,
 		title: 'Блог',

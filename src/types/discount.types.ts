@@ -39,6 +39,7 @@ export type DiscountsType = {
 }
 
 export type DiscountParamsType = {
+	name?: string
 	categoryId?: string
 	sortBy?: string
 	orderBy?: string

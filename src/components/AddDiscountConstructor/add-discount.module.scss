@@ -1,0 +1,51 @@
+.container {
+	@apply w-full max-w-[1068px] mx-auto flex flex-1 flex-col;
+	.breadcrumbs {
+		@apply mx-12 gap-1.5 text-zinc-600 flex items-center;
+		.breadcrumbItem {
+			@apply text-[0.95rem] hover:text-zinc-500 transition duration-200;
+		}
+	}
+	.inner {
+		@apply mx-3 flex flex-1 flex-col;
+		.block {
+			@apply mx-12 py-4 gap-4 flex flex-1 flex-col;
+			&.spacing {
+				@apply mt-5;
+			}
+			.subheading {
+				@apply max-w-[636px] w-full mt-3.5 -mb-5;
+			}
+			.caption {
+				@apply text-sm text-zinc-500;
+			}
+			.list {
+				@apply my-3 gap-1.5 grid grid-cols-[255px,255px,255px];
+				.categories {
+					@apply gap-1.5 flex flex-col;
+					.categoryItem {
+						@apply w-full flex items-center rounded-lg hover:bg-zinc-200 hover:shadow-sm transition duration-200;
+						&.active {
+							@apply bg-zinc-200 shadow-sm;
+						}
+						.categoryButton {
+							@apply w-full pl-5 py-2.5 flex items-center justify-between hover:text-red-500 transition duration-200;
+						}
+						.categoryDropdown {
+							@apply px-5 py-2.5 shrink-0 rounded-lg hover:text-red-500 hover:bg-zinc-300/80 transition duration-200;
+						}
+					}
+				}
+			}
+			.confirm {
+				@apply w-fit mt-5 flex flex-col;
+				.confirmText {
+					@apply mb-2.5 text-[0.95rem] font-semibold;
+				}
+				.confirmButton {
+					@apply w-fit;
+				}
+			}
+		}
+	}
+}

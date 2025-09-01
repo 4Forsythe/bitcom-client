@@ -1,0 +1,45 @@
+.container {
+	@apply max-w-[1252px] w-full p-4 gap-8 flex flex-col md:flex-row bg-zinc-50 border border-zinc-200 rounded-2xl shadow-sm;
+	.cover {
+		@apply flex items-center justify-center relative;
+		.overlay {
+			@apply inset-0 z-[30] bg-zinc-100/70 flex items-center justify-center pointer-events-none absolute;
+			.overlayTitle {
+				@apply text-zinc-700/70 text-2xl font-semibold uppercase;
+			}
+		}
+	}
+	.inner {
+		@apply flex flex-col grow;
+		.heading {
+			@apply flex items-start justify-between;
+			.headingInformation {
+				@apply flex flex-col;
+				.title {
+					@apply text-lg font-bold line-clamp-1;
+				}
+				.timestamp {
+					@apply mb-2 text-sm text-zinc-500/80;
+				}
+			}
+		}
+		.items {
+			@apply max-h-[130px] gap-4 flex items-center overflow-hidden;
+			.productItem {
+				@apply max-w-full md:max-w-[130px] w-full gap-2 flex flex-row md:flex-col items-center md:items-start;
+				.productInformation {
+					@apply flex flex-col;
+					.productTitle {
+						@apply text-sm line-clamp-2 hover:text-red-500 transition duration-200;
+					}
+					.othersButton {
+						@apply block md:hidden text-base text-blue-600 underline hover:text-blue-700 transition duration-200;
+					}
+				}
+			}
+			.othersLink {
+				@apply ml-auto w-[124px] h-[124px] hidden md:flex shrink-0 items-center justify-center bg-zinc-200/50 rounded-xl hover:bg-zinc-200 transition duration-200;
+			}
+		}
+	}
+}
