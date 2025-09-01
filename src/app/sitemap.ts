@@ -3,16 +3,25 @@ import { MetadataRoute } from 'next'
 import { ROUTE } from '@/config/routes.config'
 
 import { productService } from '@/services/product.service'
+import { discountService } from '@/services/discount.service'
 
 const baseUrl = process.env.BASE_URL
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	const products = await productService.getAll()
+	const products = await productService.getAllForSitemap()
+	const discounts = await discountService.getAll({ take: 50 })
 
 	const productsMetadata: MetadataRoute.Sitemap = products.items.map(
-		({ id, slug, createdAt }) => ({
+		({ slug, createdAt }) => ({
 			url: `${baseUrl}${ROUTE.PRODUCT}/${slug}`,
 			lastModified: new Date(createdAt)
+		})
+	)
+
+	const discountsMetadata: MetadataRoute.Sitemap = discounts.items.map(
+		({ id, startedAt }) => ({
+			url: `${baseUrl}${ROUTE.DISCOUNTS}/${id}`,
+			lastModified: new Date(startedAt)
 		})
 	)
 
@@ -50,6 +59,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			lastModified: new Date()
 		},
 		{
+			url: `${baseUrl}${ROUTE.DISCOUNTS}`,
+			lastModified: new Date()
+		},
+		{
 			url: `${baseUrl}${ROUTE.PRICES}`,
 			lastModified: new Date()
 		},
@@ -81,6 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			url: `${baseUrl}${ROUTE.POLICIES}`,
 			lastModified: new Date()
 		},
-		...productsMetadata
+		...productsMetadata,
+		...discountsMetadata
 	]
 }

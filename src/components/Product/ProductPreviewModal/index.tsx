@@ -68,7 +68,9 @@ export const ProductPreviewModal: React.FC<Props> = ({
 						{images.length > 1 && (
 							<ProductImageGalleryPagination
 								images={images}
+								activeIndex={targetImage}
 								alt={alt}
+								setActiveIndex={(index) => setTargetImage(index)}
 							/>
 						)}
 					</Swiper>

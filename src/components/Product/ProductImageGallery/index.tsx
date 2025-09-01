@@ -68,6 +68,7 @@ export const ProductImageGallery: React.FC<Props> = ({
 								prevEl: '.swiper-navigation-prev'
 							}}
 							loop
+							initialSlide={targetImage}
 							onSlideChange={(slider) => setTargetImage(slider.realIndex)}
 						>
 							{images.map((image, index) => (
@@ -103,8 +104,10 @@ export const ProductImageGallery: React.FC<Props> = ({
 							{images.length > 1 && (
 								<ProductImageGalleryPagination
 									images={images}
+									activeIndex={targetImage}
 									category={category}
 									alt={alt}
+									setActiveIndex={(index) => setTargetImage(index)}
 								/>
 							)}
 						</Swiper>

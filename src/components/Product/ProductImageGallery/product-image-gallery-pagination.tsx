@@ -14,14 +14,18 @@ import styles from './product-image-gallery.module.scss'
 
 interface Props {
 	images: ProductImageType[]
+	activeIndex: number
 	category?: ProductCategoryType
 	alt: string
+	setActiveIndex: (index: number) => void
 }
 
 export const ProductImageGalleryPagination: React.FC<Props> = ({
 	images,
+	activeIndex,
 	category,
-	alt
+	alt,
+	setActiveIndex
 }) => {
 	const swiper = useSwiper()
 
@@ -44,9 +48,12 @@ export const ProductImageGalleryPagination: React.FC<Props> = ({
 						size='thumbnail'
 						alt={`${alt} ${index + 1}`}
 						className={clsx(styles.listItem, {
-							[styles.target]: swiper.realIndex === index
+							[styles.target]: activeIndex === index
 						})}
-						onClick={() => swiper.slideToLoop(index)}
+						onClick={() => {
+							setActiveIndex(index)
+							swiper.slideToLoop(index)
+						}}
 					/>
 				))}
 			</div>

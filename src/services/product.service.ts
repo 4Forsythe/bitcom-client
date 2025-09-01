@@ -67,6 +67,11 @@ class ProductService {
 		return response.data
 	}
 
+	async getAllForSitemap(): Promise<ProductsType> {
+		const response = await api.get(`${this.endpoint}/for-sitemap`)
+		return response.data
+	}
+
 	async getSimilar(
 		id: string,
 		params?: { take: number }
