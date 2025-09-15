@@ -2,12 +2,12 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { FEATURES, NavbarItemType } from './navbar.data'
 import { Carousel } from '@/components/Carousel'
 
 import styles from './navbar.module.scss'
-import Image from 'next/image'
 
 export const Navbar: React.FC = () => {
 	const [isMounted, setIsMounted] = React.useState(false)

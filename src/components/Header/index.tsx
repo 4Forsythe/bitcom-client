@@ -99,6 +99,7 @@ export const Header: React.FC = () => {
 								/>
 							</Link>
 							<button
+								aria-label='Каталог'
 								ref={catalogRef}
 								className={styles.catalogButton}
 								onClick={(event) => {

@@ -73,7 +73,6 @@ export const ProductGroupItem: React.FC<ProductType> = ({
 					height={450}
 					alt={name}
 					size='medium'
-					priority
 				/>
 			</Link>
 			<div className={styles.information}>

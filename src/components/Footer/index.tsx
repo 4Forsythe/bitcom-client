@@ -33,28 +33,28 @@ export const Footer: React.FC = () => {
 						</ul>
 						<ul className={styles.socials}>
 							{SOCIALS.map((item) => (
-								<Link
-									className={styles.socialItem}
-									key={item.href}
-									href={item.href}
-									target='_blank'
-								>
-									<Image
-										className={styles.icon}
-										width={64}
-										height={64}
-										src={item.imageUrl}
-										alt={item.tag}
-										priority
-									/>
-								</Link>
+								<li key={item.href}>
+									<Link
+										className={styles.socialItem}
+										href={item.href}
+										target='_blank'
+									>
+										<Image
+											className={styles.icon}
+											width={64}
+											height={64}
+											src={item.imageUrl}
+											alt={item.tag}
+											priority
+										/>
+									</Link>
+								</li>
 							))}
 						</ul>
 						<ul className={styles.marketplaces}>
 							{MARKETPLACES.map((item) => (
-								<li key={item.href}>
+								<li key={item.id}>
 									<Link
-										key={item.id}
 										className={styles.market}
 										href={item.href}
 									>

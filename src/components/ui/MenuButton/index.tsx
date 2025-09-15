@@ -20,6 +20,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
 }) => {
 	return (
 		<button
+			aria-label={title}
 			className={clsx(styles.container, 'animate-opacity', {
 				[styles.loading]: isLoading
 			})}

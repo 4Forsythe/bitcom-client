@@ -34,7 +34,6 @@ export const BrandsGallery: React.FC = () => {
 							blurDataURL='/static/image-placeholder.png'
 							placeholder='blur'
 							alt={slide.tag}
-							priority
 						/>
 					</div>
 				))}

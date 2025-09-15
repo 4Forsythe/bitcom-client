@@ -2,14 +2,11 @@ import React from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-import {
-	Navbar,
-	ProductCategories,
-	TelegramBanner,
-	DiscountSlider
-} from '@/components'
+import { Navbar, TelegramBanner } from '@/components'
 
-const AboutUs = dynamic(() => import('@/components').then((mod) => mod.AboutUs))
+const DiscountSlider = dynamic(() =>
+	import('@/components').then((mod) => mod.DiscountSlider)
+)
 const BrandsGallery = dynamic(() =>
 	import('@/components').then((mod) => mod.BrandsGallery)
 )
@@ -19,6 +16,7 @@ const ProductGroup = dynamic(() =>
 const PostGroup = dynamic(() =>
 	import('@/components').then((mod) => mod.PostGroup)
 )
+const AboutUs = dynamic(() => import('@/components').then((mod) => mod.AboutUs))
 
 import type { ProductsType } from '@/types/product.types'
 import type { FrontmatterPostType } from '@/types/post.types'
@@ -65,10 +63,7 @@ export const Home: React.FC<Props> = async ({
 					<TelegramBanner />
 				</div>
 			</div>
-
-			<React.Suspense>
-				<DiscountSlider />
-			</React.Suspense>
+			<DiscountSlider />
 
 			{discountProducts.items.length >= 5 && (
 				<ProductGroup

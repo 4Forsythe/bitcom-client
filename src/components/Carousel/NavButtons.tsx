@@ -45,6 +45,7 @@ export const NavButtons: React.FC<NavButtonsProps> = ({ asHint, isLoop }) => {
 	return (
 		<div className={clsx(styles.navigation, { [styles.hint]: asHint })}>
 			<button
+				role='listitem'
 				aria-label='Предыдущий слайд'
 				className={clsx(styles.button, styles.prev)}
 				onClick={() => swiper.slidePrev()}
@@ -53,6 +54,7 @@ export const NavButtons: React.FC<NavButtonsProps> = ({ asHint, isLoop }) => {
 				<ChevronLeft className={styles.icon} />
 			</button>
 			<button
+				role='listitem'
 				aria-label='Следующий слайд'
 				className={clsx(styles.button, styles.next)}
 				onClick={() => swiper.slideNext()}
