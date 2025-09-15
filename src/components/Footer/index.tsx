@@ -33,9 +33,11 @@ export const Footer: React.FC = () => {
 						</ul>
 						<ul className={styles.socials}>
 							{SOCIALS.map((item) => (
-								<li key={item.href}>
+								<li
+									key={item.href}
+									className={styles.socialItem}
+								>
 									<Link
-										className={styles.socialItem}
 										href={item.href}
 										target='_blank'
 									>
