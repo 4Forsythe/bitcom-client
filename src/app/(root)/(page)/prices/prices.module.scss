@@ -17,6 +17,9 @@
 			}
 		}
 	}
+	.infoBlock {
+		@apply w-fit;
+	}
 }
 
 @media (max-width: 460px) {
