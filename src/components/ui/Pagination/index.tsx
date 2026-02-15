@@ -12,6 +12,8 @@ import {
 
 import styles from './Pagination.module.scss'
 
+const BORDERS_COUNT = 5
+
 interface PaginationProps {
 	total: number
 	align?: 'left' | 'center' | 'right'
@@ -35,7 +37,7 @@ export const Pagination = ({ total, align = 'center' }: PaginationProps) => {
 		return null
 	}
 
-	for (let i = page - limit; i <= page + limit; i++) {
+	for (let i = page - BORDERS_COUNT; i <= page + BORDERS_COUNT; i++) {
 		if (i >= 1 && i <= pages) {
 			pageNumbers.push(i)
 		}
